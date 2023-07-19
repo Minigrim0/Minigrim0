@@ -1,0 +1,78 @@
+version: '3'
+
+services:
+  # The main flask webserver
+  web:
+    build:
+      dockerfile: docker/flask.dockerfile
+      context: ..
+    expose:
+      - 5000
+    env_file:
+      - ./.env.prod
+    depends_on:
+      - redis
+    networks:
+      - private
+    restart: unless-stopped
+
+  # Reverse proxy used to serve statics, ...
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    volumes:
+      - static_volume:/django_static
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.minigrim0.entrypoints=https"
+      - "traefik.http.routers.minigrim0.rule=Host(`minigrim0.teamna.me`)"
+      - "traefik.http.routers.minigrim0.tls=true"
+      - "traefik.http.routers.minigrim0.service=nginx-minigrim0-prod@docker"
+      - "traefik.docker.network=traefik-proxy"
+    depends_on:
+      - web
+    networks:
+      - private
+      - public
+      - traefik-proxy
+    restart: unless-stopped
+
+  # In-memory database for repository cache
+  redis:
+    image: redis
+    networks:
+      - private
+    restart: unless-stopped
+
+  # Set of rust tools to fetch data on github, ...
+  tools:
+    build:
+      dockerfile: ../docker/tools.dockerfile
+      context: ../tools/
+    depends_on:
+      - redis
+    networks:
+      - private
+    restart: unless-stopped
+
+  # Cron legacy (To run tools, ...)
+  ofelia:
+    image: mcuadros/ofelia:latest
+    depends_on:
+      - tools
+    command: daemon --docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+networks:
+  private:
+    driver: overlay
+  public:
+    external: true
+  traefik-proxy:
+    external: true
+
+volumes:
+  redis_data:
+  static_volume:
