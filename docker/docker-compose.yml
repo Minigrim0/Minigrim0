@@ -28,7 +28,7 @@ services:
       - "traefik.http.routers.minigrim0.entrypoints=https"
       - "traefik.http.routers.minigrim0.rule=Host(`minigrim0.teamna.me`)"
       - "traefik.http.routers.minigrim0.tls=true"
-      - "traefik.http.routers.minigrim0.service=nginx-minigrim0-prod@docker"
+      - "traefik.http.routers.minigrim0.service=nginx-minigrim0-web@docker"
       - "traefik.docker.network=traefik-proxy"
     depends_on:
       - web
