@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "minigrim0"
+version = "0.1.0"
+description = "Minigrim0's website"
+authors = ["Minigrim0 <grimauflorent@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+Flask = "^2.3.2"
+flask-sqlalchemy = "^3.0.5"
+flask-login = "^0.6.2"
+python-dotenv = "^1.0.0"
+
+[tool.poetry.group.dev.dependencies]
+isort = "^5.12.0"
+pylint = "^2.17.4"
+black = "^23.7.0"
+
+
+[tool.poetry.group.prod.dependencies]
+gunicorn = "^21.2.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
