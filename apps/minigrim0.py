@@ -1,3 +1,6 @@
+import json
+import markdown
+
 from flask import Blueprint, request, url_for, redirect, render_template, flash
 minigrim0 = Blueprint('minigrim0', __name__, template_folder="../templates/")
 
@@ -9,7 +12,10 @@ def home():
 
 @minigrim0.route("/cv")
 def cv():
-    return render_template("minigrim0/cv.html", page_name="CV")
+    with open("static/json/cv.json") as file:
+        cv_data = json.load(file)
+
+    return render_template("minigrim0/cv.html", page_name="CV", cv=cv_data)
 
 
 @minigrim0.route("/projects")

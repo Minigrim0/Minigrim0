@@ -2,6 +2,7 @@ from flask import Flask
 
 # blueprint import
 from apps.minigrim0 import minigrim0
+from flaskext.markdown import Markdown
 
 def create_app():
     app = Flask(__name__)
@@ -11,6 +12,7 @@ def create_app():
     # register blueprint
     app.register_blueprint(minigrim0)
     # app.register_blueprint(app2, url_prefix="/app2")
+    Markdown(app)
 
     return app
 

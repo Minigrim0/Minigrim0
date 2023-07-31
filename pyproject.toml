@@ -12,6 +12,7 @@ Flask = "^2.3.2"
 flask-sqlalchemy = "^3.0.5"
 flask-login = "^0.6.2"
 python-dotenv = "^1.0.0"
+flask-markdown = "^0.3"
 
 [tool.poetry.group.dev.dependencies]
 isort = "^5.12.0"
