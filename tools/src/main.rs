@@ -1,7 +1,46 @@
+extern crate redis;
+extern crate serde;
+extern crate serde_json;
+use redis::Commands;
+
 use octocrab::{Octocrab, params::repos::Commitish};
 use hyper::body::to_bytes;
-use json;
+use std::collections::HashMap;
 
+#[macro_use] extern crate serde_derive;
+
+#[derive(Serialize)]
+struct Repo {
+    name: String,
+    description: Option<String>,
+    readme: Option<String>,
+    homepage: Option<String>,
+    url: String,
+    stars: u32
+}
+
+fn save_repos(repos: HashMap<String, Repo>) -> redis::RedisResult<()> {
+    let client = redis::Client::open(
+        format!("redis://{}:{}/",
+            std::env::var("REDIS_HOST")
+                .expect("This application needs the REDIS_HOST variable to be set"),
+            std::env::var("REDIS_PORT")
+                .expect("This application needs the REDIS_PORT variable to be set"),
+            ))?;
+    let mut con = client.get_connection()?;
+
+    /* do something here */
+    for name in repos.into_iter() {
+        let key = format!("miniwebsite:{}", name.0);
+        let serialized: String = match serde_json::to_string(&name.1) {
+            Ok(data) => data,
+            Err(err) => err.to_string()
+        };
+        con.set(key, serialized)?;
+    }
+
+    Ok(())
+}
 
 async fn get_data(octocrab: Octocrab, repo_name: String, branch: String) -> String {
     let content: hyper::Response<hyper::Body> = octocrab
@@ -50,7 +89,7 @@ async fn main() -> octocrab::Result<()> {
         .send()
         .await?;
 
-    let mut data: json::JsonValue = json::JsonValue::new_object();
+    let mut data: HashMap<String, Repo> = HashMap::new();
 
     for repo in my_repos {
         if repo.private.is_some() && repo.private.unwrap() {
@@ -63,12 +102,12 @@ async fn main() -> octocrab::Result<()> {
             Some(url) => url.to_string(),
             None => "Missing url".to_string()
         };
-        let repo_description = match repo.description {
-            Some(description) => description,
-            None => "Missing description".to_string()
+        let repo_stars: u32 = match repo.stargazers_count {
+            Some(amount) => amount,
+            None => 0
         };
+        
         let readme_str: String;
-
         match verify_data(body_str.clone()).await {
             false => {
                 let readme: String = get_data(octocrab.clone(), repo.name.clone(), "master".to_string()).await;
@@ -83,13 +122,19 @@ async fn main() -> octocrab::Result<()> {
             }
         }
 
-        data[repo.name.clone()] = json::object!{
-            readme: readme_str,
-            url: repo_url,
-            description: repo_description
-        }
+        data.insert(
+            repo.name.clone(),
+            Repo {
+                name: repo.name.clone(),
+                description: repo.description,
+                readme: Some(readme_str),
+                homepage: repo.homepage,
+                url: repo_url,
+                stars: repo_stars
+            }
+        );
     }
 
-    println!("{}", data.dump());
+    save_repos(data).expect("Could not save the repository details");
     Ok(())
 }
