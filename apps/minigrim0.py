@@ -1,9 +1,9 @@
 import json
-import markdown
 
 from flask import Blueprint, request, url_for, redirect, render_template, flash
 minigrim0 = Blueprint('minigrim0', __name__, template_folder="../templates/")
 
+from apps.utils import get_repos
 
 @minigrim0.route("/")
 def home():
@@ -20,7 +20,8 @@ def cv():
 
 @minigrim0.route("/projects")
 def projects():
-    return render_template("minigrim0/projects.html", page_name="Projects")
+    repos = get_repos()
+    return render_template("minigrim0/projects.html", page_name="Projects", repos=repos)
 
 
 @minigrim0.app_errorhandler(404)
