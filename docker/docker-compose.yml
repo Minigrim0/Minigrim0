@@ -12,10 +12,9 @@ services:
       - ./.env.prod
     volumes:
       - static_volume:/static
-    depends_on:
-      - redis
     networks:
       - private
+      - redis
     restart: unless-stopped
 
   # Reverse proxy used to serve statics, ...
@@ -40,13 +39,6 @@ services:
       - traefik-proxy
     restart: unless-stopped
 
-  # In-memory database for repository cache
-  redis:
-    image: redis
-    networks:
-      - private
-    restart: unless-stopped
-
   # Set of rust tools to fetch data on github, ...
   tools:
     build:
@@ -56,16 +48,8 @@ services:
       - redis
     networks:
       - private
+      - ofelia
     restart: unless-stopped
-
-  # Cron legacy (To run tools, ...)
-  ofelia:
-    image: mcuadros/ofelia:latest
-    depends_on:
-      - tools
-    command: daemon --docker
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
 
 networks:
   private:
@@ -74,7 +58,10 @@ networks:
     external: true
   traefik-proxy:
     external: true
+  redis:
+    external: true
+  ofelia:
+    external: true
 
 volumes:
-  redis_data:
   static_volume:
