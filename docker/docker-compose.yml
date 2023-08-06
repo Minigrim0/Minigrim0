@@ -39,16 +39,6 @@ services:
       - traefik-proxy
     restart: unless-stopped
 
-  # Set of rust tools to fetch data on github, ...
-  tools:
-    build:
-      dockerfile: ../docker/tools.dockerfile
-      context: ../tools/
-    networks:
-      - private
-      - ofelia
-    restart: unless-stopped
-
 networks:
   private:
     driver: overlay
