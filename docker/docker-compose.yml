@@ -44,8 +44,6 @@ services:
     build:
       dockerfile: ../docker/tools.dockerfile
       context: ../tools/
-    depends_on:
-      - redis
     networks:
       - private
       - ofelia
