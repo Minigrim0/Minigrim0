@@ -4,7 +4,7 @@ services:
   # The main flask webserver
   web:
     build:
-      dockerfile: docker/flask.dockerfile
+      dockerfile: docker/web.dockerfile
       context: ..
     expose:
       - 5000
