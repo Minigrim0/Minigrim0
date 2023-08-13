@@ -15,6 +15,10 @@ services:
     networks:
       - private
       - redis
+    labels:
+      ofelia.enabled: "true"
+      ofelia.job-exec.githubcron.schedule: "@every 1h"
+      ofelia.job-exec.githubcron.command: "/bin/minigrim0"
     restart: unless-stopped
 
   # Reverse proxy used to serve statics, ...
