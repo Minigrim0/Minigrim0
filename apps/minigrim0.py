@@ -1,7 +1,7 @@
 import json
 
-from flask import Blueprint, request, url_for, redirect, render_template, flash
-minigrim0 = Blueprint('minigrim0', __name__, template_folder="../templates/")
+from flask import Blueprint, request, render_template, send_from_directory
+minigrim0 = Blueprint('minigrim0', __name__, template_folder="../templates/", static_folder="../static")
 
 from apps.utils import get_repos
 
@@ -16,6 +16,12 @@ def cv():
         cv_data = json.load(file)
 
     return render_template("minigrim0/cv.html", page_name="CV", cv=cv_data)
+
+
+@minigrim0.route('/robots.txt')
+def static_from_root():
+    print(request.path)
+    return send_from_directory(minigrim0.static_folder, request.path[1:])
 
 
 @minigrim0.route("/projects")
