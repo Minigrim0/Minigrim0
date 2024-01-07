@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from minigrim0 import models
 
+
 def index(request):
     return render(request, "minigrim0/index.html", {
         "page_name": "Home"
     })
+
 
 def cv(request):
     cv_data = {
@@ -19,4 +21,11 @@ def cv(request):
     return render(request, "minigrim0/cv.html", {
         "page_name": "CV",
         "cv": cv_data
+    })
+
+
+def projects(request):
+    return render(request, "minigrim0/projects.html", {
+        "page_name": "Projects",
+        "repos": models.Repository.objects.all()
     })

@@ -21,6 +21,7 @@ import minigrim0.views as views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('cv/', views.cv),
-    path('', views.index),
+    path('projects/', views.projects, name="projects"),
+    path('cv/', views.cv, name="cv"),
+    path('', views.index, name="index"),
 ]
