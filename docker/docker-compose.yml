@@ -7,21 +7,19 @@ services:
       dockerfile: docker/web.dockerfile
       context: ..
     expose:
-      - 5000
+      - 8000
     env_file:
       - ./.env.prod
     volumes:
       - static_volume:/static
     networks:
       - private
-      - redis
     labels:
       ofelia.enabled: "true"
       ofelia.job-exec.githubcron.schedule: "@every 1h"
       ofelia.job-exec.githubcron.command: "/bin/minigrim0"
     restart: unless-stopped
 
-  # Reverse proxy used to serve statics, ...
   nginx:
     build:
       context: ./nginx
@@ -43,14 +41,22 @@ services:
       - traefik-proxy
     restart: unless-stopped
 
+  postgres:
+    image: postgres:12.1-alpine
+    env_file:
+      - ./.env.prod
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    networks:
+      - private
+    restart: unless-stopped
+
 networks:
   private:
     driver: overlay
   public:
     external: true
   traefik-proxy:
-    external: true
-  redis:
     external: true
   ofelia:
     external: true
