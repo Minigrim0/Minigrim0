@@ -35,3 +35,8 @@ class InterestCategoryAdmin(admin.ModelAdmin):
 @admin.register(models.Interest)
 class InterestAdmin(admin.ModelAdmin):
     list_display = ("name", "category")
+
+
+@admin.register(models.Repository)
+class RepositoryAdmin(admin.ModelAdmin):
+    list_display = ("name", "url")
