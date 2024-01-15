@@ -3,11 +3,12 @@ extern crate serde;
 extern crate serde_json;
 use redis::Commands;
 
-use octocrab::{Octocrab, params::repos::Commitish};
 use hyper::body::to_bytes;
+use octocrab::{params::repos::Commitish, Octocrab};
 use std::collections::HashMap;
 
-#[macro_use] extern crate serde_derive;
+#[macro_use]
+extern crate serde_derive;
 
 #[derive(Serialize)]
 struct Repo {
@@ -16,27 +17,18 @@ struct Repo {
     readme: Option<String>,
     homepage: Option<String>,
     url: String,
-    stars: u32
+    stars: u32,
 }
 
 fn save_repos(repos: HashMap<String, Repo>) -> redis::RedisResult<()> {
-    let client = redis::Client::open(
-        format!("redis://{}:{}/",
-            std::env::var("REDIS_HOST")
-                .expect("This application needs the REDIS_HOST variable to be set"),
-            std::env::var("REDIS_PORT")
-                .expect("This application needs the REDIS_PORT variable to be set"),
-            ))?;
-    let mut con = client.get_connection()?;
-
     /* do something here */
     for name in repos.into_iter() {
         let key = format!("miniwebsite:{}", name.0);
         let serialized: String = match serde_json::to_string(&name.1) {
             Ok(data) => data,
-            Err(err) => err.to_string()
+            Err(err) => err.to_string(),
         };
-        con.set(key, serialized)?;
+        // Call reqwest to send data to the web server
     }
 
     Ok(())
@@ -52,7 +44,7 @@ async fn get_data(octocrab: Octocrab, repo_name: String, branch: String) -> Stri
     let body = content.into_body();
     let truc = match to_bytes(body).await {
         Ok(val) => val,
-        Err(_) => panic!("Could fetch bytes")
+        Err(_) => panic!("Could fetch bytes"),
     };
 
     // Convert the response body bytes to a string
@@ -60,19 +52,12 @@ async fn get_data(octocrab: Octocrab, repo_name: String, branch: String) -> Stri
 }
 
 async fn verify_data(response: String) -> bool {
-    let parsed = json::parse(response.as_str());
+    let parsed: Result<json::JsonValue, json::Error> = json::parse(response.as_str());
     match parsed {
-        Ok(data) => if data["message"] == "No commit found for the ref main" {
-            false
-        } else {
-            false
-        },
-        Err(_) =>  {
-            true
-        }
+        Ok(_data) => false,
+        Err(_) => true,
     }
 }
-
 
 #[tokio::main]
 async fn main() -> octocrab::Result<()> {
@@ -97,27 +82,29 @@ async fn main() -> octocrab::Result<()> {
             continue;
         }
 
-        let body_str: String = get_data(octocrab.clone(), repo.name.clone(), "main".to_string()).await;
+        let body_str: String =
+            get_data(octocrab.clone(), repo.name.clone(), "main".to_string()).await;
         let repo_url: String = match repo.html_url {
             Some(url) => url.to_string(),
-            None => "Missing url".to_string()
+            None => "Missing url".to_string(),
         };
         let repo_stars: u32 = match repo.stargazers_count {
             Some(amount) => amount,
-            None => 0
+            None => 0,
         };
-        
+
         let readme_str: String;
         match verify_data(body_str.clone()).await {
             false => {
-                let readme: String = get_data(octocrab.clone(), repo.name.clone(), "master".to_string()).await;
+                let readme: String =
+                    get_data(octocrab.clone(), repo.name.clone(), "master".to_string()).await;
                 if verify_data(readme.clone()).await == true {
                     readme_str = readme;
                 } else {
                     readme_str = "No readme found".to_string();
                 }
-            },
-            true =>  {
+            }
+            true => {
                 readme_str = body_str;
             }
         }
@@ -130,8 +117,8 @@ async fn main() -> octocrab::Result<()> {
                 readme: Some(readme_str),
                 homepage: repo.homepage,
                 url: repo_url,
-                stars: repo_stars
-            }
+                stars: repo_stars,
+            },
         );
     }
 
