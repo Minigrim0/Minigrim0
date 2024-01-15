@@ -7,15 +7,12 @@ license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
-flask-sqlalchemy = "^3.0.5"
-flask-login = "^0.6.2"
-python-dotenv = "^1.0.0"
-flask-markdown = "^0.3"
-redis = "^4.6.0"
-flask-sitemap = "^0.4.0"
+python = "^3.10"
 django = "^5.0"
 markdown = "^3.5.1"
+django-environ = "^0.11.2"
+coloredlogs = "^15.0.1"
+psycopg2 = "^2.9.9"
 
 [tool.poetry.group.dev.dependencies]
 isort = "^5.12.0"

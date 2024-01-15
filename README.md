@@ -1,4 +1,4 @@
-<p align="center"><img width="240" src="static/img/minigrim0.jpeg" /></p>
+<p align="center"><img width="240" src="minigrim0/assets/img/minigrim0.jpeg" /></p>
 <p align="center"><a href="https://minigrim0.xyz">Website</a> • <a href="https://minigrim0.itch.io">My itch.io page</a>
 
 <p align="center">Master student in embedded systems @KTH, Stockholm.</p>
