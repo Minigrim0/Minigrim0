@@ -1,0 +1,12 @@
+.footer {
+    height: 50px;
+}
+
+.content {
+    min-height: calc(100vh - 60px);
+}
+
+.flex-0-0 {
+    flex: 0 0;
+    min-width: fit-content;
+}
