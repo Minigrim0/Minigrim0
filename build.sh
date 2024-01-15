@@ -1,18 +1,51 @@
 #!/bin/bash
 
-if [ $1 == "dev" ]; then
-    DOCKERFILE=docker/docker-compose.dev.yml
-    export COMPOSE_PROJECT_NAME="minigrim0-web-dev"
-else
-    DOCKERFILE=docker/docker-compose.yml
-    export COMPOSE_PROJECT_NAME="minigrim0-web"
-fi
+help_text () {
+    echo "Usage: $0 {build|attach|logs} {dev|prod}"
+    exit 1
+}
 
-docker-compose -f $DOCKERFILE up -d --build
-docker-compose -f $DOCKERFILE exec web python manage.py makemigrations --noinput
-docker-compose -f $DOCKERFILE exec web python manage.py migrate --noinput
-docker-compose -f $DOCKERFILE exec web python manage.py collectstatic --noinput
+get_docker_file () {
+    case $1 in
+        dev)
+            DOCKERFILE="docker/docker-compose.dev.yml"
+            export COMPOSE_PROJECT_NAME="minigrim0-web-dev"
+            ;;
+        prod)
+            DOCKERFILE="docker/docker-compose.yml"
+            export COMPOSE_PROJECT_NAME="minigrim0-web"
+            ;;
+        *)
+            help_text
+            ;;
+    esac
+}
 
-if [ $1 != "dev" ]; then
-    docker-compose -f $DOCKERFILE restart nginx
-fi
+case $1 in
+    build)
+        get_docker_file $2
+
+        docker-compose -f $DOCKERFILE up -d --build
+        docker-compose -f $DOCKERFILE exec web python manage.py makemigrations --noinput
+        docker-compose -f $DOCKERFILE exec web python manage.py migrate --noinput
+        docker-compose -f $DOCKERFILE exec web python manage.py collectstatic --noinput
+
+        if [ $2 != "dev" ]; then  # nginx is not in dev
+            docker-compose -f $DOCKERFILE restart nginx
+        fi
+        ;;
+    attach)
+        echo "Getting docker file $2 ..."
+        get_docker_file $2  # $2 is dev or prod
+        docker-compose -f $DOCKERFILE exec web bash  # bash is the default
+        exit 0
+        ;;
+    logs)
+        get_docker_file $2  # $2 is dev or prod
+        docker-compose -f $DOCKERFILE logs -f web  # -f is for follow
+        exit 0
+        ;;
+    *)
+        echo "Usage: $0 {build|attach|logs} {dev|prod}"
+        exit 1
+esac
