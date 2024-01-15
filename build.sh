@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Required for docker-compose to use buildkit
+export DOCKER_BUILDKIT=1
+export COMPOSE_DOCKER_CLI_BUILD=1
+
 help_text () {
     echo "Usage: $0 {build|attach|logs} {dev|prod}"
     exit 1
@@ -35,7 +39,6 @@ case $1 in
         fi
         ;;
     attach)
-        echo "Getting docker file $2 ..."
         get_docker_file $2  # $2 is dev or prod
         docker-compose -f $DOCKERFILE exec web bash  # bash is the default
         exit 0
