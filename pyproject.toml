@@ -13,6 +13,7 @@ markdown = "^3.5.1"
 django-environ = "^0.11.2"
 coloredlogs = "^15.0.1"
 psycopg2 = "^2.9.9"
+django-colorfield = "^0.11.0"
 
 [tool.poetry.group.dev.dependencies]
 isort = "^5.12.0"
