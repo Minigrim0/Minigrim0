@@ -5,7 +5,7 @@ export DOCKER_BUILDKIT=1
 export COMPOSE_DOCKER_CLI_BUILD=1
 
 help_text () {
-    echo "Usage: $0 {build|attach|logs} {dev|prod}"
+    echo "Usage: $0 {up|attach|logs|down} {dev|prod}"
     exit 1
 }
 
@@ -26,7 +26,7 @@ get_docker_file () {
 }
 
 case $1 in
-    build)
+    up)
         get_docker_file $2
 
         docker-compose -f $DOCKERFILE up -d --build
@@ -41,14 +41,17 @@ case $1 in
     attach)
         get_docker_file $2  # $2 is dev or prod
         docker-compose -f $DOCKERFILE exec web bash  # bash is the default
-        exit 0
         ;;
     logs)
         get_docker_file $2  # $2 is dev or prod
         docker-compose -f $DOCKERFILE logs -f web  # -f is for follow
-        exit 0
+        ;;
+    down)
+        get_docker_file $2  # $2 is dev or prod
+        docker-compose -f $DOCKERFILE down
         ;;
     *)
-        echo "Usage: $0 {build|attach|logs} {dev|prod}"
-        exit 1
+        help_text
 esac
+
+exit 0
