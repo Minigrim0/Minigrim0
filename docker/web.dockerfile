@@ -1,8 +1,11 @@
 ARG RUST_VERSION=1.70.0
 ARG APP_NAME=minigrim0
+
 FROM rust:${RUST_VERSION}-slim-bullseye AS build
 ARG APP_NAME
 WORKDIR /app
+
+RUN apt update && apt install libssl-dev pkg-config -y
 
 # Build the application.
 # Leverage a cache mount to /usr/local/cargo/registry/
@@ -22,12 +25,21 @@ cargo build --locked --release
 cp ./target/release/$APP_NAME /bin/minigrim0
 EOF
 
+# pull official base image
 FROM python:3.11-slim as final
+
+WORKDIR /usr/src/app
+
+RUN apt update && apt install libpq-dev gcc -y
 
 COPY . .
 RUN rm tools/ -r
+RUN pip install --upgrade pip
 RUN pip install poetry
-RUN poetry install --with=prod
 COPY --from=build /bin/minigrim0 /bin/
 
-CMD ["poetry", "run", "gunicorn", "app:create_app()", "--bind", "0.0.0.0:5000", "--timeout", "300"]
+# install project dependencies
+RUN poetry config virtualenvs.create false
+RUN poetry install --no-interaction --no-ansi
+
+CMD ["gunicorn", "minigrim0.wsgi", "--bind", "0.0.0.0:8000", "--timeout", "300"]

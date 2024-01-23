@@ -39,5 +39,5 @@ RUN pip install poetry
 COPY --from=build /bin/minigrim0 /bin/
 
 # install project dependencies
-RUN poetry config virtualenvs.create false
+# RUN poetry config virtualenvs.create false
 RUN poetry install --no-interaction --no-ansi
