@@ -18,7 +18,7 @@ services:
   db:
     image: postgres:15
     volumes:
-      - postgres_data
+      - postgres_data:/var/lib/postgresql/data/
     environment:
       - POSTGRES_USER=minidebug
       - POSTGRES_PASSWORD=minidebug

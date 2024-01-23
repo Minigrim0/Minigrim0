@@ -1,8 +1,11 @@
 ARG RUST_VERSION=1.70.0
 ARG APP_NAME=minigrim0
+
 FROM rust:${RUST_VERSION}-slim-bullseye AS build
 ARG APP_NAME
 WORKDIR /app
+
+RUN apt update && apt install libssl-dev pkg-config -y
 
 # Build the application.
 # Leverage a cache mount to /usr/local/cargo/registry/
@@ -24,6 +27,8 @@ EOF
 
 # pull official base image
 FROM python:3.11-slim as final
+
+WORKDIR /usr/src/app
 
 RUN apt update && apt install libpq-dev gcc -y
 
