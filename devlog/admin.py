@@ -1,3 +1,7 @@
 from django.contrib import admin
+from devlog import models
 
-# Register your models here.
+
+@admin.register(models.Repository)
+class RepositoryAdmin(admin.ModelAdmin):
+    list_display = ("name", "url")
