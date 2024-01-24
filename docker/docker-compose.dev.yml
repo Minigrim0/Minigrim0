@@ -5,7 +5,7 @@ services:
     build:
       context: ..
       dockerfile: docker/web.dev.dockerfile
-    command: python manage.py runserver 0.0.0.0:8080
+    command: poetry run python manage.py runserver 0.0.0.0:8080
     volumes:
       - ..:/usr/src/app/
     ports:
