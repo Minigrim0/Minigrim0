@@ -40,6 +40,11 @@ case $1 in
             docker-compose -f $DOCKERFILE restart nginx
         fi
         ;;
+    upgrade)
+        get_docker_file $2
+
+        docker-compose -f $DOCKERFILE exec web poetry install
+        ;;
     attach)
         get_docker_file $2  # $2 is dev or prod
         docker-compose -f $DOCKERFILE exec web bash  # bash is the default
