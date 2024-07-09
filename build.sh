@@ -31,31 +31,31 @@ case $1 in
     up)
         get_docker_file $2
 
-        docker-compose -f $DOCKERFILE up -d --build
-        docker-compose -f $DOCKERFILE exec web $POETRY python manage.py makemigrations --noinput
-        docker-compose -f $DOCKERFILE exec web $POETRY python manage.py migrate --noinput
-        docker-compose -f $DOCKERFILE exec web $POETRY python manage.py collectstatic --noinput
+        docker compose -f $DOCKERFILE up -d --build
+        docker compose -f $DOCKERFILE exec web $POETRY python manage.py makemigrations --noinput
+        docker compose -f $DOCKERFILE exec web $POETRY python manage.py migrate --noinput
+        docker compose -f $DOCKERFILE exec web $POETRY python manage.py collectstatic --noinput
 
         if [ $2 != "dev" ]; then  # nginx is not in dev
-            docker-compose -f $DOCKERFILE restart nginx
+            docker compose -f $DOCKERFILE restart nginx
         fi
         ;;
     upgrade)
         get_docker_file $2
 
-        docker-compose -f $DOCKERFILE exec web poetry install
+        docker compose -f $DOCKERFILE exec web poetry install
         ;;
     attach)
         get_docker_file $2  # $2 is dev or prod
-        docker-compose -f $DOCKERFILE exec web bash  # bash is the default
+        docker compose -f $DOCKERFILE exec web bash  # bash is the default
         ;;
     logs)
         get_docker_file $2  # $2 is dev or prod
-        docker-compose -f $DOCKERFILE logs -f web  # -f is for follow
+        docker compose -f $DOCKERFILE logs -f web  # -f is for follow
         ;;
     down)
         get_docker_file $2  # $2 is dev or prod
-        docker-compose -f $DOCKERFILE down
+        docker compose -f $DOCKERFILE down
         ;;
     *)
         help_text
