@@ -12,8 +12,6 @@ services:
       - ./.env.prod
     volumes:
       - static_volume:/static
-    networks:
-      - private
     labels:
       ofelia.enabled: "true"
       ofelia.job-exec.githubcron.schedule: "@every 1h"
@@ -27,39 +25,36 @@ services:
     volumes:
       - static_volume:/flask_static
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.minigrim0.entrypoints=https"
-      - "traefik.http.routers.minigrim0.rule=Host(`minigrim0.xyz`)"
-      - "traefik.http.routers.minigrim0.tls=true"
-      - "traefik.http.routers.minigrim0.service=nginx-minigrim0-web@docker"
-      - "traefik.docker.network=traefik-proxy"
+      - "traefik.enable": "true"
+      - "traefik.http.middlewares.minigrim0-web-web-redirect.redirectscheme.scheme": "https"
+      - "traefik.http.routers.minigrim0-web-insecure.entrypoints": "web"
+      - "traefik.http.routers.minigrim0-web-insecure.middlewares": "minigrim0-web-redirect"
+      - "traefik.http.routers.minigrim0-web-insecure.rule": "Host(`minigrim0.xyz`)"
+      - "traefik.http.routers.minigrim0-web-insecure.service": "minigrim0-web"
+      - "traefik.http.routers.minigrim0-web-local-insecure.entrypoints": "web"
+      - "traefik.http.routers.minigrim0-web-local-insecure.middlewares": "minigrim0-web-redirect"
+      - "traefik.http.routers.minigrim0-web-local-insecure.rule": "Host(`web.trappe.local`)"
+      - "traefik.http.routers.minigrim0-web-local-insecure.service": "minigrim0-web"
+      - "traefik.http.routers.minigrim0-web-local.entrypoints": "websecure"
+      - "traefik.http.routers.minigrim0-web-local.rule": "Host(`web.trappe.local`)"
+      - "traefik.http.routers.minigrim0-web-local.service": "minigrim0-web"
+      - "traefik.http.routers.minigrim0-web-local.tls": "true"
+      - "traefik.http.routers.minigrim0-web.entrypoints": "websecure"
+      - "traefik.http.routers.minigrim0-web.rule": "Host(`minigrim0.xyz`)"
+      - "traefik.http.routers.minigrim0-web.service": "minigrim0-web"
+      - "traefik.http.routers.minigrim0-web.tls.certresolver": "myresolver"
+      - "traefik.http.services.minigrim0-web.loadbalancer.server.port": "8000"
     depends_on:
       - web
-    networks:
-      - private
-      - public
-      - traefik-proxy
     restart: unless-stopped
 
   postgres:
     image: postgres:12.1-alpine
     env_file:
-      - ./.env.prod
+      - ./.env.prod.db
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    networks:
-      - private
+      - ./data/postgres/:/var/lib/postgresql/data/
     restart: unless-stopped
-
-networks:
-  private:
-    driver: overlay
-  public:
-    external: true
-  traefik-proxy:
-    external: true
-  ofelia:
-    external: true
 
 volumes:
   static_volume:
