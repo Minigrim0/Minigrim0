@@ -1,20 +1,47 @@
-from django.contrib import admin 
+from django.contrib import admin
 
 import minigrim0.models as models
 
 @admin.register(models.Education)
 class EducationAdmin(admin.ModelAdmin):
-    list_display = ("name", "place", "start_date", "end_date")
+    def move_up(self, request, queryset):
+        for obj in queryset:
+            obj.move(up=True)
+
+    def move_down(self, request, queryset):
+        for obj in queryset:
+            obj.move(up=False)
+
+    list_display = ("name", "place", "start_date", "end_date", "_order")
+    actions = ["move_up", "move_down"]
 
 
 @admin.register(models.Experience)
 class ExperienceAdmin(admin.ModelAdmin):
-    list_display = ("name", "place", "start_date", "end_date")
+    def move_up(self, request, queryset):
+        for obj in queryset:
+            obj.move(up=True)
+
+    def move_down(self, request, queryset):
+        for obj in queryset:
+            obj.move(up=False)
+
+    list_display = ("name", "place", "start_date", "end_date", "_order")
+    actions = ["move_up", "move_down"]
 
 
 @admin.register(models.Competition)
 class CompetitionAdmin(admin.ModelAdmin):
-    list_display = ("name", "date")
+    def move_up(self, request, queryset):
+        for obj in queryset:
+            obj.move(up=True)
+
+    def move_down(self, request, queryset):
+        for obj in queryset:
+            obj.move(up=False)
+
+    list_display = ("name", "date", "_order")
+    actions = ["move_up", "move_down"]
 
 
 @admin.register(models.Language)
