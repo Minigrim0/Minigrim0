@@ -1,11 +1,32 @@
 {% extends "layouts/app.html" %}
 
+{% load static %}
+
 {% block content %}
-    <h1 class="text-muted text-center">Minigrim0</h1>
-    <p style="font-size: 1.2em;margin-top: 2em">
-        Student in <strong>Embedded Systems</strong> platforms at <a href="https://kth.se">KTH Royal Institue of Technology</a>.<br />
-        Ancient member of <a href="https://urlab.be">UrLab</a>, the <href="https://ulb.be">ULB</a>'s student run hackerspace.<br />
-        <br/>
-        You can find my CV <a href="/cv">here</a><br/>
-    </p>
+    <div class="centered-row no-overflow">
+        <div class="grid-element"></div>
+        <div class="grid-element"></div>
+        <div class="grid-element"></div>
+        <div class="grid-element"></div>
+        <div class="grid-element"></div>
+        <div class="image-left grid-element">
+            <img src="{% static 'img/minigrim0.jpeg' %}" alt="Minigrim0's avatar"/>
+        </div>
+        <div class="text-right grid-element">
+            <span>
+                <h1 class="pseudo">Minigrim0</h1>
+                <p style="font-size: 1.2em;margin-top: 2em">
+                    Student in <strong>Embedded Systems</strong> platforms at <a href="https://kth.se">KTH Royal Institue of Technology</a>.<br />
+                    Former member of the <a href="https://urlab.be">UrLab</a> hackerspace.<br />
+                    <br/>
+                    <div class="text-center">
+                        <a href="{% url 'cv' %}">CV</a> &bull;
+                        <a href="{% url 'devlog:projects' %}">Projects</a> &bull;
+                        <a href="https://minigrim0.itch.io/">Itch.io</a> &bull;
+                        🚧 <a href="#">Blog (WIP)</a> 🚧
+                    </div>
+                </p>
+            </span>
+        </div>
+    </div>
 {% endblock %}
