@@ -1,10 +1,8 @@
-{% extends "layouts/app.html" %}
-
 {% load  static %}
 {% load markdown %}
 {% load range %}
 
-{% block content %}
+<turbo-frame id="content-frame">
     <div class="row">
         <div class="col-3">
             <img src="{% static "img/minigrim0.jpeg" %}" class="rounded img-fluid" alt="minigrim0">
@@ -23,6 +21,7 @@
         </div>
     </div>
 
+    {# Education #}
     <div class="row mt-3">
         <h2 class="text-muted flex-0-0">Education</h2>
         <hr class="col" style="margin-top: inherit" />
@@ -38,6 +37,7 @@
         </div>
     {% endfor %}
 
+    {# Experience #}
     <div class="row mt-3">
         <h2 class="text-muted flex-0-0">Experience</h2>
         <hr class="col" style="margin-top: inherit" />
@@ -58,6 +58,7 @@
         </div>
     {% endfor %}
 
+    {# Skills #}
     <div class="row mt-3">
         <h2 class="text-muted flex-0-0">Skills</h2>
         <hr class="col" style="margin-top: inherit" />
@@ -88,6 +89,7 @@
         </div>
     {% endfor %}
 
+    {# Competitions #}
     <div class="row mt-3">
         <h2 class="text-muted flex-0-0">Competitions &amp; Extra-Scolar activities</h2>
         <hr class="col" style="margin-top: inherit" />
@@ -102,5 +104,4 @@
             </div>
         </div>
     {% endfor %}
-
-{% endblock %}
+</turbo-frame>
