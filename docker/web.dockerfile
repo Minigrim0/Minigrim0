@@ -26,7 +26,7 @@ cp ./target/release/$APP_NAME /bin/minigrim0
 EOF
 
 # pull official base image
-FROM python:3.11-slim as final
+FROM python:3.11-slim AS final
 
 WORKDIR /usr/src/app
 
