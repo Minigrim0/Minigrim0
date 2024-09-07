@@ -1,10 +1,17 @@
+{% extends "layouts/app.html" %}
 {% load  static %}
 {% load markdown %}
 {% load range %}
 
-<turbo-frame id="content-frame">
-    <div class="row">
-        <div class="col-3">
+{% block content %}
+<div class="container">
+    <div class="back-link">
+        <a href="{% url 'index' %}">
+            back
+        </a>
+    </div>
+    <div class="row mt">
+        <div class="image-left">
             <img src="{% static "img/minigrim0.jpeg" %}" class="rounded img-fluid" alt="minigrim0">
         </div>
         <div class="col-9 align-self-center">
@@ -104,4 +111,5 @@
             </div>
         </div>
     {% endfor %}
-</turbo-frame>
+</div>
+{% endblock content %}

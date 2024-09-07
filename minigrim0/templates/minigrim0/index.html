@@ -18,26 +18,28 @@
                 Former member of the
                 <a href="https://urlab.be">UrLab</a> hackerspace.<br />
                 <br />
-                <turbo-frame
+                <div
                     class="text-center"
                     target="content-frame"
                     id="link-frame"
                 >
-                    <a href="{% url 'cv' %}" data-turbo-action="morph">CV</a>
+                    <a href="{% url 'cv' %}"
+                        data-turbo-action="morph"
+                        onclick="smoothScroll('#content-frame')">CV</a>
                     &bull;
                     <a
                         href="{% url 'devlog:projects' %}"
                         data-turbo-action="morph"
+                        onclick="smoothScroll('#content-frame')"
                         >Projects</a
                     >
                     &bull;
                     <a
                         href="https://minigrim0.itch.io/"
-                        data-turbo-action="morph"
                         >Itch.io</a
                     >
-                    &bull; 🚧 <a href="#">Blog (WIP)</a> 🚧
-                </turbo-frame>
+                    &bull; 🚧 <a href="#" onclick="smoothScroll('#content-frame')">Blog (WIP)</a> 🚧
+                </div>
             </p>
         </span>
     </div>

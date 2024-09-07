@@ -1,3 +1,6 @@
+{% extends "layouts/app.html" %}
+
+{% block content %}
 <turbo-frame id="content-frame">
     <h1 class="text-muted text-center">Projects</h1>
 
@@ -48,7 +51,10 @@
             </div>
         </div>
         {% empty %}
-        <small>Work in progress</small>
+            <div class="muted-center">
+                <small>Work in progress</small>
+            </div>
         {% endfor %}
     </div>
 </turbo-frame>
+{% endblock content %}

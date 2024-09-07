@@ -2,20 +2,20 @@
 
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="shortcut icon" type="image/jpg" href="{% static 'img/minigrim0.jpeg' %}" />
+        <title>Minigrim0</title>
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    </head>
 
-<head>
-    <meta charset="utf-8" />
-    <link rel="shortcut icon" type="image/jpg" href="{% static 'img/minigrim0.jpeg' %}" />
-    <title>Minigrim0</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <script type="module" src="https://unpkg.com/@hotwired/turbo@8.0.4" defer></script>
-</head>
-
-<body>
-    <div class="content">
-        {% block content %}
-        {% endblock %}
-    </div>
-    {% include "layouts/footer.html" %}
-</body>
+    <body>
+        <div class="content">
+            {% block content %}
+            {% endblock %}
+        </div>
+        {% include "layouts/footer.html" %}
+        <script src="{% static 'js/smoothscroll.js' %}"></script>
+    </body>
 </hmtl>
