@@ -3,7 +3,7 @@ import coloredlogs
 import environ
 import logging
 
-logger = logging.getLogger("Teamname.studymi")
+logger = logging.getLogger("Minigrim0")
 
 env = environ.Env(
     SECRET_KEY=(str, "randomSecretKey"),
