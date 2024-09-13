@@ -17,5 +17,7 @@
         </div>
         {% include "layouts/footer.html" %}
         <script src="{% static 'js/smoothscroll.js' %}"></script>
+        {% block extra_js %}
+        {% endblock %}
     </body>
 </hmtl>

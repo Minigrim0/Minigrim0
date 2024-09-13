@@ -29,10 +29,6 @@ body {
     grid-template-rows: 30vh 40vh calc(30vh - 40px);
 }
 
-.grid-element {
-    /* border: 1px solid rgba(0, 0, 0, 0.8); */
-}
-
 .image-left {
     display: flex;
     justify-content: center;
@@ -70,10 +66,6 @@ body {
     justify-content: space-around;
 }
 
-.row-element {
-
-}
-
 .muted-center {
     position: absolute;
     top: 50%;
@@ -83,8 +75,10 @@ body {
 }
 
 .container {
-    width: 66%;
+    width: 90%;
+    max-width: 1200px;
     margin: auto;
+    padding-top: 20px;
 }
 
 .back-link {
@@ -93,8 +87,462 @@ body {
     left: 10px;
     color: white;
     text-decoration: underline;
+    margin-bottom: 20px;
+}
+
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 12px;
+    background-color: rgba(255, 255, 255, 0.1);  /* Semi-transparent white */
+    color: #ffffff;  /* White text */
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.2s ease-in-out;
+    font-size: 0.9em;  /* Slightly smaller font size */
+    border: 1px solid rgba(255, 255, 255, 0.2);  /* Subtle border */
+}
+
+.btn-back:hover {
+    background-color: rgba(255, 255, 255, 0.2);  /* Lighter on hover */
+}
+
+.btn-back svg {
+    margin-right: 6px;
+    width: 14px;  /* Slightly smaller icon */
+    height: 14px;
 }
 
 .mt {
     margin-top: 20px;
+}
+
+.education-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.education-item {
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.education-item:hover {
+    transform: translateY(-5px);
+}
+
+.education-date {
+    flex: 0 0 150px;
+    font-weight: bold;
+    font-size: 0.7em;
+    padding-top: 0.3rem;
+}
+
+.education-details {
+    flex: 1;
+}
+
+.education-details h3 {
+    margin: 0 0 0.5rem 0;
+}
+
+.education-details p {
+    margin: 0;
+    opacity: 0.8;
+}
+
+.experience-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.experience-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;  /* Align items to the top */
+}
+
+.experience-date {
+    flex: 0 0 100px;
+    font-weight: bold;
+    font-size: 0.7em;
+    padding-top: 0.3rem;
+}
+
+.experience-main {
+    flex: 1;
+}
+
+.experience-main h3 {
+    margin: 0;
+    font-size: 1em;
+    line-height: 1.2;
+}
+
+.description {
+    margin: 0.5rem 0;
+    font-size: 0.9em;
+}
+
+.experience-company {
+    flex: 0 0 250px;  /* Increased width for better fit */
+    text-align: right;
+}
+
+.company {
+    font-style: italic;
+    margin: 0;
+    font-size: 1em;
+}
+
+.company-link {
+    display: block;
+    margin-top: 0.2rem;
+    color: #007bff;
+    text-decoration: none;
+    font-size: 0.75em;  /* Slightly smaller font size for links */
+    word-break: break-all;  /* Allow long URLs to break */
+}
+
+.company-link:hover {
+    text-decoration: underline;
+}
+
+.experience-date, .skill-name {
+    flex: 0 0 150px;
+    text-align: left;
+}
+
+.experience-details, .skill-details {
+    flex: 1;
+}
+
+.skill-level {
+    flex: 0 0 100px;
+}
+
+.star {
+    font-size: 1.2rem;
+}
+
+.star.filled {
+    color: gold;
+}
+
+.star.empty {
+    color: #ccc;
+}
+
+.skills-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.skill-item {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.skill-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.skill-header {
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.skill-name {
+    margin: 0;
+    font-size: 1.1em;
+    color: #ffffff;
+}
+
+.skill-level {
+    display: flex;
+}
+
+.star {
+    color: gold;
+    font-size: 1em;
+    margin-left: 2px;
+}
+
+.star.empty {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.skill-description {
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+}
+
+.competition-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.competition-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+}
+
+.competition-date {
+    flex: 0 0 100px;
+    text-align: right;
+    font-weight: bold;
+    font-size: 0.9em;
+    padding-top: 0.3rem;
+}
+
+.competition-details {
+    flex: 1;
+}
+
+.competition-name {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+.competition-description {
+    margin: 0.5rem 0 0;
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+h3 p {
+    margin: 0;
+}
+
+/* Responsive layout for small devices */
+@media (max-width: 768px) {
+    .experience-item {
+        flex-direction: column;
+    }
+
+    .experience-date {
+        flex: 0 0 auto;
+        text-align: left;
+        margin-bottom: 0.5rem;
+    }
+
+    .experience-main {
+        margin-bottom: 0.5rem;
+    }
+
+    .experience-company {
+        flex: 0 0 auto;
+        text-align: left;
+    }
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    padding-top: 20px;
+}
+
+.header-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.image-left {
+    flex: 0 0 120px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-left img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 50%;
+}
+
+.header-info {
+    flex: 1;
+    min-width: 200px;
+}
+
+.header-info h1 {
+    margin: 0 0 10px 0;
+    font-size: 2em;
+}
+
+.header-info h5 {
+    margin: 0 0 10px 0;
+    font-size: 1.2em;
+}
+
+.header-info p {
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding-top: 10px;
+    }
+
+    .header-row {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+        margin-bottom: 20px;
+        margin-top: 20px;
+    }
+
+    .image-left {
+        flex: 0 0 100px;
+        height: 100px;
+    }
+
+    .header-info h1 {
+        font-size: 1.8em;
+    }
+
+    .header-info h5 {
+        font-size: 1.1em;
+    }
+}
+
+.projects-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.view-toggle {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.view-toggle button {
+    background-color: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.view-toggle button.active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.list-view .project-item {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.grid-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.grid-view .project-item {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.project-title {
+    margin-top: 0;
+    font-size: 1.5em;
+}
+
+.project-description {
+    margin-bottom: 15px;
+}
+
+.project-links {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    align-items: center;  /* This will vertically center the links */
+}
+
+.project-link {
+    display: inline-flex;
+    align-items: center;
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9em;
+    padding: 5px 10px;  /* Add some padding for better clickability */
+    background-color: rgba(255, 255, 255, 0.1);  /* Slight background for better visibility */
+    border-radius: 4px;  /* Rounded corners */
+    transition: background-color 0.2s ease;  /* Smooth transition for hover effect */
+}
+
+.project-link:hover {
+    background-color: rgba(255, 255, 255, 0.2);  /* Lighten on hover */
+}
+
+.project-link svg {
+    margin-right: 5px;
+    width: 16px;  /* Ensure consistent width */
+    height: 16px;  /* Ensure consistent height */
+}
+
+/* Ensure the home icon and GitHub icon have the same dimensions */
+.project-link .home-icon,
+.project-link .github-icon {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.project-link .home-icon {
+    /* You can replace this with an SVG if you prefer */
+    content: '🏠';
+    font-size: 16px;
+    line-height: 1;
+}
+
+.project-readme {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.project-readme h3 {
+    margin-top: 0;
+    font-size: 1.2em;
+}
+
+.readme-content {
+    font-size: 0.9em;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+    .grid-view {
+        grid-template-columns: 1fr;
+    }
 }

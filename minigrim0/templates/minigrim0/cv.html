@@ -6,17 +6,20 @@
 {% block content %}
 <div class="container">
     <div class="back-link">
-        <a href="{% url 'index' %}">
-            back
+        <a href="{% url 'index' %}" class="btn-back">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+            </svg>
+            Back
         </a>
     </div>
-    <div class="row mt">
+    <div class="header-row">
         <div class="image-left">
-            <img src="{% static "img/minigrim0.jpeg" %}" class="rounded img-fluid" alt="minigrim0">
+            <img src="{% static "img/minigrim0.jpeg" %}" alt="minigrim0">
         </div>
-        <div class="col-9 align-self-center">
+        <div class="header-info">
             <h1>Florent Grimau</h1>
-            <h5>Student in Embedded Systems @KTH</h5>
+            <h5>Student in Embedded Systems at KTH</h5>
             <p>
                 <a href="https://github.com/Minigrim0">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
@@ -28,88 +31,90 @@
         </div>
     </div>
 
-    {# Education #}
+    {# Education - keep this as it was #}
     <div class="row mt-3">
         <h2 class="text-muted flex-0-0">Education</h2>
-        <hr class="col" style="margin-top: inherit" />
     </div>
-    {% for edu in cv.edu %}
-        <div class="row mt-1">
-            <div class="col-2">
-                {{ edu.start_date }} - {{ edu.end_date }}
+    <div class="education-container">
+        {% for edu in cv.edu %}
+            <div class="education-item">
+                <div class="education-date">
+                    {{ edu.start_date }} - {{ edu.end_date }}
+                </div>
+                <div class="education-details">
+                    <h3>{{ edu.name }}</h3>
+                    <p>{{ edu.place }}</p>
+                </div>
             </div>
-            <div class="col-10">
-                {{ edu.name }}<br/>{{ edu.place }}
-            </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
 
     {# Experience #}
     <div class="row mt-3">
         <h2 class="text-muted flex-0-0">Experience</h2>
-        <hr class="col" style="margin-top: inherit" />
     </div>
-    {% for exp in cv.exp %}
-        <div class="row mt-2">
-            <div class="col-2">
-                {{ exp.start_date }} - {{ exp.end_date }}
+    <div class="experience-container">
+        {% for exp in cv.exp %}
+            <div class="experience-item">
+                <div class="experience-date">
+                    {{ exp.start_date }} - {{ exp.end_date }}
+                </div>
+                <div class="experience-main">
+                    <h3>{{ exp.name }}</h3>
+                    <p class="description">{{ exp.description|markdown|safe }}</p>
+                </div>
+                <div class="experience-company">
+                    <p class="company">{{ exp.place }}</p>
+                    {% if exp.link %}
+                        <a href="{{ exp.link }}" class="company-link">{{ exp.link }}</a>
+                    {% endif %}
+                </div>
             </div>
-            <div class="col-8">
-                <h4>{{ exp.name|markdown|safe }}</h4>
-                {{ exp.description|markdown|safe }}
-            </div>
-            <div class="col-2">
-                {{ exp.place }}<br/>
-                {{ exp.link|markdown|safe }}
-            </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
 
     {# Skills #}
     <div class="row mt-3">
         <h2 class="text-muted flex-0-0">Skills</h2>
-        <hr class="col" style="margin-top: inherit" />
     </div>
-    {% for skill in cv.ski %}
-        <div class="row mt-2">
-            <div class="col-2 text-end">
-                {{ skill.name }}
+    <div class="skills-container">
+        {% for skill in cv.ski %}
+            <div class="skill-item">
+                <div class="skill-header">
+                    <h3 class="skill-name">{{ skill.name }}</h3>
+                    <div class="skill-level">
+                        {% for i in 5|times %}
+                            {% if i < skill.level %}
+                                <span class="star filled">★</span>
+                            {% else %}
+                                <span class="star empty">☆</span>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <p class="skill-description">{{ skill.details|markdown|safe }}</p>
             </div>
-            <div class="col-4">
-                {% for i in 5|times %}
-                    {% if i < skill.level %}
-                        <!-- Filled -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
-                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
-                        </svg>
-                    {% else %}
-                        <!-- Enpty -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16">
-                            <path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
-                        </svg>
-                    {% endif %}
-                {% endfor %}
-            </div>
-            <div class="col-6">
-                {{ skill.details|markdown|safe }}
-            </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
 
     {# Competitions #}
     <div class="row mt-3">
-        <h2 class="text-muted flex-0-0">Competitions &amp; Extra-Scolar activities</h2>
-        <hr class="col" style="margin-top: inherit" />
+        <h2 class="text-muted flex-0-0">Competitions &amp; Extra-Curricular Activities</h2>
     </div>
-    {% for comp in cv.com %}
-        <div class="row mt-2">
-            <div class="col-2">
+    <div class="competition-container">
+        {% for comp in cv.com %}
+        <div class="competition-item">
+            <div class="competition-date">
                 {{ comp.date }}
             </div>
-            <div class="col-10 text-end">
-                {{ comp.name|markdown|safe }}
+            <div class="competition-details">
+                <h3 class="competition-name">{{ comp.name|markdown|safe }}</h3>
+                {% if comp.description %}
+                    <p class="competition-description">{{ comp.description|markdown|safe }}</p>
+                {% endif %}
             </div>
         </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
 </div>
 {% endblock content %}
