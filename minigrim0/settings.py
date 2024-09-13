@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'colorfield',
     'minigrim0',
-    'api',
     'blog',
     'devlog'
 ]
