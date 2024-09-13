@@ -35,7 +35,7 @@ services:
       - "traefik.http.routers.minigrim0-web.rule=Host(`minigrim0.xyz`)"
       - "traefik.http.routers.minigrim0-web.tls=true"
       - "traefik.http.routers.minigrim0-web.tls.certresolver=http"
-      - "traefik.http.routers.minigrim0-web.service=minigrim0-web"
+      - "traefik.http.routers.minigrim0-web.service=nginx-minigrim0-web"
       - "traefik.docker.network=traefik-proxy"
     depends_on:
       - web
