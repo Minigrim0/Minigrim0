@@ -55,16 +55,23 @@
                         GitHub
                     </a>
                 </div>
-                <div class="project-readme">
-                    <h3>README</h3>
-                    <div class="readme-content">{{ repo.readme|markdown|safe }}</div>
-                </div>
+                <button class="readme-button" data-repo="{{ repo.name }}">View README</button>
+                <div class="readme-content" style="display: none;">{{ repo.readme|markdown|safe }}</div>
             </div>
             {% empty %}
             <div class="muted-center">
                 <small>Work in progress</small>
             </div>
             {% endfor %}
+        </div>
+
+        <!-- Modal container -->
+        <div id="readme-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 id="modal-title"></h2>
+                <div id="modal-readme-content"></div>
+            </div>
         </div>
     </div>
 </div>
@@ -103,6 +110,32 @@
                 button.classList.remove('show-tooltip');
             });
         });
+
+        // README modal functionality
+        const modal = document.getElementById('readme-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalContent = document.getElementById('modal-readme-content');
+        const closeBtn = document.getElementsByClassName('close')[0];
+
+        document.querySelectorAll('.readme-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const repoName = this.getAttribute('data-repo');
+                const readmeContent = this.parentElement.querySelector('.readme-content').innerHTML;
+                modalTitle.textContent = `${repoName} README`;
+                modalContent.innerHTML = readmeContent;
+                modal.style.display = 'block';
+            });
+        });
+
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
     });
 </script>
 {% endblock %}
