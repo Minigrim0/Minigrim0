@@ -1,5 +1,4 @@
 services:
-  # The main flask webserver
   web:
     build:
       dockerfile: docker/web.dockerfile
@@ -17,6 +16,8 @@ services:
       ofelia.job-exec.githubcron.schedule: "@every 1h"
       ofelia.job-exec.githubcron.command: "/bin/minigrim0"
     restart: unless-stopped
+    networks:
+      - private
 
   nginx:
     build:
@@ -31,14 +32,6 @@ services:
       - "traefik.http.routers.minigrim0-web-insecure.middlewares=minigrim0-web-redirect"
       - "traefik.http.routers.minigrim0-web-insecure.rule=Host(`minigrim0.xyz`)"
       - "traefik.http.routers.minigrim0-web-insecure.service=minigrim0-web"
-      - "traefik.http.routers.minigrim0-web-local-insecure.entrypoints=web"
-      - "traefik.http.routers.minigrim0-web-local-insecure.middlewares=minigrim0-web-redirect"
-      - "traefik.http.routers.minigrim0-web-local-insecure.rule=Host(`web.trappe.local`)"
-      - "traefik.http.routers.minigrim0-web-local-insecure.service=minigrim0-web"
-      - "traefik.http.routers.minigrim0-web-local.entrypoints=websecure"
-      - "traefik.http.routers.minigrim0-web-local.rule=Host(`web.trappe.local`)"
-      - "traefik.http.routers.minigrim0-web-local.service=minigrim0-web"
-      - "traefik.http.routers.minigrim0-web-local.tls=true"
       - "traefik.http.routers.minigrim0-web.entrypoints=websecure"
       - "traefik.http.routers.minigrim0-web.rule=Host(`minigrim0.xyz`)"
       - "traefik.http.routers.minigrim0-web.service=minigrim0-web"
@@ -46,6 +39,9 @@ services:
       - "traefik.http.services.minigrim0-web.loadbalancer.server.port=8000"
     depends_on:
       - web
+    networks:
+      - traefik-proxy
+      - private
     restart: unless-stopped
 
   postgres:
@@ -55,6 +51,8 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     restart: unless-stopped
+    networks:
+      - private
 
   redis:
     image: redis:alpine
@@ -63,10 +61,17 @@ services:
     expose:
       - 6379
     restart: unless-stopped
-
+    networks:
+      - private
 
 
 volumes:
   static_volume:
   postgres_data:
   redis_data:
+
+networks:
+  traefik-proxy:
+    external: true
+  private:
+    driver: overlay
