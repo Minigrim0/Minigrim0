@@ -70,7 +70,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'minigrim0.wsgi.application'
 
 DATABASES = {
-    'default': env.db_url('DATABASE_URL', default='sqlite:///tmp/db.sqlite3'),
+    'default': env.db(
+        'DATABASE_URL',
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
+    ),
 }
 
 AUTH_PASSWORD_VALIDATORS = [

@@ -25,7 +25,6 @@ class Orderable(models.Model):
             other.save()
 
     def save(self, *args, **kwargs):
-        print("Calling save")
         if self.pk is None:
             self._order = self.__class__.objects.count() + 1
         return super().save(*args, **kwargs)
@@ -51,12 +50,12 @@ class Education(Orderable):
 
 
 class Experience(Orderable):
-    name = models.CharField(verbose_name="experience_name", max_length=100, help_text="Markdown is supported")
+    name = models.CharField(verbose_name="experience_name", max_length=100)
     description = models.TextField(null=True, blank=True, help_text="Markdown is supported")
     start_date = models.CharField(max_length=4)
     end_date = models.CharField(max_length=4)
     place = models.CharField(max_length=255)
-    link = models.CharField(max_length=255, help_text="Markdown is supported")
+    link = models.CharField(max_length=255, null=True, blank=True)
 
     class Meta:
         constraints = [
