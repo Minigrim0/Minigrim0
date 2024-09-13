@@ -32,7 +32,7 @@ class Orderable(models.Model):
 
 class Education(Orderable):
     name = models.CharField(max_length=255)
-    place = models.CharField(max_length=255)
+    place = models.CharField(max_length=255, help_text="Markdown is supported")
     start_date = models.CharField(max_length=4)
     end_date = models.CharField(max_length=4)
 

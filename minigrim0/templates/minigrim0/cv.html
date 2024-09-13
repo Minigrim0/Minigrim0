@@ -43,7 +43,7 @@
                 </div>
                 <div class="education-details">
                     <h3>{{ edu.name }}</h3>
-                    <p>{{ edu.place }}</p>
+                    <p>{{ edu.place|markdown|safe }}</p>
                 </div>
             </div>
         {% endfor %}
