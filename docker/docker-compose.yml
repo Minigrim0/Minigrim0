@@ -8,7 +8,7 @@ services:
     env_file:
       - ./.env.prod
     volumes:
-      - static_volume:/static
+      - static_volume:/srv/static
     depends_on:
       - redis
     labels:
@@ -24,7 +24,7 @@ services:
       context: ./nginx
       dockerfile: Dockerfile
     volumes:
-      - static_volume:/static
+      - static_volume:/srv/static
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.minigrim0-web-insecure.entrypoints=http"
