@@ -10,6 +10,8 @@ services:
       - ./.env.prod
     volumes:
       - static_volume:/static
+    depends_on:
+      - redis
     labels:
       ofelia.enabled: "true"
       ofelia.job-exec.githubcron.schedule: "@every 1h"
@@ -54,7 +56,17 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     restart: unless-stopped
 
+  redis:
+    image: redis:alpine
+    volumes:
+      - redis_data:/data
+    expose:
+      - 6379
+    restart: unless-stopped
+
+
 
 volumes:
   static_volume:
   postgres_data:
+  redis_data:
