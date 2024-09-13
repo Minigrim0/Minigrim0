@@ -14,7 +14,7 @@ services:
     labels:
       ofelia.enabled: "true"
       ofelia.job-exec.githubcron.schedule: "@every 1h"
-      ofelia.job-exec.githubcron.command: "/bin/minigrim0"
+      ofelia.job-exec.githubcron.command: "/bin/minigrim0 >> minigrim0.log && python manage.py fetchrepositories >> repo.log"
     restart: unless-stopped
     networks:
       - private
