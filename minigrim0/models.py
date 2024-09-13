@@ -106,7 +106,7 @@ class Language(models.Model):
 class Skill(models.Model):
     name = models.CharField(max_length=100)
     level = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
-    details = models.TextField(null=True, blank=True)
+    details = models.TextField(null=True, blank=True, help_text="Markdown is supported")
 
     def __str__(self) -> str:
         return self.name

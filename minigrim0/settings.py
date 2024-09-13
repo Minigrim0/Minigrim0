@@ -22,6 +22,8 @@ DEBUG = env('DEBUG', default=False)
 if DEBUG:
     logger.warning("Application is running in DEBUG mode.")
 
+REDIS_URL = env('REDIS_URL', default='redis://localhost:6379')
+
 ALLOWED_HOSTS = env("ALLOWED_HOSTS", default="127.0.0.1").split(",")
 CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in ALLOWED_HOSTS]
 

@@ -1,4 +1,5 @@
 {% extends "layouts/app.html" %}
+{% load markdown %}
 
 {% block content %}
 <div id="content-frame">
@@ -38,7 +39,7 @@
         <div id="projects-wrapper" class="list-view">
             {% for repo in repos %}
             <div class="project-item">
-                <h2 class="project-title">{{ repo.name }}</h2>
+                <h2 class="project-title">{{ repo.name|truncatechars:30 }}</h2>
                 <p class="project-description">{{ repo.description }}</p>
                 <div class="project-links">
                     {% if repo.homepage %}
@@ -56,7 +57,7 @@
                 </div>
                 <div class="project-readme">
                     <h3>README</h3>
-                    <div class="readme-content">{{ repo.readme }}</div>
+                    <div class="readme-content">{{ repo.readme|markdown|safe }}</div>
                 </div>
             </div>
             {% empty %}
