@@ -7,11 +7,12 @@ class Post(models.Model):
 
     title = models.CharField(max_length=100)
     content = models.TextField()
-    date_posted = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
     tag = models.ManyToManyField('Tag', blank=True)
+    date_posted = models.DateTimeField(auto_now_add=True)
+    published = models.BooleanField(default=False)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.title
 
 
@@ -25,7 +26,7 @@ class Comment(models.Model):
     date_updated = models.DateTimeField(auto_now=True)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.pseudo
 
 
@@ -35,5 +36,5 @@ class Tag(models.Model):
     name = models.CharField(max_length=100)
     color = ColorField(default='#FF0000')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
