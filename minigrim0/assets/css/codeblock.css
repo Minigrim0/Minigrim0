@@ -1,0 +1,17 @@
+.supercodeblock {
+    background-color: #bfbfbf;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border-radius: 2px;
+}
+
+.supercodeblock .filename {
+    color: #333;
+    margin-left: 5px;
+    font-family: monospace;
+    margin-bottom: 0px;
+}
+
+.highlight pre {
+    margin-top: 0px;
+}

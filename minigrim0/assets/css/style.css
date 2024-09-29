@@ -364,15 +364,15 @@ h3 p {
     margin-bottom: 30px;
 }
 
-.image-left {
+.image-left-cv {
+    align-items: center;
     flex: 0 0 120px;
     height: 120px;
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 
-.image-left img {
+.image-left-cv img {
     max-width: 100%;
     max-height: 100%;
     border-radius: 50%;
