@@ -1,48 +1,51 @@
-{% extends "layouts/app.html" %} {% load static %} {% block content %}
-<div class="centered-row no-overflow">
-    <div class="grid-element"></div>
-    <div class="grid-element"></div>
-    <div class="grid-element"></div>
-    <div class="grid-element"></div>
-    <div class="grid-element"></div>
-    <div class="image-left grid-element">
-        <img src="{% static 'img/minigrim0.jpeg' %}" alt="Minigrim0's avatar" />
-    </div>
-    <div class="text-right grid-element">
-        <span>
-            <h1 class="pseudo">Minigrim0</h1>
-            <p style="font-size: 1.2em; margin-top: 2em">
-                Student in <strong>Embedded Systems</strong> platforms at
-                <a href="https://kth.se">KTH Royal Institue of Technology</a
-                >.<br />
-                Former member of the
-                <a href="https://urlab.be">UrLab</a> hackerspace.<br />
-                <br />
-                <div
-                    class="text-center"
-                    target="content-frame"
-                    id="link-frame"
-                >
-                    <a href="{% url 'cv' %}"
-                        data-turbo-action="morph"
-                        onclick="smoothScroll('#content-frame')">CV</a>
-                    &bull;
-                    <a
-                        href="{% url 'devlog:projects' %}"
-                        data-turbo-action="morph"
-                        onclick="smoothScroll('#content-frame')"
-                        >Projects</a
+{% extends "layouts/app.html" %}
+
+{% load static %}
+
+{% block content %}
+    <div class="centered-row no-overflow">
+        <div class="grid-element"></div>
+        <div class="grid-element"></div>
+        <div class="grid-element"></div>
+        <div class="grid-element"></div>
+        <div class="grid-element"></div>
+        <div class="image-left grid-element">
+            <img src="{% static 'img/minigrim0.jpeg' %}" alt="Minigrim0's avatar" />
+        </div>
+        <div class="text-right grid-element">
+            <span>
+                <h1 class="pseudo">Minigrim0</h1>
+                <p style="font-size: 1.2em; margin-top: 2em">
+                    Student in <strong>Embedded Systems</strong> platforms at
+                    <a href="https://kth.se">KTH Royal Institue of Technology</a
+                    >.<br />
+                    Former member of the
+                    <a href="https://urlab.be">UrLab</a> hackerspace.<br />
+                    <br />
+                    <div
+                        class="text-center"
+                        target="content-frame"
+                        id="link-frame"
                     >
-                    &bull;
-                    <a
-                        href="https://minigrim0.itch.io/"
-                        >Itch.io</a
-                    >
-                    &bull; 🚧 <a href="#" onclick="smoothScroll('#content-frame')">Blog (WIP)</a> 🚧
-                </div>
-            </p>
-        </span>
+                        <a href="{% url 'cv' %}"
+                            data-turbo-action="morph"
+                            onclick="smoothScroll('#content-frame')">CV</a>
+                        &bull;
+                        <a
+                            href="{% url 'devlog:projects' %}"
+                            data-turbo-action="morph"
+                            onclick="smoothScroll('#content-frame')"
+                            >Projects</a
+                        >
+                        &bull; <a href="{% url 'blog:blog_root' %}" onclick="smoothScroll('#content-frame')">Blog</a>
+                        &bull;
+                        <a
+                            href="https://minigrim0.itch.io/"
+                            >Itch.io</a
+                        >
+                    </div>
+                </p>
+            </span>
+        </div>
     </div>
-</div>
-<turbo-frame id="content-frame" refresh="morph"> </turbo-frame>
 {% endblock %}
