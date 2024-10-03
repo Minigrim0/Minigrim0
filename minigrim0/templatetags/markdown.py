@@ -12,8 +12,6 @@ register = template.Library()
 
 class HighlightRenderer(mistune.HTMLRenderer):
     def block_code(self, code, info = None):
-        logger.info("Info: %s", info)
-
         if not info:
             return f"""
 ```
@@ -26,8 +24,16 @@ class HighlightRenderer(mistune.HTMLRenderer):
             lexer = get_lexer_by_name(lang, stripall=True)
             formatter = HtmlFormatter()
             rendered_code = highlight(code, lexer, formatter)
-            lines = len(code.split("\n"))
-            return render_to_string("blog/code_block.html", {code: rendered_code, filename: filename})
+            lines = len(code.split("\n")) - 1
+            result = render_to_string(
+                "blog/code_block.html",
+                context={
+                    "code": rendered_code,
+                    "filename": filename,
+                    "line_range": range(lines)
+                }
+            )
+            return result
         else:
             lexer = get_lexer_by_name(info, stripall=True)
             formatter = HtmlFormatter()

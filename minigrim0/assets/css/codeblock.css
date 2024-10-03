@@ -1,17 +1,40 @@
 .supercodeblock {
-    background-color: #bfbfbf;
+    border: 1px solid black;
     padding-top: 3px;
-    padding-bottom: 3px;
-    border-radius: 2px;
+    border-radius: 5px;
+
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
 }
 
 .supercodeblock .filename {
-    color: #333;
-    margin-left: 5px;
+    color: #555;
+    display: inline-block;
     font-family: monospace;
     margin-bottom: 0px;
+    padding: 5px;
+}
+
+.supercodeblock hr {
+    margin: 0px;
+    border: 1px solid rgba(0, 0, 0, 0.8);
 }
 
 .highlight pre {
     margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.supercodeblock .code-block {
+    display: flex;
+    background: #f8f8f8;
+}
+
+.code-block .numbering {
+    width: 25px;
+}
+
+.numbering .highlight {
+    border-right: 1px solid black;
 }
