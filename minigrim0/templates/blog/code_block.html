@@ -1,8 +1,15 @@
-<table>
-    <div class='supercodeblock'>
-        <span class='filename'>{{ filename }}</span>
-        <hr/>
-        {{lines}}
-        {{code}}
+<div class="supercodeblock">
+    <span class="filename">{{ filename }}</span>
+    <!-- TODO Add copy code button -->
+    <hr />
+    <div class="code-block">
+        <div class="numbering">
+            <div class="highlight">
+                <pre>
+{% for line in line_range %}<span class="p">{{ line|add:1 }}</span>
+{% endfor %}</pre>
+            </div>
+        </div>
+        <div class="code">{{ code|safe }}</div>
     </div>
-</table>
+</div>
