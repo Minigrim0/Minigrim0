@@ -1,11 +1,28 @@
-from django.shortcuts import HttpResponse, render
+from django.views.generic import CreateView, UpdateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.urls import reverse
+from django.utils import timezone
 
 from blog.models import Post
 from blog.forms import BlogPostForm
 
+class BlogPostCreateView(CreateView):
+    form_class = BlogPostForm
+    template_name = 'blog/create.html'
+    permission_required = 'blog.create_post'
+
+    def get_initial(self):
+        return {
+            'date_updated': timezone.now(),
+        }
+
+
+class BlogPostEditView(UpdateView):
+    form_class = BlogPostForm
+    model = Post
+    template_name = 'blog/update.html'
+    permission_required = 'blog.change_post'
 
 
 class BlogPostListView(ListView):
