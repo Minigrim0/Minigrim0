@@ -17,8 +17,8 @@
         <h1 class="text-muted text-center">MiniBlog</h1>
 
         <div id="projects-wrapper" class="list-view">
-            {% for post in posts %}
-            <a href="{% url "blog:post_detail" post.id %}" class="project-item">
+            {% for post in object_list %}
+            <a href="{% url "blog:post-detail" post.id %}" class="project-item">
                 <h2 class="project-title">{{ post.title|truncatechars:30 }}</h2>
                 <p class="project-description">{{ post.content|truncatechars:70 }}</p>
             </a>
