@@ -4,7 +4,7 @@ body {
     background-image: url(/static/img/noise.png);
     font-family: "Terminess Nerd Font", Times, serif;
     font-size: 2em;
-    scroll-behavior: smooth !important;;
+    scroll-behavior: smooth !important;
 }
 
 .footer {
@@ -94,22 +94,22 @@ body {
     display: inline-flex;
     align-items: center;
     padding: 8px 12px;
-    background-color: rgba(255, 255, 255, 0.1);  /* Semi-transparent white */
-    color: #ffffff;  /* White text */
+    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+    color: #ffffff; /* White text */
     text-decoration: none;
     border-radius: 4px;
     transition: background-color 0.2s ease-in-out;
-    font-size: 0.9em;  /* Slightly smaller font size */
-    border: 1px solid rgba(255, 255, 255, 0.2);  /* Subtle border */
+    font-size: 0.9em; /* Slightly smaller font size */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
 }
 
 .btn-back:hover {
-    background-color: rgba(255, 255, 255, 0.2);  /* Lighter on hover */
+    background-color: rgba(255, 255, 255, 0.2); /* Lighter on hover */
 }
 
 .btn-back svg {
     margin-right: 6px;
-    width: 14px;  /* Slightly smaller icon */
+    width: 14px; /* Slightly smaller icon */
     height: 14px;
 }
 
@@ -165,7 +165,7 @@ body {
 .experience-item {
     display: flex;
     gap: 1rem;
-    align-items: flex-start;  /* Align items to the top */
+    align-items: flex-start; /* Align items to the top */
 }
 
 .experience-date {
@@ -191,7 +191,7 @@ body {
 }
 
 .experience-company {
-    flex: 0 0 250px;  /* Increased width for better fit */
+    flex: 0 0 250px; /* Increased width for better fit */
     text-align: right;
 }
 
@@ -206,20 +206,22 @@ body {
     margin-top: 0.2rem;
     color: #007bff;
     text-decoration: none;
-    font-size: 0.75em;  /* Slightly smaller font size for links */
-    word-break: break-all;  /* Allow long URLs to break */
+    font-size: 0.75em; /* Slightly smaller font size for links */
+    word-break: break-all; /* Allow long URLs to break */
 }
 
 .company-link:hover {
     text-decoration: underline;
 }
 
-.experience-date, .skill-name {
+.experience-date,
+.skill-name {
     flex: 0 0 150px;
     text-align: left;
 }
 
-.experience-details, .skill-details {
+.experience-details,
+.skill-details {
     flex: 1;
 }
 
@@ -483,7 +485,7 @@ h3 p {
     display: flex;
     gap: 10px;
     margin-bottom: 15px;
-    align-items: center;  /* This will vertically center the links */
+    align-items: center; /* This will vertically center the links */
 }
 
 .project-link {
@@ -492,20 +494,25 @@ h3 p {
     color: #fff;
     text-decoration: none;
     font-size: 0.9em;
-    padding: 5px 10px;  /* Add some padding for better clickability */
-    background-color: rgba(255, 255, 255, 0.1);  /* Slight background for better visibility */
-    border-radius: 4px;  /* Rounded corners */
-    transition: background-color 0.2s ease;  /* Smooth transition for hover effect */
+    padding: 5px 10px; /* Add some padding for better clickability */
+    background-color: rgba(
+        255,
+        255,
+        255,
+        0.1
+    ); /* Slight background for better visibility */
+    border-radius: 4px; /* Rounded corners */
+    transition: background-color 0.2s ease; /* Smooth transition for hover effect */
 }
 
 .project-link:hover {
-    background-color: rgba(255, 255, 255, 0.2);  /* Lighten on hover */
+    background-color: rgba(255, 255, 255, 0.2); /* Lighten on hover */
 }
 
 .project-link svg {
     margin-right: 5px;
-    width: 16px;  /* Ensure consistent width */
-    height: 16px;  /* Ensure consistent height */
+    width: 16px; /* Ensure consistent width */
+    height: 16px; /* Ensure consistent height */
 }
 
 /* Ensure the home icon and GitHub icon have the same dimensions */
@@ -519,7 +526,7 @@ h3 p {
 
 .project-link .home-icon {
     /* You can replace this with an SVG if you prefer */
-    content: '🏠';
+    content: "🏠";
     font-size: 16px;
     line-height: 1;
 }
@@ -556,7 +563,7 @@ h3 p {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {

@@ -2,6 +2,9 @@
     border: 1px solid black;
     padding-top: 3px;
     border-radius: 5px;
+    max-width: 75%;
+    margin-left: auto;
+    margin-right: auto;
 
     -webkit-background-clip: padding-box;
     -moz-background-clip: padding;
@@ -37,4 +40,33 @@
 
 .numbering .highlight {
     border-right: 1px solid black;
+}
+
+.title {
+    display: flex;
+}
+
+.title .copy-text {
+    margin-right: 10px;
+    margin-left: auto;
+    transition: transform 0.5s ease;
+}
+
+.title .btn-hidden {
+    margin-right: 0px;
+    border: 0px;
+    background-color: #ffffff00;
+    transition: transform 0.1s ease;
+}
+
+.title .btn-hidden:hover {
+    transform: scale(1.2, 1.2);
+}
+
+.title .btn-hidden:active {
+    transform: scale(0.9, 0.9);
+}
+
+.title svg {
+    height: 25px;
 }
