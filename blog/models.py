@@ -12,9 +12,18 @@ class Post(models.Model):
     date_posted = models.DateTimeField(auto_now_add=True)
     published = models.BooleanField(default=False)
 
+    class Meta:
+        ordering = ["-date_posted"]
+
     def __str__(self) -> str:
         return self.title
 
+class PostImage(models.Model):
+    """Represents an image in a blog post"""
+
+    post = models.ForeignKey("blog.Post", on_delete=models.CASCADE)
+    alt = models.TextField()
+    image = models.ImageField()
 
 class Comment(models.Model):
     """Represents a comment to a blog post"""

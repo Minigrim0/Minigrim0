@@ -1,20 +1,38 @@
 from django.shortcuts import HttpResponse, render
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
+from django.urls import reverse
+
 from blog.models import Post
+from blog.forms import BlogPostForm
 
 
-def blog_root(request) -> HttpResponse:
-    """Returns a list of published posts"""
 
-    posts = Post.objects.filter(published=True).order_by('-date_posted')
+class BlogPostListView(ListView):
+    model = Post
+    template_name = "blog/list.html"
+    paginate_by = 20
 
-    return render(request, 'blog/index.html', {'posts': posts})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+    def get_queryset(self):
+        return Post.objects.filter(published=True)
 
 
-def post_detail(request, post_id: int) -> HttpResponse:
-    """Returns a single post if existing andd published, 404 otherwise"""
+class BlogPostDetailView(DetailView):
+    model = Post
+    template_name = "blog/detail.html"
+    context_object_name = 'post'
 
-    post = Post.objects.get(pk=post_id)
-    if post.published is False:
-        return HttpResponse(b"Post not found", status=404)
+    def get_success_url(self):
+        return reverse('view_post', kwargs={'pk': self.object.id})
 
-    return render(request, 'blog/post_detail.html', {'post': post})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = BlogPostForm(initial={
+            'project': self.object,
+            'author': self.request.user
+        })
+        return context
