@@ -18,7 +18,7 @@
 
         <div id="projects-wrapper" class="list-view">
             {% for post in object_list %}
-            <a href="{% url "blog:post-detail" post.id %}" class="project-item">
+            <a href="{% url "blog:post-detail" post.slug %}" class="project-item">
                 <h2 class="project-title">{{ post.title|truncatechars:30 }}</h2>
                 <p class="project-description">{{ post.content|truncatechars:70 }}</p>
             </a>

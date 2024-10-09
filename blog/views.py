@@ -1,13 +1,14 @@
 from django.views.generic import CreateView, UpdateView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from django.utils import timezone
 
 from blog.models import Post
 from blog.forms import BlogPostForm
 
-class BlogPostCreateView(CreateView):
+class BlogPostCreateView(LoginRequiredMixin, CreateView):
     form_class = BlogPostForm
     template_name = 'blog/create.html'
     permission_required = 'blog.create_post'
@@ -18,7 +19,7 @@ class BlogPostCreateView(CreateView):
         }
 
 
-class BlogPostEditView(UpdateView):
+class BlogPostEditView(LoginRequiredMixin, UpdateView):
     form_class = BlogPostForm
     model = Post
     template_name = 'blog/update.html'
