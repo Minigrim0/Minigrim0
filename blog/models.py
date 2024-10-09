@@ -1,6 +1,10 @@
 from django.db import models
 from colorfield.fields import ColorField
+from django.utils.text import slugify
 
+import logging
+
+logger = logging.getLogger(__file__)
 
 class Post(models.Model):
     """Represents a blog post"""
@@ -11,6 +15,7 @@ class Post(models.Model):
     tag = models.ManyToManyField('Tag', blank=True)
     date_posted = models.DateTimeField(auto_now_add=True)
     published = models.BooleanField(default=False)
+    slug = models.SlugField(max_length=50, primary_key=True, default="")
 
     class Meta:
         ordering = ["-date_posted"]
@@ -18,12 +23,27 @@ class Post(models.Model):
     def __str__(self) -> str:
         return self.title
 
+    def save(self, *args, **kwargs):
+        """
+        Save the model and add initial slug/pk value if needed
+        """
+        logger.info("Saving model")
+
+        if self.pk == "":
+            logger.info("New post created, setting slug")
+            self.slug = slugify(self.title)
+        logger.info("Instance pk: %s", self.pk)
+
+        super().save(*args, **kwargs)
+
+
 class PostImage(models.Model):
     """Represents an image in a blog post"""
 
     post = models.ForeignKey("blog.Post", on_delete=models.CASCADE)
     alt = models.TextField()
     image = models.ImageField()
+
 
 class Comment(models.Model):
     """Represents a comment to a blog post"""

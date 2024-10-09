@@ -8,9 +8,5 @@ class BlogPostForm(forms.ModelForm):
         model = Post
         exclude = ["date_posted", "date_updated"]
 
-        widgets = {
-            'content': forms.Textarea(attrs={'rows': 25}),
-        }
-
     # def clean(self):
     #     cleaned_data = super().clean()

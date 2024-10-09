@@ -6,6 +6,10 @@ authors = ["Minigrim0 <grimauflorent@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+
 [tool.poetry.dependencies]
 python = "^3.10"
 django = "^5.0"
@@ -23,9 +27,9 @@ isort = "^5.12.0"
 pylint = "^2.17.4"
 black = "^23.7.0"
 
-
 [tool.poetry.group.prod.dependencies]
 gunicorn = "^21.2.0"
+
 
 [build-system]
 requires = ["poetry-core"]
