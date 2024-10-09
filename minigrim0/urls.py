@@ -23,5 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('dev/', include(("devlog.urls", "devlog"), namespace="devlog")),
     path('cv/', views.cv, name="cv"),
+    path("blog/", include(("blog.urls", "blog"), namespace="blog")),
     path('', views.index, name="index"),
 ]
