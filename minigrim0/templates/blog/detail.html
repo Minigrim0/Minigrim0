@@ -29,7 +29,11 @@
             </div>
 
             <h1 class="text-muted text-center">{{post.title}}</h1>
-
+            {% if user.is_superuser %}
+                <div class="blog-toolchain text-center">
+                    <a class="btn-edit" href="{% url 'blog:post-edit' post.slug %}">Edit</a>
+                </div>
+            {% endif %}
             <div id="post-content" class="list-view">
                 <div id="modal-readme-content">
                     {{ post.content | markdown | safe }}

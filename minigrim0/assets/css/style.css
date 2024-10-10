@@ -66,6 +66,24 @@ body {
     justify-content: space-around;
 }
 
+.blog-toolchain {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.btn-edit {
+    padding: 8px 12px;
+    color: #ddd;
+    background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-edit:hover {
+    background-color: rgba(255, 255, 255, 0.3); /* Semi-transparent white */
+}
+
 .muted-center {
     position: absolute;
     top: 50%;
@@ -104,7 +122,7 @@ body {
 }
 
 .btn-back:hover {
-    background-color: rgba(255, 255, 255, 0.2); /* Lighter on hover */
+    background-color: rgba(255, 255, 255, 0.3); /* Lighter on hover */
 }
 
 .btn-back svg {
