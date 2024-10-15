@@ -1,0 +1,97 @@
+{% extends "layouts/app.html" %}
+
+{% load markdown %}
+{% load static %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/syntax.css' %}" />
+
+    <link id="import-theme" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism-tomorrow.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css"/>
+
+    <!--Code-input is on GitHub ==> https://github.com/WebCoder49/code-input-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/WebCoder49/code-input@2.3/code-input.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/WebCoder49/code-input@2.3/code-input.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/WebCoder49/code-input@2.3/plugins/indent.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/WebCoder49/code-input@2.3/plugins/auto-close-brackets.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/WebCoder49/code-input@2.3/plugins/find-and-replace.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/WebCoder49/code-input@2.1/plugins/find-and-replace.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/WebCoder49/code-input@2.3/plugins/go-to-line.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/WebCoder49/code-input@2.3/plugins/go-to-line.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/WebCoder49/code-input@2.1/plugins/prism-line-numbers.min.css">
+
+{% endblock %}
+
+{% block content %}
+<div id="content-frame">
+    <div class="projects-container">
+        <div class="back-link">
+            <a href="{% url 'blog:blog-list' %}" class="btn-back">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        fill-rule="evenodd"
+                        d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"
+                    />
+                </svg>
+                Back
+            </a>
+        </div>
+
+        <h1 class="text-muted text-center">Edit post</h1>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- Title -->
+            <div>
+                <label for="id_title">Post title</label>
+                <div class="post-title-input">{{ form.title }}</div>
+            </div>
+
+            <!-- Content -->
+            <div>
+                <label for="id_content">Content</label>
+                <!-- {{ form.content }} -->
+                <code-input name="content" required id="post-content" class="line-numbers" style="width: 75%;" lang="markdown" placeholder="Write the post here" template="blog-post">{{ post_content }}</code-input>
+            </div>
+
+            <!-- Tag (ManyToManyField) -->
+            <div>
+                <label for="id_tag">Tag(s):</label>
+                {{ form.tag }}
+            </div>
+
+            <!-- Published -->
+            <div>
+                <label for="id_published">Published:</label>
+                <div class="post-published-input">{{ form.published }}</div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  codeInput.registerTemplate(
+    "blog-post",
+    codeInput.templates.prism(
+      Prism, [
+        new codeInput.plugins.Indent(true, 4),
+        new codeInput.plugins.GoToLine()
+  ]));
+</script>
+{% endblock %}

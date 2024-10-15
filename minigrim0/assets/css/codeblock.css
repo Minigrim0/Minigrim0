@@ -1,3 +1,5 @@
+/* Contains css code for the code block in blog posts as well as for the post update/create forms */
+
 .supercodeblock {
     border: 1px solid black;
     padding-top: 3px;
@@ -69,4 +71,21 @@
 
 .title svg {
     height: 25px;
+}
+
+.post-title-input {
+    width: 100%;
+}
+
+.post-title-input input {
+    width: 100%;
+    border: 0px;
+    border-radius: 3px;
+    padding: 2px;
+    font-size: 1.2em;
+    background-color: rgba(0.1, 0.1, 0.1, 0.1);
+}
+
+.post-published-input input {
+    height: 2em;
 }
