@@ -25,6 +25,12 @@ class BlogPostEditView(LoginRequiredMixin, UpdateView):
     template_name = 'blog/update.html'
     permission_required = 'blog.change_post'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            "post_content": self.object.content
+        })
+        return context
 
 class BlogPostListView(ListView):
     model = Post
