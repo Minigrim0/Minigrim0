@@ -15,10 +15,11 @@
         <div class="text-right grid-element">
             <span>
                 <h1 class="pseudo">Minigrim0</h1>
-                <p style="font-size: 1.2em; margin-top: 2em">
+                <div style="font-size: 1.2em; margin-top: 2em">
                     Student in <strong>Embedded Systems</strong> platforms at
                     <a href="https://kth.se">KTH Royal Institue of Technology</a
-                    >.<br />
+                    >.
+                    <br />
                     Former member of the
                     <a href="https://urlab.be">UrLab</a> hackerspace.<br />
                     <br />
@@ -27,24 +28,16 @@
                         target="content-frame"
                         id="link-frame"
                     >
-                        <a href="{% url 'cv' %}"
-                            data-turbo-action="morph"
-                            onclick="smoothScroll('#content-frame')">CV</a>
+                        <a href="{% url 'cv' %}">CV</a>
                         &bull;
-                        <a
-                            href="{% url 'devlog:projects' %}"
-                            data-turbo-action="morph"
-                            onclick="smoothScroll('#content-frame')"
-                            >Projects</a
+                        <a href="{% url 'devlog:projects' %}">Projects</a
                         >
-                        &bull; <a href="{% url 'blog:blog-list' %}" onclick="smoothScroll('#content-frame')">Blog</a>
+                        &bull; <a href="{% url 'blog:blog-list' %}">Blog</a>
                         &bull;
-                        <a
-                            href="https://minigrim0.itch.io/"
-                            >Itch.io</a
+                        <a href="https://minigrim0.itch.io/">Itch.io</a
                         >
                     </div>
-                </p>
+                </div>
             </span>
         </div>
     </div>

@@ -6,9 +6,9 @@
         <meta charset="utf-8" />
         <link rel="shortcut icon" type="image/jpg" href="{% static 'img/minigrim0.jpeg' %}" />
         <title>Minigrim0</title>
-        <link rel="stylesheet" href="{% static 'css/style.css' %}">
-        <link rel="stylesheet" href="{% static 'css/codeblock.css' %}">
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
         {% block extra_head %}
         {% endblock %}
     </head>
@@ -18,9 +18,10 @@
             {% block content %}
             {% endblock %}
         </div>
+
         {% include "layouts/footer.html" %}
-        <script src="{% static 'js/smoothscroll.js' %}"></script>
+
         {% block extra_js %}
         {% endblock %}
     </body>
-</hmtl>
+</html>
