@@ -3,20 +3,20 @@
 {% load markdown %}
 {% load range %}
 
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/cv.css' %}" />
+{% endblock %}
+
 {% block content %}
 <div class="container">
-    <div class="back-link">
-        <a href="{% url 'index' %}" class="btn-back">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-            </svg>
-            Back
-        </a>
-    </div>
-    <div class="header-row">
+    {% url 'index' as back_link %}
+    {% include "widgets/back_link.html" with back_url=back_link %}
+
+    <div class="cv-header">
         <div class="image-left-cv">
             <img src="{% static "img/minigrim0.jpeg" %}" alt="minigrim0">
         </div>
+
         <div class="header-info">
             <h1>Florent Grimau</h1>
             <h5>Student in Embedded Systems at KTH</h5>
@@ -31,11 +31,12 @@
         </div>
     </div>
 
-    {# Education - keep this as it was #}
-    <div class="row mt-3">
-        <h2 class="text-muted flex-0-0">Education</h2>
+    {# Education #}
+    <div class="cv-section-title">
+        <h2>Education</h2>
     </div>
-    <div class="education-container">
+
+    <div class="cv-container">
         {% for edu in cv.edu %}
             <div class="education-item">
                 <div class="education-date">
@@ -50,23 +51,24 @@
     </div>
 
     {# Experience #}
-    <div class="row mt-3">
-        <h2 class="text-muted flex-0-0">Experience</h2>
+    <div class="cv-section-title">
+        <h2>Experience</h2>
     </div>
-    <div class="experience-container">
+
+    <div class="cv-container">
         {% for exp in cv.exp %}
-            <div class="experience-item">
-                <div class="experience-date">
+            <div class="cv-exp">
+                <div class="cv-exp-date">
                     {{ exp.start_date }} - {{ exp.end_date }}
                 </div>
-                <div class="experience-main">
+                <div class="cv-exp-main">
                     <h3>{{ exp.name }}</h3>
                     <p class="description">{{ exp.description|markdown|safe }}</p>
                 </div>
-                <div class="experience-company">
-                    <p class="company">{{ exp.place }}</p>
+                <div class="cv-exp-company">
+                    <p>{{ exp.place }}</p>
                     {% if exp.link %}
-                        <a href="{{ exp.link }}" class="company-link">{{ exp.link }}</a>
+                        <a href="{{ exp.link }}">{{ exp.link }}</a>
                     {% endif %}
                 </div>
             </div>
@@ -74,10 +76,11 @@
     </div>
 
     {# Skills #}
-    <div class="row mt-3">
-        <h2 class="text-muted flex-0-0">Skills</h2>
+    <div class="cv-section-title">
+        <h2>Skills</h2>
     </div>
-    <div class="skills-container">
+
+    <div class="cv-container-grid">
         {% for skill in cv.ski %}
             <div class="skill-item">
                 <div class="skill-header">
@@ -101,7 +104,8 @@
     <div class="row mt-3">
         <h2 class="text-muted flex-0-0">Competitions &amp; Extra-Curricular Activities</h2>
     </div>
-    <div class="competition-container">
+
+    <div class="cv-container">
         {% for comp in cv.com %}
         <div class="competition-item">
             <div class="competition-date">
