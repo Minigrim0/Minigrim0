@@ -5,24 +5,9 @@
 
 {% block extra_head %}
     <link rel="stylesheet" href="{% static 'css/syntax.css' %}" />
-
-    <link id="import-theme" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism-tomorrow.css"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css"/>
-
-    <!--Code-input is on GitHub ==> https://github.com/WebCoder49/code-input-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/WebCoder49/code-input@2.3/code-input.min.css">
-    <script src="https://cdn.jsdelivr.net/gh/WebCoder49/code-input@2.3/code-input.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/gh/WebCoder49/code-input@2.3/plugins/indent.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/WebCoder49/code-input@2.3/plugins/auto-close-brackets.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/WebCoder49/code-input@2.3/plugins/find-and-replace.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/WebCoder49/code-input@2.1/plugins/find-and-replace.min.css">
-    <script src="https://cdn.jsdelivr.net/gh/WebCoder49/code-input@2.3/plugins/go-to-line.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/WebCoder49/code-input@2.3/plugins/go-to-line.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/WebCoder49/code-input@2.1/plugins/prism-line-numbers.min.css">
+    {# form specific CSS #}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}" />
+    {{ form.media }}
 {% endblock %}
 
 {% block content %}
@@ -47,35 +32,14 @@
         </div>
 
         <h1 class="text-muted text-center">Edit post</h1>
+        <div class="blog-toolchain text-center">
+            <a class="btn-edit" href="{% url 'blog:post-detail' post.slug %}">View post</a>
+        </div>
 
-        <form method="POST">
+        <form method="post">
             {% csrf_token %}
 
-            <!-- Title -->
-            <div>
-                <label for="id_title">Post title</label>
-                <div class="post-title-input">{{ form.title }}</div>
-            </div>
-
-            <!-- Content -->
-            <div>
-                <label for="id_content">Content</label>
-                <!-- {{ form.content }} -->
-                <code-input name="content" required id="post-content" class="line-numbers" style="width: 75%;" lang="markdown" placeholder="Write the post here" template="blog-post">{{ post_content }}</code-input>
-            </div>
-
-            <!-- Tag (ManyToManyField) -->
-            <div>
-                <label for="id_tag">Tag(s):</label>
-                {{ form.tag }}
-            </div>
-
-            <!-- Published -->
-            <div>
-                <label for="id_published">Published:</label>
-                <div class="post-published-input">{{ form.published }}</div>
-            </div>
-
+            {{ form.as_p }}
             <!-- Submit Button -->
             <button type="submit">Submit</button>
         </form>
