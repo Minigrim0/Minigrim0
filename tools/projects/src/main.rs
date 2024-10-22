@@ -1,15 +1,10 @@
-extern crate redis;
-extern crate serde;
-extern crate serde_json;
-use redis::Commands;
-use log::{info, error, warn};
-
-use hyper::body::to_bytes;
-use octocrab::{params::repos::Commitish, Octocrab};
 use std::collections::HashMap;
 
-#[macro_use]
-extern crate serde_derive;
+use serde::Serialize;
+use log::{info, error, warn};
+use redis::Commands;
+use octocrab::{params::repos::Commitish, Octocrab};
+use hyper::body::to_bytes;
 
 /// Represents a GitHub repository with its details.
 #[derive(Serialize)]
