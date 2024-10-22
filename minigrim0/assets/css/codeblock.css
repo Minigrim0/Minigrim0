@@ -1,0 +1,91 @@
+/* Contains css code for the code block in blog posts as well as for the post update/create forms */
+
+.supercodeblock {
+    border: 1px solid black;
+    padding-top: 3px;
+    border-radius: 5px;
+    max-width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+}
+
+.supercodeblock .filename {
+    color: #555;
+    display: inline-block;
+    font-family: monospace;
+    margin-bottom: 0px;
+    padding: 5px;
+}
+
+.supercodeblock hr {
+    margin: 0px;
+    border: 1px solid rgba(0, 0, 0, 0.8);
+}
+
+.highlight pre {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.supercodeblock .code-block {
+    display: flex;
+    background: #f8f8f8;
+}
+
+.code-block .numbering {
+    width: 25px;
+}
+
+.numbering .highlight {
+    border-right: 1px solid black;
+}
+
+.title {
+    display: flex;
+}
+
+.title .copy-text {
+    margin-right: 10px;
+    margin-left: auto;
+    transition: transform 0.5s ease;
+}
+
+.title .btn-hidden {
+    margin-right: 0px;
+    border: 0px;
+    background-color: #ffffff00;
+    transition: transform 0.1s ease;
+}
+
+.title .btn-hidden:hover {
+    transform: scale(1.2, 1.2);
+}
+
+.title .btn-hidden:active {
+    transform: scale(0.9, 0.9);
+}
+
+.title svg {
+    height: 25px;
+}
+
+.post-title-input {
+    width: 100%;
+}
+
+.post-title-input input {
+    width: 100%;
+    border: 0px;
+    border-radius: 3px;
+    padding: 2px;
+    font-size: 1.2em;
+    background-color: rgba(0.1, 0.1, 0.1, 0.1);
+}
+
+.post-published-input input {
+    height: 2em;
+}

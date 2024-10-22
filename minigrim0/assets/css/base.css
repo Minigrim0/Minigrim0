@@ -1,0 +1,109 @@
+body {
+  font: 100% Terminess Nerd Font, sans-serif;
+  background-color: #8d639c;
+  background-image: url("/static/img/noise.png");
+  font-size: 2em;
+}
+
+footer {
+  height: 40px;
+}
+
+.content {
+  min-height: calc(100vh - 40px);
+}
+
+.no-overflow {
+  overflow-y: hidden;
+}
+
+.m-0 {
+  margin: 0;
+}
+
+.centered-row {
+  display: grid;
+  grid-template-columns: 10vw 15vw auto 10vw;
+  grid-template-rows: 30vh 40vh calc(30vh - 40px);
+}
+
+.pseudo {
+  text-decoration: none;
+}
+
+.text-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.text-center {
+  text-align: center;
+  width: 100%;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+}
+
+.muted-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+  padding-top: 20px;
+}
+
+.back-link {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: white;
+  text-decoration: underline;
+  margin-bottom: 20px;
+}
+
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+  color: #ffffff; /* White text */
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.2s ease-in-out;
+  font-size: 0.9em; /* Slightly smaller font size */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
+}
+.btn-back:hover {
+  background-color: rgba(255, 255, 255, 0.3); /* Lighter on hover */
+}
+.btn-back svg {
+  margin-right: 6px;
+  width: 14px; /* Slightly smaller icon */
+  height: 14px;
+}
+
+.image-left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.image-left img {
+  max-width: 15vw;
+  margin: auto;
+  border-radius: 50%;
+}
+
+/*# sourceMappingURL=base.css.map */

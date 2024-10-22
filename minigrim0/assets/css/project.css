@@ -1,0 +1,187 @@
+@charset "UTF-8";
+.project-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.view-toggle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.view-toggle button {
+  background-color: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.view-toggle button.active {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.list-view .project-item {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.grid-view {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.grid-view .project-item {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.project-title {
+  margin-top: 0;
+  font-size: 1.5em;
+}
+
+.project-description {
+  margin-bottom: 15px;
+}
+
+.project-links {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  align-items: center; /* This will vertically center the links */
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.9em;
+  padding: 5px 10px; /* Add some padding for better clickability */
+  background-color: rgba(255, 255, 255, 0.1); /* Slight background for better visibility */
+  border-radius: 4px; /* Rounded corners */
+  transition: background-color 0.2s ease; /* Smooth transition for hover effect */
+}
+
+.project-link:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Lighten on hover */
+}
+
+.project-link svg {
+  margin-right: 5px;
+  width: 16px; /* Ensure consistent width */
+  height: 16px; /* Ensure consistent height */
+}
+
+/* Ensure the home icon and GitHub icon have the same dimensions */
+.project-link .home-icon,
+.project-link .github-icon {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.project-link .home-icon {
+  /* You can replace this with an SVG if you prefer */
+  content: "🏠";
+  font-size: 16px;
+  line-height: 1;
+}
+
+.project-readme {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.project-readme h3 {
+  margin-top: 0;
+  font-size: 1.2em;
+}
+
+.readme-content {
+  font-size: 0.9em;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  .grid-view {
+    grid-template-columns: 1fr;
+  }
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #bbb;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 700px;
+}
+
+#modal-readme-content {
+  font-size: 0.6em;
+  border-radius: 10px;
+  background-color: #fff;
+  border: 1px solid #888;
+  padding: 10px;
+}
+
+#modal-title {
+  font-size: 0.7em;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.readme-button {
+  background-color: #f1f1f1;
+  border: none;
+  color: black;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.readme-button:hover {
+  background-color: #ddd;
+}
+
+/*# sourceMappingURL=project.css.map */
