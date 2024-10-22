@@ -13,7 +13,7 @@ env = environ.Env(
 )
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-environ.Env.read_env(env_file=BASE_DIR / '.env')
+environ.Env.read_env(env_file=BASE_DIR / ".env")
 coloredlogs.install(level=env("LOGLEVEL", default="INFO"))
 
 

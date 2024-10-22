@@ -1,6 +1,7 @@
 from django.db import models
 from colorfield.fields import ColorField
 from django.utils.text import slugify
+from django.shortcuts import reverse
 
 import logging
 
@@ -22,6 +23,9 @@ class Post(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+    def get_absolute_url(self):
+        return reverse("blog:post-detail", kwargs={"slug": self.slug})
 
     def save(self, *args, **kwargs):
         """
