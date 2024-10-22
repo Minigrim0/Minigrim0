@@ -2,6 +2,7 @@ extern crate redis;
 extern crate serde;
 extern crate serde_json;
 use redis::Commands;
+use log::{info, error, warn};
 
 use hyper::body::to_bytes;
 use octocrab::{params::repos::Commitish, Octocrab};
@@ -31,7 +32,13 @@ struct Repo {
 ///
 /// A Redis result indicating success or failure.
 fn save_repos(repos: HashMap<String, Repo>) -> redis::RedisResult<()> {
-    let redis_url = std::env::var("REDIS_URL").unwrap_or("redis://127.0.0.1/".to_string());
+    let redis_url = match std::env::var("REDIS_URL") {
+        Ok(val) => val,
+        Err(_) => {
+            warn!("No REDIS_URL environment variable found, using default value");
+            "redis://127.0.0.1:6379/".to_string()
+        }
+    };
 
     let client = redis::Client::open(redis_url)?;
     let mut con = client.get_connection()?;
@@ -95,14 +102,22 @@ async fn verify_data(response: String) -> bool {
 }
 
 #[tokio::main]
-async fn main() -> octocrab::Result<()> {
+async fn main() -> Result<(), ()> {
+    colog::init();
+
     // Fetch GitHub token from environment variable
-    let token = std::env::var("GITHUB_TOKEN").expect("GITHUB_TOKEN env variable is required");
+    let token = std::env::var("GITHUB_TOKEN")
+        .map_err(|e| error!("Unable to get github_token: {}", e.to_string()))?;
 
     // Initialize Octocrab client with the GitHub token
-    let octocrab: Octocrab = Octocrab::builder().personal_token(token).build()?;
+    info!("Building Octocrab client...");
+    let octocrab: Octocrab = Octocrab::builder()
+        .personal_token(token)
+        .build()
+        .map_err(|e| error!("Unable to create Octocrab client: {}", e.to_string()))?;
 
     // Fetch repositories for the authenticated user
+    info!("Fetching repositories...");
     let my_repos = octocrab
         .current()
         .list_repos_for_authenticated_user()
@@ -110,27 +125,26 @@ async fn main() -> octocrab::Result<()> {
         .sort("updated")
         .per_page(100)
         .send()
-        .await?;
+        .await
+        .map_err(|e| error!("Unable to fetch repositories: {}", e.to_string()))?;
 
+    // Skip private repositories
     let mut data: HashMap<String, Repo> = HashMap::new();
 
     // Iterate through repositories and collect data
-    for repo in my_repos {
-        // Skip private repositories
-        if repo.private.is_some() && repo.private.unwrap() {
-            continue;
-        }
+    for repo in my_repos.into_iter().filter(|repo| repo.private != Some(true)) {
+        info!("Processing repository: {}", repo.name);
 
         // Fetch README content
         let body_str: String =
             get_data(octocrab.clone(), repo.name.clone(), "main".to_string()).await;
-        
+
         // Get repository URL
         let repo_url: String = match repo.html_url {
             Some(url) => url.to_string(),
             None => "Missing url".to_string(),
         };
-        
+
         // Get star count
         let repo_stars: u32 = match repo.stargazers_count {
             Some(amount) => amount,
@@ -170,6 +184,5 @@ async fn main() -> octocrab::Result<()> {
     }
 
     // Save collected repository data
-    save_repos(data).expect("Could not save the repository details");
-    Ok(())
+    save_repos(data).map_err(|e| error!("Unable to save repositories to redis: {}", e.to_string()))
 }
