@@ -1,9 +1,15 @@
 {% extends "layouts/app.html" %}
+
+{% load static %}
 {% load markdown %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/project.css' %}" />
+{% endblock %}
 
 {% block content %}
 <div id="content-frame">
-    <div class="projects-container">
+    <div class="project-container">
         {% url 'index' as back_link %}
         {% include "widgets/back_link.html" with back_url=back_link %}
 
