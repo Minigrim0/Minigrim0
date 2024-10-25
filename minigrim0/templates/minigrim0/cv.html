@@ -101,8 +101,8 @@
     </div>
 
     {# Competitions #}
-    <div class="row mt-3">
-        <h2 class="text-muted flex-0-0">Competitions &amp; Extra-Curricular Activities</h2>
+    <div class="cv-section-title">
+        <h2>Competitions &amp; Extra-Curricular Activities</h2>
     </div>
 
     <div class="cv-container">
@@ -112,9 +112,11 @@
                 {{ comp.date }}
             </div>
             <div class="competition-details">
-                <h3 class="competition-name">{{ comp.name|markdown|safe }}</h3>
+                <div class="competition-details-name">
+                    {{ comp.name|markdown|safe }}
+                </div>
                 {% if comp.description %}
-                    <p class="competition-description">{{ comp.description|markdown|safe }}</p>
+                    <div class="competition-details-desc">{{ comp.description|markdown|safe }}</div>
                 {% endif %}
             </div>
         </div>

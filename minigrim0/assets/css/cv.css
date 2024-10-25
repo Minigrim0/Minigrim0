@@ -202,39 +202,34 @@
   margin: 0;
 }
 
-.competition-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
 .competition-item {
+  font-size: 1.1em;
+  margin-bottom: 1em;
   display: flex;
   gap: 1rem;
   align-items: flex-start;
 }
-
 .competition-date {
   flex: 0 0 100px;
   text-align: right;
-  font-weight: bold;
-  font-size: 0.9em;
-  padding-top: 0.3rem;
 }
-
 .competition-details {
   flex: 1;
 }
-
-.competition-name {
+.competition-details-name {
+  font-weight: bold;
   margin: 0;
-  font-size: 1.1em;
 }
-
-.competition-description {
+.competition-details-name p {
+  margin: 0;
+}
+.competition-details-desc {
   margin: 0.5rem 0 0;
   font-size: 0.9em;
   color: rgba(255, 255, 255, 0.8);
+}
+.competition-details-desc p {
+  margin: 0;
 }
 
 /*# sourceMappingURL=cv.css.map */
