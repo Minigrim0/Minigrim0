@@ -2,6 +2,10 @@
 
 {% load static %}
 
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/home.css' %}" />
+{% endblock %}
+
 {% block content %}
     <div class="centered-row no-overflow">
         <div class="grid-element"></div>
@@ -15,16 +19,17 @@
         <div class="text-right grid-element">
             <span>
                 <h1 class="pseudo">Minigrim0</h1>
-                <div style="font-size: 1.2em; margin-top: 2em">
+                <div class="self-description">
                     Student in <strong>Embedded Systems</strong> platforms at
-                    <a href="https://kth.se">KTH Royal Institue of Technology</a
+                    <a href="https://kth.se">KTH Royal Institute of Technology</a
                     >.
                     <br />
                     Former member of the
                     <a href="https://urlab.be">UrLab</a> hackerspace.<br />
-                    <br />
+                </div>
+                <div class="self-links">
                     <div
-                        class="text-center"
+                        class="text-center content-justify"
                         target="content-frame"
                         id="link-frame"
                     >
