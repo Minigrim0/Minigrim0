@@ -1,8 +1,33 @@
+@font-face {
+  font-family: "AnonymiceProNerdFont";
+  src: url("/static/fonts/AnonymiceProNerdFont-Regular.ttf"), format("ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "AnonymiceProNerdFont";
+  src: url("/static/fonts/AnonymiceProNerdFont-Bold.ttf"), format("ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+:root {
+  color-scheme: light dark;
+}
+
 body {
-  font: 100% Terminess Nerd Font, sans-serif;
-  background-color: #8d639c;
+  font: 100% AnonymiceProNerdFont, sans-serif;
+  background: light-dark(#D8D4F2, #231E2C);
+  color: light-dark(#333, #ccc);
   background-image: url("/static/img/noise.png");
+  background-size: 200px;
   font-size: 2em;
+  margin: 0px;
+  transition: color 0.2s, background 0.2s;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: AnonymiceProNerdFont, sans-serif;
+  color: light-dark(#111, #eee);
 }
 
 footer {
@@ -71,25 +96,22 @@ footer {
   left: 10px;
   color: white;
   text-decoration: underline;
-  margin-bottom: 20px;
 }
-
-.btn-back {
+.back-link a {
   display: inline-flex;
   align-items: center;
   padding: 8px 12px;
-  background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
-  color: #ffffff; /* White text */
+  background: light-dark(rgba(255, 255, 255, 0.0980392157), rgba(0, 0, 0, 0.0980392157));
+  color: light-dark(#000, #fff);
   text-decoration: none;
   border-radius: 4px;
-  transition: background-color 0.2s ease-in-out;
   font-size: 0.9em; /* Slightly smaller font size */
-  border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border */
+  border: 1px solid light-dark(rgba(0, 0, 0, 0.1960784314), rgba(255, 255, 255, 0.1960784314)); /* Subtle border */
 }
-.btn-back:hover {
-  background-color: rgba(255, 255, 255, 0.3); /* Lighter on hover */
+.back-link a:hover {
+  background-color: light-dark(rgba(0, 0, 0, 0.1960784314), rgba(255, 255, 255, 0.1960784314)); /* Lighter on hover */
 }
-.btn-back svg {
+.back-link a svg {
   margin-right: 6px;
   width: 14px; /* Slightly smaller icon */
   height: 14px;
@@ -104,6 +126,11 @@ footer {
   max-width: 15vw;
   margin: auto;
   border-radius: 50%;
+}
+
+.content-justify {
+  justify-content: space-evenly;
+  display: flex;
 }
 
 /*# sourceMappingURL=base.css.map */

@@ -1,3 +1,10 @@
+.pseudo {
+  font-weight: 1200;
+}
 
+.self-description {
+  font-size: 1.2em;
+  margin: 1.2em 0;
+}
 
 /*# sourceMappingURL=home.css.map */

@@ -23,15 +23,20 @@
   min-width: 200px;
 }
 .header-info h1 {
-  margin: 0 0 10px 0;
+  margin: 0;
   font-size: 2em;
 }
 .header-info h5 {
-  margin: 0 0 10px 0;
+  margin: 0;
   font-size: 1.2em;
 }
 .header-info p {
   margin: 0;
+}
+.header-info svg {
+  margin-right: 6px;
+  width: 14px; /* Slightly smaller icon */
+  height: 14px;
 }
 
 .cv-container {
@@ -82,7 +87,7 @@
   justify-content: space-around;
 }
 .cv-section-title h2 {
-  color: #1e1e1e;
+  color: light-dark(#1e1e1e, #e1e1e1);
 }
 
 .cv-exp {
@@ -104,9 +109,10 @@
   font-size: 1em;
   line-height: 1.2;
 }
-.cv-exp-main .description {
+.cv-exp-main p {
   margin: 0.5rem 0;
   font-size: 0.9em;
+  text-align: justify;
 }
 .cv-exp-company {
   flex: 0 0 250px; /* Increased width for better fit */
@@ -212,8 +218,11 @@
 .competition-date {
   flex: 0 0 100px;
   text-align: right;
+  word-wrap: anywhere;
 }
 .competition-details {
+  border-left: 1px solid light-dark(#1e1e1e, #e1e1e1);
+  padding-left: 1rem;
   flex: 1;
 }
 .competition-details-name {
