@@ -44,17 +44,12 @@ function copyTextToClipboard(event) {
     fallbackCopyTextToClipboard(target, text);
   } else {
     navigator.clipboard.writeText(text).then(
-      function () {
-        onCopyEnd(true, target);
-      },
-      function (err) {
-        onCopyEnd(false, target);
-      },
+      () => onCopyEnd(true, target),
+      (err) =>  onCopyEnd(false, target)
     );
   }
 }
 
-var copyBobBtn = document.querySelector(".btn-hidden");
-copyBobBtn.addEventListener("click", function (event) {
-  copyTextToClipboard(event);
-});
+for(var btn of document.getElementsByClassName("btn-hidden")) {
+    btn.addEventListener("click", (event) => copyTextToClipboard(event));
+}

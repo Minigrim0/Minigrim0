@@ -22,3 +22,10 @@ def cv(request):
         "page_name": "CV",
         "cv": cv_data
     })
+
+
+def error(request, error_type):
+    return render(request, "error.html", {
+        "page_name": "Error",
+        "error": error_type
+    })

@@ -1,19 +1,15 @@
 <div class="supercodeblock">
     <div class="title">
-        <span class="filename">{{ filename }}</span>
+        {% if filename != None %}
+            <span class="filename">{{ filename }}</span>
+        {% else %}
+            <span class="filename">{{ lang }}</span>
+        {% endif %}
         <span class="copy-text"></span>
         <button class="btn-hidden">
-            <svg
-                viewBox="0 -0.5 25 25"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
+            <svg viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                <g
-                    id="SVGRepo_tracerCarrier"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                ></g>
+                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                 <g id="SVGRepo_iconCarrier">
                     <path
                         fill-rule="evenodd"
@@ -40,7 +36,8 @@
         <div class="numbering">
             <div class="highlight">
                 <pre>
-{% for line in line_range %}<span class="p">{{ line|add:1 }}</span>{% endfor %}
+{% for line in line_range %}<span class="line-number">{{ line|add:1 }}</span>
+{% endfor %}
                 </pre>
             </div>
         </div>

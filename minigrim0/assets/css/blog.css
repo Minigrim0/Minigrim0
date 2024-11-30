@@ -34,4 +34,36 @@
   background-color: rgba(255, 255, 255, 0.2);
 }
 
+.list-view {
+  width: 100%;
+  margin-bottom: 15px;
+}
+.list-view .list-item {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1960784314);
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.0980392157);
+  color: #ddd;
+  transition: background-color 0.2s ease-in-out;
+}
+.list-view .list-item:hover {
+  background-color: rgba(255, 255, 255, 0.1960784314);
+}
+.list-view .list-item .item-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin: 5px 10px;
+  text-decoration: none;
+}
+.list-view .list-item .item-content {
+  font-size: 0.8em;
+  margin-bottom: 5px;
+  color: light-dark(#1e1e1e, #e1e1e1);
+}
+
+.line-number {
+  color: #666;
+}
+
 /*# sourceMappingURL=blog.css.map */

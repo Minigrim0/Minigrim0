@@ -1,21 +1,32 @@
 {% extends "layouts/app.html" %}
 
 {% load static %}
+{% load markdown %}
+
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/syntax.css' %}" />
+    {# form specific CSS #}
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/form.css' %}" />
+    {{ form.media }}
+{% endblock %}
 
 {% block content %}
 <div id="content-frame">
-    <div class="projects-container">
+    <div class="container">
         {% url 'index' as back_link %}
         {% include "widgets/back_link.html" with back_url=back_link %}
 
         <h1 class="text-muted text-center">MiniBlog</h1>
 
-        <div id="projects-wrapper" class="list-view">
+        <div class="list-view">
             {% for post in object_list %}
-            <a href="{% url "blog:post-detail" post.slug %}" class="project-item">
-                <h2 class="project-title">{{ post.title|truncatechars:30 }}</h2>
-                <p class="project-description">{{ post.content|truncatechars:70 }}</p>
-            </a>
+            <div class="list-item">
+                <a href="{% url 'blog:post-detail' post.slug %}">
+                    <h2 class="item-title">{{ post.title|truncatechars:60 }}</h2>
+                    <p class="item-content">{{ post.content|truncatechars:120| cleaned_markdown | safe }}</p>
+                </a>
+            </div>
             {% empty %}
             <div class="muted-center">
                 <small>Nothing yet 🙈</small>

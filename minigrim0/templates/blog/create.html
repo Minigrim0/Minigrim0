@@ -34,36 +34,12 @@
 
         <h1 class="text-muted text-center">Create New Post</h1>
 
-        <form method="POST">
+        <form method="post">
             {% csrf_token %}
 
-            <!-- Title -->
-            <div class="input-text">
-                <label for="id_title">Title</label>
-                {{ form.title }}
-            </div>
-
-            <!-- Content -->
-            <div class="input-text">
-                <label for="id_content">Content</label>
-                <!-- {{ form.content }} -->
-                <code-input name="content" required id="post-content" class="line-numbers" lang="markdown" placeholder="Write the post here" template="blog-post"></code-input>
-            </div>
-
-            <!-- Tag (ManyToManyField) -->
-            <div class="input-text">
-                <label for="id_tag">Tag(s):</label>
-                {{ form.tag }}
-            </div>
-
-            <!-- Published -->
-            <div>
-                <label for="id_published">Published:</label>
-                {{ form.published }}
-            </div>
-
+            {{ form.as_p }}
             <!-- Submit Button -->
-            <button type="submit">Submit</button>
+            <button type="submit">Save</button>
         </form>
     </div>
 </div>
