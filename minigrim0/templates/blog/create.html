@@ -3,9 +3,17 @@
 {% load markdown %}
 {% load static %}
 
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/syntax.css' %}" />
+    {# form specific CSS #}
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/form.css' %}" />
+    {{ form.media }}
+{% endblock %}
+
 {% block content %}
 <div id="content-frame">
-    <div class="projects-container">
+    <div class="container">
         <div class="back-link">
             <a href="{% url 'blog:blog-list' %}" class="btn-back">
                 <svg
@@ -30,20 +38,20 @@
             {% csrf_token %}
 
             <!-- Title -->
-            <div>
-                <label for="id_title">Title:</label>
+            <div class="input-text">
+                <label for="id_title">Title</label>
                 {{ form.title }}
             </div>
 
             <!-- Content -->
-            <div>
-                <label for="id_content">Content:</label>
+            <div class="input-text">
+                <label for="id_content">Content</label>
                 <!-- {{ form.content }} -->
-                <code-input name="content" required id="post-content" class="line-numbers" style="width: 75%;" lang="markdown" placeholder="Write the post here" template="blog-post"></code-input>
+                <code-input name="content" required id="post-content" class="line-numbers" lang="markdown" placeholder="Write the post here" template="blog-post"></code-input>
             </div>
 
             <!-- Tag (ManyToManyField) -->
-            <div>
+            <div class="input-text">
                 <label for="id_tag">Tag(s):</label>
                 {{ form.tag }}
             </div>
