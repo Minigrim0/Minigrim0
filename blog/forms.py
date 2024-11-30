@@ -35,5 +35,4 @@ class BlogPostForm(forms.ModelForm):
 
     def clean(self) -> dict:
         cleaned_data = super().clean()
-        print(self.cleaned_data)
         return cleaned_data
