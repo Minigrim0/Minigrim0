@@ -28,16 +28,17 @@ ALLOWED_HOSTS = env("ALLOWED_HOSTS", default="127.0.0.1").split(",")
 CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in ALLOWED_HOSTS]
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'colorfield',
-    'minigrim0',
-    'blog',
-    'devlog'
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "colorfield",
+    "minigrim0",
+    "blog",
+    "devlog",
+    "import_export"
 ]
 
 MIDDLEWARE = [
