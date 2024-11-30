@@ -12,9 +12,9 @@ def cv(request):
     cv_data = {
         "edu": models.Education.objects.all(),
         "exp": models.Experience.objects.all(),
-        "com": models.Competition.objects.all(),
+        "com": models.Competition.objects.all().order_by("-_order"),
         "lan": models.Language.objects.all(),
-        "ski": models.Skill.objects.all(),
+        "ski": models.Skill.objects.all().order_by("-level"),
         "int": models.Interest.objects.all(),
     }
 

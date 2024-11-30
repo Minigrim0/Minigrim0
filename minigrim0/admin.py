@@ -1,9 +1,10 @@
 from django.contrib import admin
+from import_export.admin import ImportExportModelAdmin
 
 import minigrim0.models as models
 
 @admin.register(models.Education)
-class EducationAdmin(admin.ModelAdmin):
+class EducationAdmin(ImportExportModelAdmin):
     def move_up(self, request, queryset):
         for obj in queryset:
             obj.move(up=True)
@@ -17,7 +18,7 @@ class EducationAdmin(admin.ModelAdmin):
 
 
 @admin.register(models.Experience)
-class ExperienceAdmin(admin.ModelAdmin):
+class ExperienceAdmin(ImportExportModelAdmin):
     def move_up(self, request, queryset):
         for obj in queryset:
             obj.move(up=True)
@@ -31,7 +32,7 @@ class ExperienceAdmin(admin.ModelAdmin):
 
 
 @admin.register(models.Competition)
-class CompetitionAdmin(admin.ModelAdmin):
+class CompetitionAdmin(ImportExportModelAdmin):
     def move_up(self, request, queryset):
         for obj in queryset:
             obj.move(up=True)
@@ -45,20 +46,20 @@ class CompetitionAdmin(admin.ModelAdmin):
 
 
 @admin.register(models.Language)
-class LanguageAdmin(admin.ModelAdmin):
+class LanguageAdmin(ImportExportModelAdmin):
     list_display = ("name", "level")
 
 
 @admin.register(models.Skill)
-class SkillAdmin(admin.ModelAdmin):
+class SkillAdmin(ImportExportModelAdmin):
     list_display = ("name", "level")
 
 
 @admin.register(models.InterestCategory)
-class InterestCategoryAdmin(admin.ModelAdmin):
+class InterestCategoryAdmin(ImportExportModelAdmin):
     list_display = ("name",)
 
 
 @admin.register(models.Interest)
-class InterestAdmin(admin.ModelAdmin):
+class InterestAdmin(ImportExportModelAdmin):
     list_display = ("name", "category")
