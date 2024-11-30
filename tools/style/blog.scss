@@ -41,3 +41,41 @@
         }
     }
 }
+
+
+.list-view {
+    width: 100%;
+    margin-bottom: 15px;
+
+    .list-item {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #ffffff32;
+        border-radius: 4px;
+        background-color: #ffffff19;
+        color: #ddd;
+        transition: background-color 0.2s ease-in-out;
+
+        &:hover {
+            background-color: #ffffff32;
+        }
+
+        .item-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 5px 10px;
+            text-decoration: none;
+        }
+
+        .item-content {
+            font-size: 0.8em;
+            margin-bottom: 5px;
+            color: light-dark(#1e1e1e, #e1e1e1);
+        }
+    }
+}
+
+
+.line-number {
+    color: #666;
+}

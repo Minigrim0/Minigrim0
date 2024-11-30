@@ -33,9 +33,10 @@ class Post(models.Model):
         """
         logger.info("Saving model")
 
-        if self.pk == "":
+        expected_slug = slugify(self.title)
+        if self.pk != expected_slug:
             logger.info("New post created, setting slug")
-            self.slug = slugify(self.title)
+            self.slug = expected_slug
         logger.info("Instance pk: %s", self.pk)
 
         super().save(*args, **kwargs)

@@ -4,17 +4,18 @@
     border: 1px solid black;
     padding-top: 3px;
     border-radius: 5px;
-    max-width: 75%;
+    max-width: 100%;
     margin-left: auto;
     margin-right: auto;
 
     -webkit-background-clip: padding-box;
     -moz-background-clip: padding;
     background-clip: padding-box;
+    font-size: 1em;
 }
 
 .supercodeblock .filename {
-    color: #555;
+    color: light-dark(#555, #999);
     display: inline-block;
     font-family: monospace;
     margin-bottom: 0px;
@@ -24,6 +25,10 @@
 .supercodeblock hr {
     margin: 0px;
     border: 1px solid rgba(0, 0, 0, 0.8);
+}
+
+.code-block {
+    overflow-x: scroll;
 }
 
 .highlight pre {
@@ -37,7 +42,7 @@
 }
 
 .code-block .numbering {
-    width: 25px;
+    width: 30px;
 }
 
 .numbering .highlight {
