@@ -55,6 +55,7 @@
         background-color: #ffffff19;
         color: #ddd;
         transition: background-color 0.2s ease-in-out;
+        margin-bottom: 5px;
 
         &:hover {
             background-color: #ffffff32;
@@ -78,4 +79,11 @@
 
 .line-number {
     color: #666;
+}
+
+code-input {
+    width: 100%;
+    font-size: 0.7em;
+    line-height: 1.2em;
+    height: fit-content;
 }
