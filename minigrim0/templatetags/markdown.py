@@ -160,15 +160,32 @@ class HighlightRenderer(mistune.HTMLRenderer):
             return highlight(code, lexer, formatter)
 
 
+class SimpleHighlight(mistune.HTMLRenderer):
+    def block_code(self, code, info = None):
+        if info is None:
+            info = "text"
+        lexer = get_lexer_by_name(info, stripall=True)
+        formatter = HtmlFormatter()
+        return highlight(code, lexer, formatter)
+
+
 @register.filter
 def markdown(value):
+    """Returns HTML with code fancy blocks (copy button, line numbers)"""
     renderer = HighlightRenderer()
     markdown = mistune.Markdown(renderer=renderer, plugins=[task_lists])
     return markdown(value)
 
 @register.filter
+def simple_markdown(value):
+    """Returns HTML with colored code blocks"""
+    renderer = SimpleHighlight()
+    markdown = mistune.Markdown(renderer=renderer, plugins=[task_lists])
+    return markdown(value)
+
+@register.filter
 def cleaned_markdown(value):
-    """Returns pure text, no HTML"""
+    """Returns pure text, no HTML. Skips code blocks"""
     renderer = CleanRenderer()
     markdown = mistune.Markdown(renderer=renderer, plugins=[task_lists])
     return markdown(value)

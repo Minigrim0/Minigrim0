@@ -1,36 +1,23 @@
-.project-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
 .view-toggle {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
-}
 
-.view-toggle button {
-    background-color: transparent;
-    border: 1px solid #fff;
-    color: #fff;
-    padding: 5px 10px;
-    margin: 0 5px;
-    cursor: pointer;
-}
+    button {
+        background-color: transparent;
+        border: 1px solid #fff;
+        color: #fff;
+        padding: 5px 10px;
+        margin: 0 5px;
+        cursor: pointer;
+    }
 
-.view-toggle button.active {
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
-.project-item {
-    transition: width 0.3s ease, height 0.3s ease;
+    .active {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
 }
 
 .list-view .project-item {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 20px;
     margin-bottom: 20px;
 }
 
@@ -38,82 +25,109 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
+
+    .project {
+        &-title {
+            word-break: break-all;
+        }
+
+        &-description {
+            text-align: justify;
+        }
+
+        &-links {
+            justify-content: end;
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+        }
+    }
+
+    .grid-collapse {
+        display: none;
+    }
 }
 
-.grid-view .project-item {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    padding: 20px;
-}
+.project {
+    &-item {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 20px;
+        position: relative;
+    }
 
-.project-title {
-    margin-top: 0;
-    font-size: 1.5em;
-}
+    &-title {
+        margin-top: 0;
+        font-size: 1.5em;
+    }
 
-.project-description {
-    margin-bottom: 15px;
-}
+    &-description {
+        margin-bottom: 1.2em;
+    }
 
-.project-links {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-    align-items: center; /* This will vertically center the links */
-}
+    &-links {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+        align-items: center; /* This will vertically center the links */
+        margin-top: auto;
+    }
 
-.project-link {
-    display: inline-flex;
-    align-items: center;
-    color: #fff;
-    text-decoration: none;
-    font-size: 0.9em;
-    padding: 5px 10px; /* Add some padding for better clickability */
-    background-color: rgba(
-        255,
-        255,
-        255,
-        0.1
-    ); /* Slight background for better visibility */
-    border-radius: 4px; /* Rounded corners */
-    transition: background-color 0.2s ease; /* Smooth transition for hover effect */
-}
+    &-link {
+        display: inline-flex;
+        align-items: center;
+        color: #fff;
+        text-decoration: none;
+        font-size: 0.9em;
+        padding: 5px 10px; /* Add some padding for better clickability */
+        background-color: #ffffff19; /* Slight background for better visibility */
+        border-radius: 4px; /* Rounded corners */
+        transition: background-color 0.2s ease; /* Smooth transition for hover effect */
+        cursor: pointer;
 
-.project-link:hover {
-    background-color: rgba(255, 255, 255, 0.2); /* Lighten on hover */
-}
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.2); /* Lighten on hover */
+        }
 
-.project-link svg {
-    margin-right: 5px;
-    width: 16px; /* Ensure consistent width */
-    height: 16px; /* Ensure consistent height */
-}
+        .grid-collapse {
+            margin-left: 5px;
+        }
 
-/* Ensure the home icon and GitHub icon have the same dimensions */
-.project-link .home-icon,
-.project-link .github-icon {
-    width: 16px;
-    height: 16px;
-    display: inline-block;
-    vertical-align: middle;
-}
+        svg {
+            width: 16px; /* Ensure consistent width */
+            height: 16px; /* Ensure consistent height */
+        }
 
-.project-link .home-icon {
-    /* You can replace this with an SVG if you prefer */
-    content: "🏠";
-    font-size: 16px;
-    line-height: 1;
-}
+        .home-icon, .github-icon, .readme-icon {
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+            vertical-align: middle;
+        }
 
-.project-readme {
-    background-color: rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-    padding: 10px;
-}
+        .home-icon {
+            content: "🏠 ";
+            font-size: 16px;
+            line-height: 1;
+        }
 
-.project-readme h3 {
-    margin-top: 0;
-    font-size: 1.2em;
+        .readme-icon {
+            content: "📖 ";
+            font-size: 16px;
+            line-height: 1;
+        }
+    }
+
+    &-readme {
+        background-color: rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        padding: 10px;
+
+        h3 {
+            margin-top: 0;
+            font-size: 1.2em;
+        }
+    }
 }
 
 .readme-content {
@@ -138,43 +152,50 @@
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
-}
+    color: light-dark(#eee, #111) !important;
 
-.modal-content {
-    background-color: #bbb;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 700px;
-}
+    &-title {
+        font-size: 0.7em;
+        color: light-dark(#eee, #111);
+    }
 
-#modal-readme-content {
-    font-size: 0.6em;
-    border-radius: 10px;
-    background-color: #fff;
-    border: 1px solid #888;
-    padding: 10px;
-}
+    &-content {
+        background-color: #bbb;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 700px;
+    }
 
-#modal-title {
-    font-size: 0.7em;
-}
+    &-readme-content {
+        color: light-dark(#eee, #111) !important;
+        font-size: 0.6em;
+        border-radius: 10px;
+        background-color: #fff;
+        border: 1px solid #888;
+        padding: 10px;
 
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
+        h1, h2, h3, h4, h5, h6 {
+            color: light-dark(#eee, #111) !important;
+            margin-top: 0;
+        }
+    }
 
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
+    .close {
+        color: light-dark(#111, #eee);
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
 
+        &:hover, &:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    }
+}
+/*
 .readme-button {
     background-color: #f1f1f1;
     border: none;
@@ -187,8 +208,7 @@
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 4px;
-}
-
-.readme-button:hover {
-    background-color: #ddd;
-}
+    &:hover {
+        background-color: #ddd;
+    }
+} */
