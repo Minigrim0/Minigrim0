@@ -3,6 +3,7 @@ from import_export.admin import ImportExportModelAdmin
 
 import minigrim0.models as models
 
+
 @admin.register(models.Education)
 class EducationAdmin(ImportExportModelAdmin):
     def move_up(self, request, queryset):

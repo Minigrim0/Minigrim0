@@ -1,14 +1,16 @@
+import logging
+
+import mistune
 from django import template
 from django.template.loader import render_to_string
-import mistune
 from mistune.plugins.task_lists import task_lists
 from pygments import highlight
-from pygments.lexers import get_lexer_by_name
 from pygments.formatters import HtmlFormatter
-import logging
+from pygments.lexers import get_lexer_by_name
 
 logger = logging.getLogger(__file__)
 register = template.Library()
+
 
 class CleanRenderer(mistune.HTMLRenderer):
     # inline level
@@ -113,13 +115,12 @@ class CleanRenderer(mistune.HTMLRenderer):
     def table_cell(self, text, align=None, head=False):
         return text
 
-
     # provide by def_list plugin
     def def_list(self, text):
         return text
 
     def def_list_head(self, text):
-            return text
+        return text
 
     def def_list_item(self, text):
         return text
@@ -127,11 +128,13 @@ class CleanRenderer(mistune.HTMLRenderer):
     # provide by math plugin
     def block_math(self, text):
         return text
+
     def inline_math(self, text):
         return text
 
+
 class HighlightRenderer(mistune.HTMLRenderer):
-    def block_code(self, code, info = None):
+    def block_code(self, code, info=None):
         if info != "" and info is not None:
             if ":" in info:
                 lang, filename = info.split(":")
@@ -149,7 +152,7 @@ class HighlightRenderer(mistune.HTMLRenderer):
                     "filename": filename,
                     "line_range": range(lines),
                     "lang": lang,
-                }
+                },
             )
             return result
         else:
@@ -161,7 +164,7 @@ class HighlightRenderer(mistune.HTMLRenderer):
 
 
 class SimpleHighlight(mistune.HTMLRenderer):
-    def block_code(self, code, info = None):
+    def block_code(self, code, info=None):
         if info is None:
             info = "text"
         lexer = get_lexer_by_name(info, stripall=True)
@@ -176,12 +179,14 @@ def markdown(value):
     markdown = mistune.Markdown(renderer=renderer, plugins=[task_lists])
     return markdown(value)
 
+
 @register.filter
 def simple_markdown(value):
     """Returns HTML with colored code blocks"""
     renderer = SimpleHighlight()
     markdown = mistune.Markdown(renderer=renderer, plugins=[task_lists])
     return markdown(value)
+
 
 @register.filter
 def cleaned_markdown(value):

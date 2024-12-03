@@ -1,6 +1,6 @@
 from django import forms
-from django.utils.safestring import mark_safe
 from django.forms import widgets
+from django.utils.safestring import mark_safe
 
 
 class BlogPostContentWidget(widgets.Widget):

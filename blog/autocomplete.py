@@ -2,6 +2,7 @@ from dal import autocomplete
 
 from blog.models import Tag
 
+
 class TagAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         # Don't forget to filter out results depending on the visitor !

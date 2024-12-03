@@ -1,18 +1,29 @@
+import random
+
 from django.core.management.base import BaseCommand
 from django.db import transaction
-from minigrim0.models import Education, Experience, Competition, Language, Skill, InterestCategory, Interest
-from devlog.models import Repository
 from faker import Faker
-import random
+
+from devlog.models import Repository
+from minigrim0.models import (
+    Competition,
+    Education,
+    Experience,
+    Interest,
+    InterestCategory,
+    Language,
+    Skill,
+)
 
 fake = Faker()
 
+
 class Command(BaseCommand):
-    help = 'Generates fake data for the database'
+    help = "Generates fake data for the database"
 
     @transaction.atomic
     def handle(self, *args, **kwargs):
-        self.stdout.write('Generating fake data...')
+        self.stdout.write("Generating fake data...")
 
         # Generate Education
         for _ in range(5):
@@ -20,7 +31,7 @@ class Command(BaseCommand):
                 name=fake.company(),
                 place=fake.city(),
                 start_date=str(fake.year()),
-                end_date=str(fake.year())
+                end_date=str(fake.year()),
             )
 
         # Generate Experience
@@ -30,7 +41,7 @@ class Command(BaseCommand):
                 place=fake.company(),
                 start_date=str(fake.year()),
                 end_date=str(fake.year()),
-                link=fake.url()
+                link=fake.url(),
             )
 
         # Generate Competition
@@ -45,25 +56,18 @@ class Command(BaseCommand):
         for _ in range(3):
             Language.objects.create(
                 name=fake.language_name(),
-                level=random.choice(['beg', 'int', 'adv', 'flu', 'nat'])
+                level=random.choice(["beg", "int", "adv", "flu", "nat"]),
             )
 
         # Generate Skill
         for _ in range(10):
-            Skill.objects.create(
-                name=fake.job(),
-                level=random.randint(1, 5),
-                details=fake.paragraph()
-            )
+            Skill.objects.create(name=fake.job(), level=random.randint(1, 5), details=fake.paragraph())
 
         # Generate InterestCategory and Interest
         for _ in range(3):
             category = InterestCategory.objects.create(name=fake.word())
             for _ in range(random.randint(2, 5)):
-                Interest.objects.create(
-                    name=fake.word(),
-                    category=category
-                )
+                Interest.objects.create(name=fake.word(), category=category)
 
         # Generate Repository
         for _ in range(10):
@@ -73,7 +77,7 @@ class Command(BaseCommand):
                 readme=fake.text(),
                 homepage=fake.url() if random.choice([True, False]) else None,
                 url=fake.url(),
-                stars=random.randint(0, 1000)
+                stars=random.randint(0, 1000),
             )
 
-        self.stdout.write(self.style.SUCCESS('Fake data generated successfully!'))
+        self.stdout.write(self.style.SUCCESS("Fake data generated successfully!"))

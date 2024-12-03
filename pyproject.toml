@@ -6,6 +6,7 @@ venv = ".venv"
 name = "minigrim0"
 version = "0.1.0"
 description = "Minigrim0's website"
+requires-python = ">=3.11"
 authors = [{name = "Minigrim0", email="grimauflorent@gmail.com"}]
 license = "MIT"
 readme = "README.md"
@@ -23,6 +24,24 @@ dependencies = [
     "redis == 5.1.0",
 ]
 
-[project.optional-dependencies]
+[dependency-groups]
 dev = ["isort == 5.13.2", "pylint == 2.17.7", "black == 23.12.1"]
 prod = ["gunicorn == 21.2.0"]
+
+[tool.black]
+line-length = 110
+target-version = ["py312"]
+extend-exclude = '''
+.*\/migrations\/.*\.py  # Skip all migration files
+\.venv\/.*  # Skip virtual environment
+'''
+
+[tool.pylint]
+ignore = [
+    "migrations",
+    ".venv",
+]
+disable = [
+    "too-few-public-methods",
+]
+jobs = 4
