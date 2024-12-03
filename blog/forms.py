@@ -1,10 +1,10 @@
 from django import forms
+from dal import autocomplete
 
 from blog.models import Post
 from blog.widgets import BlogPostContentWidget
 
 class BlogPostForm(forms.ModelForm):
-
     class Media:
         css = {
             "all": [
@@ -15,7 +15,7 @@ class BlogPostForm(forms.ModelForm):
                 "https://cdn.jsdelivr.net/gh/WebCoder49/code-input@2.1/plugins/prism-line-numbers.min.css",
             ]
         }
-        js = [
+        js=[
             "https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js",
             "https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js",
             "https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js",
@@ -29,10 +29,7 @@ class BlogPostForm(forms.ModelForm):
         exclude = ["date_posted", "date_updated"]
 
         widgets = {
-            'slug': forms.HiddenInput(),
-            'content': BlogPostContentWidget(),
+            "slug": forms.HiddenInput(),
+            "content": BlogPostContentWidget(),
+            "tag": autocomplete.ModelSelect2Multiple(url="blog:tag-autocomplete"),
         }
-
-    def clean(self) -> dict:
-        cleaned_data = super().clean()
-        return cleaned_data

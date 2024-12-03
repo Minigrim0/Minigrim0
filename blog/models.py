@@ -11,6 +11,7 @@ class Post(models.Model):
     """Represents a blog post"""
 
     title = models.CharField(max_length=100)
+    short_description = models.CharField(default="", max_length=200)
     content = models.TextField()
     date_updated = models.DateTimeField(auto_now=True)
     tag = models.ManyToManyField('Tag', blank=True)
