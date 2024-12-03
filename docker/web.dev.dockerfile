@@ -1,7 +1,6 @@
-ARG RUST_VERSION=1.70.0
 ARG APP_NAME=minigrim0
 
-FROM rust:${RUST_VERSION}-slim-bullseye AS build
+FROM rust:slim-bullseye AS build
 ARG APP_NAME
 WORKDIR /app
 
@@ -15,7 +14,7 @@ RUN --mount=type=bind,source=tools/projects/src,target=src \
     <<EOF
 set -e
 cargo build --locked --release
-cp ./target/release/$APP_NAME /bin/minigrim0
+cp ./target/release/github-project-fetcher /bin/${APP_NAME}
 EOF
 
 # pull official base image
@@ -28,8 +27,5 @@ RUN apt update && apt install libpq-dev gcc -y
 COPY . .
 RUN rm tools/ -r
 RUN pip install --upgrade pip
-RUN pip install poetry
+RUN pip install uv
 COPY --from=build /bin/minigrim0 /bin/
-
-# install project dependencies
-RUN poetry install --no-interaction --no-ansi

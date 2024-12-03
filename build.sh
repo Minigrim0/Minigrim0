@@ -14,12 +14,10 @@ get_docker_file () {
         dev)
             DOCKERFILE="docker/docker-compose.dev.yml"
             export COMPOSE_PROJECT_NAME="minigrim0-web-dev"
-            POETRY='poetry run'
             ;;
         prod)
             DOCKERFILE="docker/docker-compose.yml"
             export COMPOSE_PROJECT_NAME="minigrim0-web"
-            POETRY=''
             ;;
         *)
             help_text
@@ -32,9 +30,9 @@ case $1 in
         get_docker_file $2
 
         docker compose -f $DOCKERFILE up -d --build
-        docker compose -f $DOCKERFILE exec web $POETRY python manage.py makemigrations --noinput
-        docker compose -f $DOCKERFILE exec web $POETRY python manage.py migrate --noinput
-        docker compose -f $DOCKERFILE exec web $POETRY python manage.py collectstatic --noinput
+        docker compose -f $DOCKERFILE exec web uv run manage.py makemigrations --noinput
+        docker compose -f $DOCKERFILE exec web uv run manage.py migrate --noinput
+        docker compose -f $DOCKERFILE exec web uv run manage.py collectstatic --noinput
 
         if [ $2 != "dev" ]; then  # nginx is not in dev
             docker compose -f $DOCKERFILE restart nginx
