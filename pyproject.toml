@@ -6,12 +6,13 @@ venv = ".venv"
 name = "minigrim0"
 version = "0.1.0"
 description = "Minigrim0's website"
-authors = ["Minigrim0 <grimauflorent@gmail.com>"]
+authors = [{name = "Minigrim0", email="grimauflorent@gmail.com"}]
 license = "MIT"
 readme = "README.md"
 dependencies = [
     "coloredlogs == 15.0.1",
     "django == 5.1.1",
+    "django-autocomplete-light>=3.11.0",
     "django-colorfield == 0.11.0",
     "django-environ == 0.11.2",
     "django-import-export>=4.3.1",

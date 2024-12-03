@@ -109,6 +109,15 @@ wheels = [
 ]
 
 [[package]]
+name = "django-autocomplete-light"
+version = "3.11.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "django" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/ec/32/004073fb1bc55770bc9111bac42f17f481e17d4d20bbab2b5a8b921b95a6/django-autocomplete-light-3.11.0.tar.gz", hash = "sha256:212576a17e3308ef7ca77e280b86684167916d2091d4b73640f38845d9516328", size = 173786 }
+
+[[package]]
 name = "django-colorfield"
 version = "0.11.0"
 source = { registry = "https://pypi.org/simple" }
@@ -220,6 +229,7 @@ source = { virtual = "." }
 dependencies = [
     { name = "coloredlogs" },
     { name = "django" },
+    { name = "django-autocomplete-light" },
     { name = "django-colorfield" },
     { name = "django-environ" },
     { name = "django-import-export" },
@@ -245,6 +255,7 @@ requires-dist = [
     { name = "black", marker = "extra == 'dev'", specifier = "==23.12.1" },
     { name = "coloredlogs", specifier = "==15.0.1" },
     { name = "django", specifier = "==5.1.1" },
+    { name = "django-autocomplete-light", specifier = ">=3.11.0" },
     { name = "django-colorfield", specifier = "==0.11.0" },
     { name = "django-environ", specifier = "==0.11.2" },
     { name = "django-import-export", specifier = ">=4.3.1" },
