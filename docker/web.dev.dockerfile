@@ -17,6 +17,19 @@ cargo build --locked --release
 cp ./target/release/github-project-fetcher /bin/${APP_NAME}
 EOF
 
+# Compile CSS
+FROM alpine:latest as css
+
+WORKDIR /app
+
+RUN apk add --no-cache npm \
+    && npm install --global sass
+
+WORKDIR /data
+
+COPY ./tools/sass ./sass
+RUN npx sass ./sass:./css
+
 # pull official base image
 FROM python:3.11-slim as final
 
@@ -29,3 +42,4 @@ RUN rm tools/ -r
 RUN pip install --upgrade pip
 RUN pip install uv
 COPY --from=build /bin/minigrim0 /bin/
+COPY --from=css /data/css ./minigrim0/assets/css

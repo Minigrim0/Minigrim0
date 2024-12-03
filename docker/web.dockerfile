@@ -1,3 +1,4 @@
+# Compile Github Fetcher
 ARG APP_NAME=minigrim0
 
 FROM rust:slim-bullseye AS build
@@ -17,7 +18,20 @@ cargo build --locked --release
 cp ./target/release/$APP_NAME /bin/minigrim0
 EOF
 
-# pull official base image
+# Compile CSS
+FROM alpine:latest as css
+
+WORKDIR /app
+
+RUN apk add --no-cache npm \
+    && npm install --global sass
+
+WORKDIR /data
+
+COPY ./tools/sass ./sass
+RUN npx sass ./sass:./css
+
+# Build final image
 FROM python:3.11-slim AS final
 
 WORKDIR /usr/src/app
@@ -29,6 +43,7 @@ RUN rm tools/ -r
 RUN pip install --upgrade pip
 RUN pip install uv
 COPY --from=build /bin/minigrim0 /bin/
+COPY --from=css /data/css ./minigrim0/assets/css
 
 # install project dependencies
 CMD ["uv", "run", "--extra", "prod", "gunicorn", "minigrim0.wsgi", "--bind", "0.0.0.0:8000", "--timeout", "300"]
