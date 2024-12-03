@@ -27,11 +27,8 @@ RUN apt update && apt install libpq-dev gcc -y
 COPY . .
 RUN rm tools/ -r
 RUN pip install --upgrade pip
-RUN pip install poetry
+RUN pip install uv
 COPY --from=build /bin/minigrim0 /bin/
 
 # install project dependencies
-RUN poetry config virtualenvs.create false
-RUN poetry install --no-interaction --no-ansi
-
-CMD ["gunicorn", "minigrim0.wsgi", "--bind", "0.0.0.0:8000", "--timeout", "300"]
+CMD ["uv", "run", "--extra", "prod", "gunicorn", "minigrim0.wsgi", "--bind", "0.0.0.0:8000", "--timeout", "300"]

@@ -24,9 +24,11 @@ dependencies = [
     "redis == 5.1.0",
 ]
 
-[dependency-groups]
+[project.optional-dependencies]
 dev = ["isort == 5.13.2", "pylint == 2.17.7", "black == 23.12.1"]
-prod = ["gunicorn == 21.2.0"]
+prod = [
+    "gunicorn>=23.0.0",
+]
 
 [tool.black]
 line-length = 110
