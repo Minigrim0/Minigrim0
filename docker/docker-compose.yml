@@ -46,7 +46,7 @@ services:
     restart: unless-stopped
 
   postgres:
-    image: postgres:12.1-alpine
+    image: postgres:15
     env_file:
       - ./.env.prod.db
     volumes:
