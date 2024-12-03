@@ -1,1 +1,1 @@
-sass --watch tools/style:minigrim0/assets/css
+sass --watch tools/sass:minigrim0/assets/css
