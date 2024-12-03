@@ -1,11 +1,12 @@
-from django.db import models
-from colorfield.fields import ColorField
-from django.utils.text import slugify
-from django.shortcuts import reverse
-
 import logging
 
+from colorfield.fields import ColorField
+from django.db import models
+from django.shortcuts import reverse
+from django.utils.text import slugify
+
 logger = logging.getLogger(__file__)
+
 
 class Post(models.Model):
     """Represents a blog post"""
@@ -14,7 +15,7 @@ class Post(models.Model):
     short_description = models.CharField(default="", max_length=200)
     content = models.TextField()
     date_updated = models.DateTimeField(auto_now=True)
-    tag = models.ManyToManyField('Tag', blank=True)
+    tag = models.ManyToManyField("Tag", blank=True)
     date_posted = models.DateTimeField(auto_now_add=True)
     published = models.BooleanField(default=False)
     slug = models.SlugField(max_length=50, primary_key=True, default="")
@@ -69,7 +70,7 @@ class Tag(models.Model):
     """Represents a tag for a blog post"""
 
     name = models.CharField(max_length=100)
-    color = ColorField(default='#FF0000')
+    color = ColorField(default="#FF0000")
 
     def __str__(self) -> str:
         return self.name

@@ -1,11 +1,10 @@
 from django.shortcuts import render
+
 from minigrim0 import models
 
 
 def index(request):
-    return render(request, "minigrim0/index.html", {
-        "page_name": "Home"
-    })
+    return render(request, "minigrim0/index.html", {"page_name": "Home"})
 
 
 def cv(request):
@@ -18,14 +17,8 @@ def cv(request):
         "int": models.Interest.objects.all(),
     }
 
-    return render(request, "minigrim0/cv.html", {
-        "page_name": "CV",
-        "cv": cv_data
-    })
+    return render(request, "minigrim0/cv.html", {"page_name": "CV", "cv": cv_data})
 
 
 def error(request, error_type):
-    return render(request, "error.html", {
-        "page_name": "Error",
-        "error": error_type
-    })
+    return render(request, "error.html", {"page_name": "Error", "error": error_type})

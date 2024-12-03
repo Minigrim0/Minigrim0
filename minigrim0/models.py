@@ -1,6 +1,5 @@
-from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
-from django.db import transaction
+from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import models, transaction
 
 
 class Orderable(models.Model):
@@ -90,10 +89,10 @@ class Competition(Orderable):
 
 class Language(models.Model):
     level_choice = (
-        ('beg', 'Beginner'),
-        ('int', 'Intermediate'),
-        ('flu', 'fluent'),
-        ('nat', 'native')
+        ("beg", "Beginner"),
+        ("int", "Intermediate"),
+        ("flu", "fluent"),
+        ("nat", "native"),
     )
 
     name = models.CharField(max_length=100)

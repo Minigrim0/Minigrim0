@@ -10,11 +10,13 @@ class Repository(models.Model):
     homepage = models.CharField(max_length=256, blank=True, null=True)
     url = models.CharField(max_length=256, primary_key=True)
     stars = models.IntegerField()
-    active = models.BooleanField(default=True)  # Use this to disable a repository from the projects page rather than deleting it
+    active = models.BooleanField(
+        default=True
+    )  # Use this to disable a repository from the projects page rather than deleting it
 
     def __str__(self) -> str:
         return self.name
-    
+
     @property
     def related_posts(self) -> int:
         return self.posts.count()

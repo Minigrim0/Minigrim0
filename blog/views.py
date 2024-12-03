@@ -1,27 +1,27 @@
-from django.views.generic import CreateView, UpdateView, DeleteView
-from django.views.generic.detail import DetailView
-from django.views.generic.list import ListView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse
-from django.utils import timezone
-from django.shortcuts import redirect
-
 import logging
 
-from blog.models import Post
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
+from django.urls import reverse
+from django.utils import timezone
+from django.views.generic import CreateView, DeleteView, UpdateView
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
+
 from blog.forms import BlogPostForm
+from blog.models import Post
 
 logger = logging.getLogger(__name__)
 
 
 class BlogPostCreateView(LoginRequiredMixin, CreateView):
     form_class = BlogPostForm
-    template_name = 'blog/posts/create.html'
-    permission_required = 'blog.create_post'
+    template_name = "blog/posts/create.html"
+    permission_required = "blog.create_post"
 
     def get_initial(self):
         return {
-            'date_updated': timezone.now(),
+            "date_updated": timezone.now(),
             "slug": "default-slug-that-will-be-changed",
         }
 
@@ -29,8 +29,8 @@ class BlogPostCreateView(LoginRequiredMixin, CreateView):
 class BlogPostEditView(LoginRequiredMixin, UpdateView):
     form_class = BlogPostForm
     model = Post
-    template_name = 'blog/posts/update.html'
-    permission_required = 'blog.change_post'
+    template_name = "blog/posts/update.html"
+    permission_required = "blog.change_post"
 
     def get_initial(self):
         return {
@@ -55,32 +55,29 @@ class BlogPostListView(ListView):
 class BlogPostDetailView(DetailView):
     model = Post
     template_name = "blog/posts/detail.html"
-    context_object_name = 'post'
+    context_object_name = "post"
 
     def get_success_url(self):
-        return reverse('view_post', kwargs={'pk': self.object.id})
+        return reverse("view_post", kwargs={"pk": self.object.id})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = BlogPostForm(initial={
-            'project': self.object,
-            'author': self.request.user
-        })
+        context["form"] = BlogPostForm(initial={"project": self.object, "author": self.request.user})
         return context
 
 
 class BlogPostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
-    template_name = 'blog/posts/delete.html'
-    success_url = '/blog/'
-    permission_required = 'blog.delete_post'
-    context_object_name = 'post'
+    template_name = "blog/posts/delete.html"
+    success_url = "/blog/"
+    permission_required = "blog.delete_post"
+    context_object_name = "post"
 
 
 def change_post_published_status(request, pk):
     """Changes the publication status of the post depending on the requested action"""
 
-    action = request.GET.get('action', 'toggle')
+    action = request.GET.get("action", "toggle")
     post = Post.objects.get(pk=pk)
 
     match action:
@@ -98,4 +95,4 @@ def change_post_published_status(request, pk):
 
     post.save()
     # Redirect to the previous page or to the blog list
-    return redirect(request.META.get('HTTP_REFERER', reverse('blog:blog-list')))
+    return redirect(request.META.get("HTTP_REFERER", reverse("blog:blog-list")))
