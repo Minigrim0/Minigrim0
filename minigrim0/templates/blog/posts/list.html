@@ -23,8 +23,11 @@
             {% for post in object_list %}
             <div class="list-item">
                 <a href="{% url 'blog:post-detail' post.slug %}">
-                    <h2 class="item-title">{{ post.title|truncatechars:60 }}</h2>
-                    <p class="item-content">{{ post.content|truncatechars:120| cleaned_markdown | safe }}</p>
+                    <div class="row justify-between">
+                        <h2 class="item-title">{{ post.title|truncatechars:60 }}</h2>
+                        <small class="align-right">{{ post.date_posted|date:"d M Y" }}</small>
+                    </div>
+                    <p class="item-content">{{ post.short_description }}</p>
                 </a>
             </div>
             {% empty %}

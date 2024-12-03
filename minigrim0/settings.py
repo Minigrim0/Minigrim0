@@ -28,6 +28,8 @@ ALLOWED_HOSTS = env("ALLOWED_HOSTS", default="127.0.0.1").split(",")
 CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in ALLOWED_HOSTS]
 
 INSTALLED_APPS = [
+    "dal",
+    "dal_select2",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

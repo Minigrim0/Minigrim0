@@ -13,6 +13,12 @@
             {% if user.is_superuser %}
                 <div class="blog-toolchain text-center">
                     <a class="btn-edit" href="{% url 'blog:post-edit' post.slug %}">Edit</a>
+                    <a class="btn-edit" href="{% url 'blog:post-delete' post.slug %}">Delete</a>
+                    {% if post.published %}
+                        <a class="btn-edit" href="{% url 'blog:post-publish' post.slug %}?action=retract">Retract</a>
+                    {% else %}
+                        <a class="btn-edit" href="{% url 'blog:post-publish' post.slug %}?action=publish">Publish</a>
+                    {% endif %}
                 </div>
             {% endif %}
             <div id="post-content" class="list-view">

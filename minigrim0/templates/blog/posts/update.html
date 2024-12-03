@@ -8,6 +8,7 @@
     {# form specific CSS #}
     <link rel="stylesheet" href="{% static 'css/blog.css' %}" />
     <link rel="stylesheet" href="{% static 'css/form.css' %}" />
+    <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
     {{ form.media }}
 {% endblock %}
 
@@ -32,12 +33,12 @@
             </a>
         </div>
 
-        <h1 class="text-muted text-center">Edit post</h1>
+        <h1 class="text-muted text-center m-0">Edit post</h1>
         <div class="blog-toolchain text-center">
             <a class="btn-edit" href="{% url 'blog:post-detail' post.slug %}">View post</a>
         </div>
 
-        <form method="post">
+        <form method="post" class="post-form">
             {% csrf_token %}
 
             {{ form.as_p }}
