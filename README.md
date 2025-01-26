@@ -14,11 +14,6 @@
     <img alt="member of TeamNameBE" height="50em" src="https://avatars.githubusercontent.com/u/80853475?s=400&u=af2d066698d453aa9bc927dee18c236a6e9ac1b2&v=4"/>
   </a>
 </h2>
-<div align="center">
-  <a href="https://git.io/streak-stats">
-    <img height="180em" src="https://streak-stats.demolab.com/?user=Minigrim0&theme=dark" />
-  </a>
-</div>
 <p align="center">
   <img height="180em" src="https://github-readme-stats.vercel.app/api?username=Minigrim0&count_private=true&show_icons=true&theme=dark&include_all_commits=true)" />
   <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Minigrim0&layout=compact&hide=roff,Jupyter%20Notebook,html,css,scss,Makefile&theme=dark" />
