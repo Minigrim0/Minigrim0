@@ -7,7 +7,7 @@ name = "minigrim0"
 version = "0.1.0"
 description = "Minigrim0's website"
 requires-python = ">=3.11"
-authors = [{name = "Minigrim0", email="grimauflorent@gmail.com"}]
+authors = [{ name = "Minigrim0", email = "grimauflorent@gmail.com" }]
 license = "MIT"
 readme = "README.md"
 dependencies = [
@@ -19,16 +19,13 @@ dependencies = [
     "django-import-export>=4.3.1",
     "faker == 28.4.1",
     "mistune == 3.0.2",
-    "psycopg2 == 2.9.9",
     "pygments == 2.18.0",
     "redis == 5.1.0",
 ]
 
 [project.optional-dependencies]
 dev = ["isort == 5.13.2", "pylint == 2.17.7", "black == 23.12.1"]
-prod = [
-    "gunicorn>=23.0.0",
-]
+prod = ["gunicorn>=23.0.0", "psycopg2 == 2.9.9"]
 
 [tool.black]
 line-length = 110
@@ -39,11 +36,6 @@ extend-exclude = '''
 '''
 
 [tool.pylint]
-ignore = [
-    "migrations",
-    ".venv",
-]
-disable = [
-    "too-few-public-methods",
-]
+ignore = ["migrations", ".venv"]
+disable = ["too-few-public-methods"]
 jobs = 4

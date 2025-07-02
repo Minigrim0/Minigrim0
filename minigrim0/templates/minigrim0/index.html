@@ -1,49 +1,40 @@
-{% extends "layouts/app.html" %}
-
-{% load static %}
-
-{% block extra_head %}
-    <link rel="stylesheet" href="{% static 'css/home.css' %}" />
-{% endblock %}
-
-{% block content %}
-    <div class="centered-row no-overflow">
-        <div class="grid-element"></div>
-        <div class="grid-element"></div>
-        <div class="grid-element"></div>
-        <div class="grid-element"></div>
-        <div class="grid-element"></div>
-        <div class="image-left grid-element">
-            <img src="{% static 'img/minigrim0.jpeg' %}" alt="Minigrim0's avatar" />
-        </div>
-        <div class="text-right grid-element">
-            <span>
-                <h1 class="pseudo">Minigrim0</h1>
-                <div class="self-description">
-                    Student in <strong>Embedded Systems</strong> platforms at
-                    <a href="https://kth.se">KTH Royal Institute of Technology</a
-                    >.
-                    <br />
-                    Former member of the
-                    <a href="https://urlab.be">UrLab</a> hackerspace.<br />
-                </div>
-                <div class="self-links">
-                    <div
-                        class="text-center content-justify"
-                        target="content-frame"
-                        id="link-frame"
-                    >
-                        <a href="{% url 'cv' %}">CV</a>
-                        &bull;
-                        <a href="{% url 'devlog:projects' %}">Projects</a
-                        >
-                        &bull; <a href="{% url 'blog:blog-list' %}">Blog</a>
-                        &bull;
-                        <a href="https://minigrim0.itch.io/">Itch.io</a
-                        >
-                    </div>
-                </div>
-            </span>
-        </div>
+{% extends "layouts/app.html" %} {% load static %} {% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}" />
+{% endblock %} {% block content %}
+<div class="centered-row no-overflow">
+    <div class="grid-element"></div>
+    <div class="grid-element"></div>
+    <div class="grid-element"></div>
+    <div class="grid-element"></div>
+    <div class="grid-element"></div>
+    <div class="image-left grid-element">
+        <img src="{% static 'img/minigrim0.jpeg' %}" alt="Minigrim0's avatar" />
     </div>
+    <div class="text-right grid-element">
+        <span>
+            <h1 class="pseudo">Florent Grimau</h1>
+            <div class="self-description">
+                Student in <strong>Embedded Systems</strong> platforms at
+                <a href="https://kth.se">KTH Royal Institute of Technology</a>.
+                <br />
+                Former member of the
+                <a href="https://urlab.be">UrLab</a> hackerspace.<br />
+            </div>
+            <div class="self-links">
+                <div
+                    class="text-center content-justify"
+                    target="content-frame"
+                    id="link-frame"
+                >
+                    <a href="{% url 'cv' %}">CV</a>
+                    &bull;
+                    <a href="{% url 'devlog:projects' %}">Projects</a>
+                    &bull; <a href="{% url 'blog:blog-list' %}">Blog</a>
+                    &bull;
+                    <a href="https://minigrim0.itch.io/">Itch.io</a>
+                </div>
+            </div>
+        </span>
+    </div>
+</div>
 {% endblock %}

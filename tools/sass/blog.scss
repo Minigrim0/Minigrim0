@@ -1,34 +1,36 @@
+// Import variables if not already imported
+@use "variables" as *;
+
 .blog-toolchain {
     width: 100%;
     margin-bottom: 15px;
 
     .btn-edit {
         padding: 8px 12px;
-        color: #ddd;
-        background-color: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: theme-color(color(neutral-600), color(neutral-300));
+        background-color: $card-background;
+        border: 1px solid $border-color;
         border-radius: 4px;
         transition: background-color 0.2s ease-in-out;
 
         &:hover {
-            background-color: rgba(255, 255, 255, 0.3);
+            background-color: $card-hover-background;
         }
     }
 }
-
 
 .input-text {
     input {
         width: 100%;
         padding: 8px 12px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        border: 1px solid $border-color;
         border-radius: 4px;
-        background-color: rgba(255, 255, 255, 0.1);
-        color: #ddd;
+        background-color: $card-background;
+        color: theme-color(color(neutral-700), color(neutral-200));
         transition: background-color 0.2s ease-in-out;
 
         &:focus {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: $card-hover-background;
         }
     }
 
@@ -37,11 +39,10 @@
         margin: auto;
 
         &:focus {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: $card-hover-background;
         }
     }
 }
-
 
 .list-view {
     width: 100%;
@@ -50,15 +51,15 @@
     .list-item {
         width: 100%;
         padding: 8px 12px;
-        border: 1px solid #ffffff32;
+        border: 1px solid $border-color;
         border-radius: 4px;
-        background-color: #ffffff19;
-        color: #ddd;
+        background-color: $card-background;
+        color: theme-color(color(neutral-700), color(neutral-200));
         transition: background-color 0.2s ease-in-out;
         margin-bottom: 5px;
 
         &:hover {
-            background-color: #ffffff32;
+            background-color: $card-hover-background;
         }
 
         .item-title {
@@ -71,14 +72,13 @@
         .item-content {
             font-size: 0.8em;
             margin-bottom: 5px;
-            color: light-dark(#1e1e1e, #e1e1e1);
+            color: theme-color(color(neutral-700), color(neutral-200));
         }
     }
 }
 
-
 .line-number {
-    color: #666;
+    color: theme-color(color(neutral-500), color(neutral-400));
 }
 
 code-input {
@@ -87,7 +87,6 @@ code-input {
     line-height: 1.2em;
     height: fit-content;
 }
-
 
 .post-form {
     p {
@@ -104,7 +103,10 @@ code-input {
         }
 
         select {
-            background: light-dark(#eee, #111);
+            background: theme-color(
+                color(neutral-200),
+                color(dark-neutral-400)
+            );
         }
     }
 }

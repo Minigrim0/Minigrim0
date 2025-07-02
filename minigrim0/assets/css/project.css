@@ -1,0 +1,196 @@
+@charset "UTF-8";
+.view-toggle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.view-toggle button {
+  background-color: transparent;
+  border: 1px solid light-dark(#0a0a0a, #ffffff);
+  color: light-dark(#0a0a0a, #ffffff);
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+}
+.view-toggle .active {
+  background-color: light-dark(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2));
+}
+
+.list-view .project-item {
+  margin-bottom: 20px;
+}
+
+.grid-view {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+.grid-view .project-title {
+  word-break: break-all;
+}
+.grid-view .project-description {
+  text-align: justify;
+}
+.grid-view .project-links {
+  justify-content: end;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+}
+.grid-view .grid-collapse {
+  display: none;
+}
+
+.project-item {
+  background-color: light-dark(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.1));
+  border-radius: 8px;
+  padding: 20px;
+  position: relative;
+}
+.project-title {
+  margin-top: 0;
+  font-size: 1.5em;
+}
+.project-description {
+  margin-bottom: 1.2em;
+}
+.project-links {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  align-items: center; /* This will vertically center the links */
+  margin-top: auto;
+}
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  color: light-dark(#0a0a0a, #ffffff);
+  text-decoration: none;
+  font-size: 0.9em;
+  padding: 5px 10px; /* Add some padding for better clickability */
+  background-color: light-dark(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.1)); /* Slight background for better visibility */
+  border-radius: 4px; /* Rounded corners */
+  transition: background-color 0.2s ease; /* Smooth transition for hover effect */
+  cursor: pointer;
+}
+.project-link:hover {
+  background-color: light-dark(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2)); /* Lighten on hover */
+}
+.project-link .grid-collapse {
+  margin-left: 5px;
+}
+.project-link svg {
+  width: 16px; /* Ensure consistent width */
+  height: 16px; /* Ensure consistent height */
+}
+.project-link .home-icon,
+.project-link .github-icon,
+.project-link .readme-icon {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.project-link .home-icon {
+  content: "🏠 ";
+  font-size: 16px;
+  line-height: 1;
+}
+.project-link .readme-icon {
+  content: "📖 ";
+  font-size: 16px;
+  line-height: 1;
+}
+.project-readme {
+  background-color: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.05));
+  border-radius: 4px;
+  padding: 10px;
+}
+.project-readme h3 {
+  margin-top: 0;
+  font-size: 1.2em;
+}
+
+.readme-content {
+  font-size: 0.9em;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  .grid-view {
+    grid-template-columns: 1fr;
+  }
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: light-dark(#f5f5f5, #1e1e1e) !important;
+}
+.modal-title {
+  font-size: 0.7em;
+  color: light-dark(#f5f5f5, #1e1e1e);
+}
+.modal-content {
+  background-color: light-dark(#e0e0e0, #999999);
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid light-dark(#999999, #666666);
+  width: 80%;
+  max-width: 700px;
+}
+.modal-readme-content {
+  color: light-dark(#f5f5f5, #1e1e1e) !important;
+  font-size: 0.6em;
+  border-radius: 10px;
+  background-color: light-dark(#ffffff, #333333);
+  border: 1px solid light-dark(#999999, #666666);
+  padding: 10px;
+}
+.modal-readme-content h1,
+.modal-readme-content h2,
+.modal-readme-content h3,
+.modal-readme-content h4,
+.modal-readme-content h5,
+.modal-readme-content h6 {
+  color: light-dark(#f5f5f5, #1e1e1e) !important;
+  margin-top: 0;
+}
+.modal .close {
+  color: light-dark(#1e1e1e, #f5f5f5);
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.modal .close:hover, .modal .close:focus {
+  color: light-dark(#0a0a0a, #ffffff);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/*
+.readme-button {
+    background-color: #f1f1f1;
+    border: none;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    &:hover {
+        background-color: #ddd;
+    }
+} */
+
+/*# sourceMappingURL=project.css.map */

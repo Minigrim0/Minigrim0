@@ -1,8 +1,13 @@
+// Import variables if not already imported
+@use "variables" as *;
+
 .pseudo {
     font-weight: 1200;
+    color: $accent-color;
 }
 
 .self-description {
     font-size: 1.2em;
     margin: 1.2em 0;
+    color: theme-color(color(neutral-700), color(neutral-200));
 }

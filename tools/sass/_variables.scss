@@ -1,0 +1,262 @@
+// ===== COLOR PALETTE SYSTEM =====
+// Primary colors define the main brand colors
+// Secondary colors are used for accents and highlights
+// Neutral colors are used for text, backgrounds, and UI elements
+
+// Default Palette (Purple-based)
+$palettes: (
+    default: (
+        // Primary colors
+        primary-100: #f2eff9,
+        primary-200: #e6dfff,
+        primary-300: #d8d4f2,
+        primary-400: #b3a6e3,
+        primary-500: #8b7bd6,
+
+        // Secondary colors
+        secondary-100: #fff6e5,
+        secondary-200: #ffe8c7,
+        secondary-300: #ffd69c,
+        secondary-400: #ffbb63,
+        secondary-500: #ffa729,
+
+        // Neutral colors
+        neutral-100: #ffffff,
+        neutral-200: #f5f5f5,
+        neutral-300: #e0e0e0,
+        neutral-400: #999999,
+        neutral-500: #666666,
+        neutral-600: #333333,
+        neutral-700: #1e1e1e,
+        neutral-800: #0a0a0a,
+
+        // Dark mode colors
+        dark-primary-100: #3f375c,
+        dark-primary-200: #352e4c,
+        dark-primary-300: #2d263f,
+        dark-primary-400: #231e2c,
+        dark-primary-500: #19151f,
+
+        dark-secondary-100: #5d4c2c,
+        dark-secondary-200: #6e5a33,
+        dark-secondary-300: #7d6839,
+        dark-secondary-400: #8a7342,
+        dark-secondary-500: #9a8452,
+
+        dark-neutral-100: #3a3a3a,
+        dark-neutral-200: #303030,
+        dark-neutral-300: #252525,
+        dark-neutral-400: #1e1e1e,
+        dark-neutral-500: #151515,
+        dark-neutral-600: #101010,
+        dark-neutral-700: #0a0a0a,
+        dark-neutral-800: #050505,
+    ),
+
+    // Blue Palette (Alternative)
+    blue: (
+            // Primary colors
+            primary-100: #eff6ff,
+            primary-200: #dbeafe,
+            primary-300: #bfdbfe,
+            primary-400: #93c5fd,
+            primary-500: #60a5fa,
+
+            // Secondary colors
+            secondary-100: #fef3f2,
+            secondary-200: #fee4e2,
+            secondary-300: #fda29b,
+            secondary-400: #f87171,
+            secondary-500: #ef4444,
+
+            // Neutral colors (same as default)
+            neutral-100: #ffffff,
+            neutral-200: #f5f5f5,
+            neutral-300: #e0e0e0,
+            neutral-400: #999999,
+            neutral-500: #666666,
+            neutral-600: #333333,
+            neutral-700: #1e1e1e,
+            neutral-800: #0a0a0a,
+
+            // Dark mode colors
+            dark-primary-100: #1e3a8a,
+            dark-primary-200: #1e3178,
+            dark-primary-300: #1e2861,
+            dark-primary-400: #1e1f48,
+            dark-primary-500: #1e1e3a,
+
+            dark-secondary-100: #7f1d1d,
+            dark-secondary-200: #711f2d,
+            dark-secondary-300: #63212d,
+            dark-secondary-400: #55232d,
+            dark-secondary-500: #472525,
+
+            dark-neutral-100: #3a3a3a,
+            dark-neutral-200: #303030,
+            dark-neutral-300: #252525,
+            dark-neutral-400: #1e1e1e,
+            dark-neutral-500: #151515,
+            dark-neutral-600: #101010,
+            dark-neutral-700: #0a0a0a,
+            dark-neutral-800: #050505,
+        ),
+
+    // Green Palette (Alternative)
+    green: (
+            // Primary colors
+            primary-100: #ecfdf5,
+            primary-200: #d1fae5,
+            primary-300: #a7f3d0,
+            primary-400: #6ee7b7,
+            primary-500: #34d399,
+
+            // Secondary colors
+            secondary-100: #fef3c7,
+            secondary-200: #fde68a,
+            secondary-300: #fcd34d,
+            secondary-400: #fbbf24,
+            secondary-500: #f59e0b,
+
+            // Neutral colors (same as default)
+            neutral-100: #ffffff,
+            neutral-200: #f5f5f5,
+            neutral-300: #e0e0e0,
+            neutral-400: #999999,
+            neutral-500: #666666,
+            neutral-600: #333333,
+            neutral-700: #1e1e1e,
+            neutral-800: #0a0a0a,
+
+            // Dark mode colors
+            dark-primary-100: #064e3b,
+            dark-primary-200: #0c4a3a,
+            dark-primary-300: #0f4739,
+            dark-primary-400: #134337,
+            dark-primary-500: #153e34,
+
+            dark-secondary-100: #78350f,
+            dark-secondary-200: #783a14,
+            dark-secondary-300: #784019,
+            dark-secondary-400: #78461e,
+            dark-secondary-500: #784c23,
+
+            dark-neutral-100: #3a3a3a,
+            dark-neutral-200: #303030,
+            dark-neutral-300: #252525,
+            dark-neutral-400: #1e1e1e,
+            dark-neutral-500: #151515,
+            dark-neutral-600: #101010,
+            dark-neutral-700: #0a0a0a,
+            dark-neutral-800: #050505,
+        ),
+);
+
+// Active palette selection - change this to switch palettes
+$active-palette: default;
+
+// Function to get color from palette
+@use "sass:map";
+@function color($color-name) {
+    $palette: map.get($palettes, $active-palette);
+    @return map.get($palette, $color-name);
+}
+
+// Light/dark mode color function
+@function theme-color($light-color, $dark-color) {
+    @return light-dark($light-color, $dark-color);
+}
+
+// ===== TYPOGRAPHY SYSTEM =====
+// Base font settings
+$font-stack: AnonymiceProNerdFont, sans-serif;
+$base-font-size: 16px;
+$base-line-height: 1.5;
+
+// Font weights
+$font-weight-regular: 400;
+$font-weight-bold: 700;
+
+// Font sizes
+$font-size-xs: 0.75rem; // 12px
+$font-size-sm: 0.875rem; // 14px
+$font-size-md: 1rem; // 16px
+$font-size-lg: 1.25rem; // 20px
+$font-size-xl: 1.5rem; // 24px
+$font-size-2xl: 2rem; // 32px
+$font-size-3xl: 2.5rem; // 40px
+
+// Line heights
+$line-height-tight: 1.2;
+$line-height-normal: 1.5;
+$line-height-loose: 1.8;
+
+// Letter spacing
+$letter-spacing-tight: -0.025em;
+$letter-spacing-normal: 0;
+$letter-spacing-wide: 0.025em;
+
+// ===== SPACING SYSTEM =====
+// Consistent spacing variables
+$spacing-xs: 0.25rem; // 4px
+$spacing-sm: 0.5rem; // 8px
+$spacing-md: 1rem; // 16px
+$spacing-lg: 1.5rem; // 24px
+$spacing-xl: 2rem; // 32px
+$spacing-2xl: 3rem; // 48px
+$spacing-3xl: 4rem; // 64px
+
+// ===== LAYOUT VARIABLES =====
+$footer-height: 40px;
+$border-radius-sm: 4px;
+$border-radius-md: 8px;
+$border-radius-lg: 12px;
+$border-radius-full: 9999px;
+
+// Box shadows
+$shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$shadow-md:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+$shadow-lg:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+// Transitions
+$transition-fast: 150ms ease;
+$transition-normal: 300ms ease;
+$transition-slow: 500ms ease;
+
+// ===== THEME COLORS =====
+// Base theme colors
+$background-color: theme-color(color(primary-300), color(dark-primary-400));
+$text-color: theme-color(color(neutral-600), color(neutral-300));
+$header-color: theme-color(color(neutral-800), color(neutral-100));
+$muted-text-color: theme-color(color(neutral-500), color(neutral-400));
+$link-color: theme-color(color(primary-500), color(primary-400));
+$link-hover-color: theme-color(color(primary-400), color(primary-300));
+$border-color: theme-color(rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.2));
+$accent-color: theme-color(color(secondary-500), color(secondary-400));
+
+// Component-specific colors
+$card-background: theme-color(
+    rgba(255, 255, 255, 0.6),
+    rgba(255, 255, 255, 0.1)
+);
+$card-hover-background: theme-color(
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0.2)
+);
+$button-background: theme-color(color(primary-400), color(dark-primary-300));
+$button-hover-background: theme-color(
+    color(primary-500),
+    color(dark-primary-200)
+);
+$button-text-color: theme-color(color(neutral-100), color(neutral-100));
+$input-background: theme-color(rgba(255, 255, 255, 0.8), rgba(0, 0, 0, 0.2));
+$input-border: theme-color(color(neutral-300), color(neutral-600));
+$input-focus-border: theme-color(color(primary-400), color(primary-400));
+$success-color: theme-color(#34d399, #10b981);
+$error-color: theme-color(#ef4444, #f87171);
+$warning-color: theme-color(#f59e0b, #fbbf24);
+$info-color: theme-color(#3b82f6, #60a5fa);

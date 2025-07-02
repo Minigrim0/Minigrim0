@@ -1,3 +1,6 @@
+// Import variables if not already imported
+@use "variables" as *;
+
 .view-toggle {
     display: flex;
     justify-content: center;
@@ -5,15 +8,15 @@
 
     button {
         background-color: transparent;
-        border: 1px solid #fff;
-        color: #fff;
+        border: 1px solid theme-color(color(neutral-800), color(neutral-100));
+        color: theme-color(color(neutral-800), color(neutral-100));
         padding: 5px 10px;
         margin: 0 5px;
         cursor: pointer;
     }
 
     .active {
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: $card-hover-background;
     }
 }
 
@@ -50,7 +53,7 @@
 
 .project {
     &-item {
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: $card-background;
         border-radius: 8px;
         padding: 20px;
         position: relative;
@@ -76,17 +79,17 @@
     &-link {
         display: inline-flex;
         align-items: center;
-        color: #fff;
+        color: theme-color(color(neutral-800), color(neutral-100));
         text-decoration: none;
         font-size: 0.9em;
         padding: 5px 10px; /* Add some padding for better clickability */
-        background-color: #ffffff19; /* Slight background for better visibility */
+        background-color: $card-background; /* Slight background for better visibility */
         border-radius: 4px; /* Rounded corners */
         transition: background-color 0.2s ease; /* Smooth transition for hover effect */
         cursor: pointer;
 
         &:hover {
-            background-color: rgba(255, 255, 255, 0.2); /* Lighten on hover */
+            background-color: $card-hover-background; /* Lighten on hover */
         }
 
         .grid-collapse {
@@ -98,7 +101,9 @@
             height: 16px; /* Ensure consistent height */
         }
 
-        .home-icon, .github-icon, .readme-icon {
+        .home-icon,
+        .github-icon,
+        .readme-icon {
             width: 16px;
             height: 16px;
             display: inline-block;
@@ -119,7 +124,10 @@
     }
 
     &-readme {
-        background-color: rgba(0, 0, 0, 0.1);
+        background-color: theme-color(
+            rgba(0, 0, 0, 0.1),
+            rgba(255, 255, 255, 0.05)
+        );
         border-radius: 4px;
         padding: 10px;
 
@@ -152,44 +160,53 @@
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
-    color: light-dark(#eee, #111) !important;
+    color: theme-color(color(neutral-200), color(neutral-700)) !important;
 
     &-title {
         font-size: 0.7em;
-        color: light-dark(#eee, #111);
+        color: theme-color(color(neutral-200), color(neutral-700));
     }
 
     &-content {
-        background-color: #bbb;
+        background-color: theme-color(color(neutral-300), color(neutral-400));
         margin: 15% auto;
         padding: 20px;
-        border: 1px solid #888;
+        border: 1px solid theme-color(color(neutral-400), color(neutral-500));
         width: 80%;
         max-width: 700px;
     }
 
     &-readme-content {
-        color: light-dark(#eee, #111) !important;
+        color: theme-color(color(neutral-200), color(neutral-700)) !important;
         font-size: 0.6em;
         border-radius: 10px;
-        background-color: #fff;
-        border: 1px solid #888;
+        background-color: theme-color(color(neutral-100), color(neutral-600));
+        border: 1px solid theme-color(color(neutral-400), color(neutral-500));
         padding: 10px;
 
-        h1, h2, h3, h4, h5, h6 {
-            color: light-dark(#eee, #111) !important;
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: theme-color(
+                color(neutral-200),
+                color(neutral-700)
+            ) !important;
             margin-top: 0;
         }
     }
 
     .close {
-        color: light-dark(#111, #eee);
+        color: theme-color(color(neutral-700), color(neutral-200));
         float: right;
         font-size: 28px;
         font-weight: bold;
 
-        &:hover, &:focus {
-            color: black;
+        &:hover,
+        &:focus {
+            color: theme-color(color(neutral-800), color(neutral-100));
             text-decoration: none;
             cursor: pointer;
         }

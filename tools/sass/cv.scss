@@ -1,3 +1,6 @@
+// Import variables if not already imported
+@use "variables" as *;
+
 .image-left-cv {
     align-items: center;
     flex: 0 0 120px;
@@ -59,7 +62,7 @@
 
 .education-item {
     display: flex;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: $card-background;
     border-radius: 8px;
     padding: 1rem;
     transition: transform 0.3s ease;
@@ -96,7 +99,7 @@
     justify-content: space-around;
 
     h2 {
-        color: light-dark(#1e1e1e, #e1e1e1);
+        color: theme-color(color(neutral-700), color(neutral-200));
     }
 }
 
@@ -185,13 +188,16 @@
 }
 
 .skill-item {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: theme-color(
+        rgba(255, 255, 255, 0.05),
+        rgba(255, 255, 255, 0.05)
+    );
     border-radius: 8px;
     padding: 1rem;
     transition: background-color 0.3s ease;
 
     &:hover {
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: $card-background;
     }
 }
 
@@ -204,7 +210,7 @@
 .skill-name {
     margin: 0;
     font-size: 1.1em;
-    color: #ffffff;
+    color: theme-color(color(neutral-800), color(neutral-100));
 }
 
 .skill-level {
@@ -212,18 +218,18 @@
 }
 
 .star {
-    color: gold;
+    color: $accent-color;
     font-size: 1em;
     margin-left: 2px;
 }
 
 .star .empty {
-    color: rgba(255, 255, 255, 0.3);
+    color: theme-color(rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.3));
 }
 
 .skill-description {
     font-size: 0.9em;
-    color: rgba(255, 255, 255, 0.8);
+    color: theme-color(color(neutral-600), rgba(255, 255, 255, 0.8));
     margin: 0;
 }
 
@@ -244,7 +250,8 @@
     }
 
     &-details {
-        border-left: 1px solid light-dark(#1e1e1e, #e1e1e1);
+        border-left: 1px solid
+            theme-color(color(neutral-700), color(neutral-200));
         padding-left: 1rem;
         flex: 1;
 
@@ -260,7 +267,7 @@
         &-desc {
             margin: 0.5rem 0 0;
             font-size: 0.9em;
-            color: rgba(255, 255, 255, 0.8);
+            color: theme-color(color(neutral-600), rgba(255, 255, 255, 0.8));
 
             p {
                 margin: 0;
