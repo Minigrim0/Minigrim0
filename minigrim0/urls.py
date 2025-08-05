@@ -2,10 +2,22 @@ from django.conf.urls import handler400, handler403, handler404, handler500
 from django.contrib import admin
 from django.urls import include, path
 from django.views.generic.base import TemplateView
+from knox import views as knox_views
+from rest_framework import routers
 
-import minigrim0.views as views
+from blog import api as api_views
+from minigrim0 import views as views
+from minigrim0 import api as auth_views
+
+router = routers.DefaultRouter()
+router.register(r'posts', api_views.PostViewSet)
+router.register(r'tags', api_views.TagViewSet)
 
 urlpatterns = [
+    path('api/', include(router.urls)),
+    path(r'auth/login/', auth_views.LoginView.as_view(), name='knox_login'),
+    path(r'auth/logout/', knox_views.LogoutView.as_view(), name='knox_logout'),
+    path(r'auth/logoutall/', knox_views.LogoutAllView.as_view(), name='knox_logoutall'),
     path("admin/", admin.site.urls),
     path("dev/", include(("devlog.urls", "devlog"), namespace="devlog")),
     path("cv/", views.cv, name="cv"),

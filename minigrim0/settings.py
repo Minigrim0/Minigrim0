@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     "blog",
     "devlog",
     "import_export",
+    "rest_framework",
+    "knox"
 ]
 
 MIDDLEWARE = [
@@ -98,6 +100,10 @@ TIME_ZONE = "Europe/Stockholm"
 USE_I18N = True
 USE_TZ = True
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),
+
+}
 
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "static/"
