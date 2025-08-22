@@ -1,12 +1,102 @@
-.pseudo {
-  font-weight: 1200;
-  color: light-dark(#ffa729, #ffbb63);
+@charset "UTF-8";
+.home-terminal {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 120px);
+  font-family: AnonymiceProNerdFont, sans-serif;
+  gap: 2rem;
 }
 
-.self-description {
-  font-size: 1.2em;
-  margin: 1.2em 0;
-  color: light-dark(#1e1e1e, #f5f5f5);
+.profile-section {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  margin: 1.5rem 0;
+}
+@media (max-width: 768px) {
+  .profile-section {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 }
 
-/*# sourceMappingURL=home.css.map */
+.profile-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile-image .ascii-frame {
+  border: 2px solid #3c3c3c;
+  padding: 1rem;
+  background: #252526;
+}
+.profile-image .ascii-frame img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border: 1px solid #3c3c3c;
+  filter: contrast(1.2) brightness(1.1);
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.profile-info .name-header {
+  font-size: 2rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+.profile-info .name-header::before {
+  content: "┌─ ";
+  color: #569cd6;
+}
+.profile-info .name-header::after {
+  content: " ─┐";
+  color: #569cd6;
+}
+.profile-info .description {
+  color: #d4d4d4;
+  line-height: 1.8;
+  padding: 1rem;
+  border-left: 3px solid #569cd6;
+  background: #252526;
+}
+.profile-info .description strong {
+  color: #ffffff;
+}
+.profile-info .description a {
+  color: #569cd6;
+}
+.profile-info .description a:hover {
+  color: #4ec9b0;
+}
+
+.navigation-menu .menu-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+.navigation-menu .menu-item {
+  border: 1px solid #3c3c3c;
+  background: #252526;
+  transition: all 150ms ease;
+}
+.navigation-menu .menu-item:hover {
+  background: #4f4f4f;
+  border-color: #007acc;
+  transform: translateY(-2px);
+}
+.navigation-menu .menu-item a {
+  color: #569cd6;
+  text-decoration: none;
+  display: block;
+  padding: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+}
+.navigation-menu .menu-item a:hover {
+  color: #4ec9b0;
+}
