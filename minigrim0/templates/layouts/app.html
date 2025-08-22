@@ -14,9 +14,24 @@
     </head>
 
     <body>
-        <div class="content">
-            {% block content %}
-            {% endblock %}
+        <div class="terminal-window">
+            <div class="terminal-titlebar">
+                <div class="terminal-buttons">
+                    <button class="btn close"></button>
+                    <button class="btn minimize"></button>
+                    <button class="btn maximize"></button>
+                </div>
+                <div class="terminal-title">{% block terminal_title %}portfolio{% endblock %}</div>
+                <div class="terminal-info">
+                    <span class="mono">{% now "H:i:s" %}</span>
+                </div>
+            </div>
+            <div class="terminal-content">
+                <div class="content">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
         </div>
 
         {% include "layouts/footer.html" %}
