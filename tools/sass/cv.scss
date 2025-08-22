@@ -188,20 +188,31 @@
     }
     
     .item-subtitle {
-        color: $text-bright-color;
+        color: terminal-color(foreground-bright);
         margin-bottom: $spacing-sm;
+        display: inline-block;
+        width: 100%;
         
         &::before {
-            content: "  └─ ";
-            color: $border-color;
+            content: "└─ ";
+            color: terminal-color(border);
+            display: inline;
+            margin-right: $spacing-xs;
+        }
+        
+        // Handle markdown-generated <p> tags - make them inline to prevent line breaks
+        p {
+            display: inline;
+            margin: 0;
+            padding: 0;
         }
         
         a {
-            color: $link-color;
+            color: terminal-color(accent-secondary);
             text-decoration: underline;
             
             &:hover {
-                color: $link-hover-color;
+                color: terminal-color(foreground-bright);
             }
         }
     }
