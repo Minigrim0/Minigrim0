@@ -23,6 +23,11 @@ def cv(request):
 
 def cv_pdf(request):
     """Generate CV PDF from LaTeX template"""
+    try:
+        profile = models.CVProfile.objects.first()
+    except models.CVProfile.DoesNotExist:
+        profile = None
+    
     cv_data = {
         "edu": models.Education.objects.all(),
         "exp": models.Experience.objects.all(),
@@ -30,11 +35,8 @@ def cv_pdf(request):
         "lan": models.Language.objects.all(),
         "ski": models.Skill.objects.all().order_by("-level"),
         "int": models.Interest.objects.all(),
+        "profile": profile,
     }
-    
-    # Debug: print the context to see what's available
-    print("CV Data keys:", cv_data.keys())
-    print("Education count:", cv_data['edu'].count())
     
     return render_to_pdf(request, 'cv.tex', cv_data, filename='cv.pdf')
 
