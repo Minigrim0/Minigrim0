@@ -1,231 +1,475 @@
-// Import variables if not already imported
+// Import variables
 @use "variables" as *;
 
+// Project Terminal Layout
+.projects-terminal {
+    font-family: $font-stack;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.projects-header {
+    border: 2px solid $border-color;
+    padding: $spacing-lg;
+    margin-bottom: $spacing-lg;
+    background: $card-background;
+    text-align: center;
+    
+    .projects-title {
+        font-size: $font-size-3xl;
+        color: $header-color;
+        margin: 0;
+        
+        &::before {
+            content: "┌─[ ";
+            color: $accent-color;
+        }
+        
+        &::after {
+            content: " ]─┐";
+            color: $accent-color;
+        }
+    }
+    
+    .projects-subtitle {
+        color: $text-dim-color;
+        margin-top: $spacing-sm;
+        
+        &::before {
+            content: "└─ ";
+            color: $border-color;
+        }
+    }
+}
+
+// View toggle controls
 .view-toggle {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
-
+    gap: $spacing-sm;
+    margin-bottom: $spacing-lg;
+    
     button {
-        background-color: transparent;
-        border: 1px solid theme-color(color(neutral-800), color(neutral-100));
-        color: theme-color(color(neutral-800), color(neutral-100));
-        padding: 5px 10px;
-        margin: 0 5px;
+        padding: $spacing-sm $spacing-md;
+        border: 1px solid $border-color;
+        background: $button-background;
+        color: $button-text-color;
         cursor: pointer;
-    }
-
-    .active {
-        background-color: $card-hover-background;
-    }
-}
-
-.list-view .project-item {
-    margin-bottom: 20px;
-}
-
-.grid-view {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-
-    .project {
-        &-title {
-            word-break: break-all;
-        }
-
-        &-description {
-            text-align: justify;
-        }
-
-        &-links {
-            justify-content: end;
-            position: absolute;
-            bottom: 15px;
-            right: 15px;
-        }
-    }
-
-    .grid-collapse {
-        display: none;
-    }
-}
-
-.project {
-    &-item {
-        background-color: $card-background;
-        border-radius: 8px;
-        padding: 20px;
-        position: relative;
-    }
-
-    &-title {
-        margin-top: 0;
-        font-size: 1.5em;
-    }
-
-    &-description {
-        margin-bottom: 1.2em;
-    }
-
-    &-links {
+        transition: all $transition-fast;
         display: flex;
-        gap: 10px;
-        margin-bottom: 15px;
-        align-items: center; /* This will vertically center the links */
-        margin-top: auto;
-    }
-
-    &-link {
-        display: inline-flex;
         align-items: center;
-        color: theme-color(color(neutral-800), color(neutral-100));
-        text-decoration: none;
-        font-size: 0.9em;
-        padding: 5px 10px; /* Add some padding for better clickability */
-        background-color: $card-background; /* Slight background for better visibility */
-        border-radius: 4px; /* Rounded corners */
-        transition: background-color 0.2s ease; /* Smooth transition for hover effect */
-        cursor: pointer;
-
+        gap: $spacing-xs;
+        
         &:hover {
-            background-color: $card-hover-background; /* Lighten on hover */
+            background: $button-hover-background;
+            border-color: $border-focus-color;
         }
-
-        .grid-collapse {
-            margin-left: 5px;
+        
+        &.active {
+            background: $accent-color;
+            color: $background-color;
+            border-color: $accent-color;
         }
-
+        
         svg {
-            width: 16px; /* Ensure consistent width */
-            height: 16px; /* Ensure consistent height */
-        }
-
-        .home-icon,
-        .github-icon,
-        .readme-icon {
             width: 16px;
             height: 16px;
-            display: inline-block;
-            vertical-align: middle;
-        }
-
-        .home-icon {
-            content: "🏠 ";
-            font-size: 16px;
-            line-height: 1;
-        }
-
-        .readme-icon {
-            content: "📖 ";
-            font-size: 16px;
-            line-height: 1;
-        }
-    }
-
-    &-readme {
-        background-color: theme-color(
-            rgba(0, 0, 0, 0.1),
-            rgba(255, 255, 255, 0.05)
-        );
-        border-radius: 4px;
-        padding: 10px;
-
-        h3 {
-            margin-top: 0;
-            font-size: 1.2em;
         }
     }
 }
 
-.readme-content {
-    font-size: 0.9em;
-    max-height: 200px;
-    overflow-y: auto;
-}
-
-@media (max-width: 768px) {
-    .grid-view {
-        grid-template-columns: 1fr;
-    }
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-    color: theme-color(color(neutral-200), color(neutral-700)) !important;
-
-    &-title {
-        font-size: 0.7em;
-        color: theme-color(color(neutral-200), color(neutral-700));
-    }
-
-    &-content {
-        background-color: theme-color(color(neutral-300), color(neutral-400));
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid theme-color(color(neutral-400), color(neutral-500));
-        width: 80%;
-        max-width: 700px;
-    }
-
-    &-readme-content {
-        color: theme-color(color(neutral-200), color(neutral-700)) !important;
-        font-size: 0.6em;
-        border-radius: 10px;
-        background-color: theme-color(color(neutral-100), color(neutral-600));
-        border: 1px solid theme-color(color(neutral-400), color(neutral-500));
-        padding: 10px;
-
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-            color: theme-color(
-                color(neutral-200),
-                color(neutral-700)
-            ) !important;
-            margin-top: 0;
+// Projects container
+.projects-wrapper {
+    transition: all $transition-normal;
+    
+    &.list-view {
+        .projects-grid {
+            display: flex;
+            flex-direction: column;
+            gap: $spacing-md;
         }
     }
-
-    .close {
-        color: theme-color(color(neutral-700), color(neutral-200));
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-
-        &:hover,
-        &:focus {
-            color: theme-color(color(neutral-800), color(neutral-100));
-            text-decoration: none;
-            cursor: pointer;
+    
+    &.grid-view {
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: $spacing-lg;
         }
     }
 }
-/*
-.readme-button {
-    background-color: #f1f1f1;
-    border: none;
-    color: black;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 4px;
+
+// Individual project item
+.project-item {
+    border: 1px solid $border-color;
+    background: $card-background;
+    padding: $spacing-lg;
+    transition: all $transition-fast;
+    position: relative;
+    
     &:hover {
-        background-color: #ddd;
+        background: $card-hover-background;
+        border-color: $border-focus-color;
+        transform: translateY(-2px);
     }
-} */
+    
+    &::before {
+        content: "├─ ";
+        position: absolute;
+        left: $spacing-sm;
+        top: $spacing-sm;
+        color: $accent-color;
+        font-weight: bold;
+    }
+    
+    .project-content {
+        padding-left: $spacing-lg;
+    }
+    
+    .project-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: $spacing-md;
+        flex-wrap: wrap;
+        
+        .project-title {
+            font-size: $font-size-xl;
+            color: $header-color;
+            margin: 0;
+            
+            a {
+                color: $link-color;
+                text-decoration: none;
+                
+                &:hover {
+                    color: $link-hover-color;
+                    text-decoration: underline;
+                }
+            }
+        }
+        
+        .project-status {
+            display: flex;
+            gap: $spacing-xs;
+            
+            .status-badge {
+                padding: $spacing-xs $spacing-sm;
+                border-radius: 3px;
+                font-size: $font-size-xs;
+                font-weight: bold;
+                
+                &.active {
+                    background: $success-color;
+                    color: $background-color;
+                }
+                
+                &.inactive {
+                    background: $error-color;
+                    color: $background-color;
+                }
+                
+                &.archived {
+                    background: $warning-color;
+                    color: $background-color;
+                }
+            }
+        }
+    }
+    
+    .project-meta {
+        display: flex;
+        gap: $spacing-md;
+        margin-bottom: $spacing-sm;
+        font-size: $font-size-sm;
+        color: $text-dim-color;
+        flex-wrap: wrap;
+        
+        .meta-item {
+            display: flex;
+            align-items: center;
+            
+            &::before {
+                content: "│ ";
+                color: $border-color;
+                margin-right: $spacing-xs;
+            }
+            
+            &:first-child::before {
+                content: "";
+                margin: 0;
+            }
+            
+            .icon {
+                margin-right: $spacing-xs;
+                width: 14px;
+                height: 14px;
+            }
+        }
+        
+        .language {
+            color: $accent-color;
+            font-weight: bold;
+        }
+        
+        .stars {
+            color: $warning-color;
+        }
+        
+        .forks {
+            color: $info-color;
+        }
+    }
+    
+    .project-description {
+        color: $text-color;
+        line-height: $line-height-loose;
+        margin-bottom: $spacing-md;
+        
+        p {
+            margin: 0;
+        }
+    }
+    
+    .project-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: $spacing-xs;
+        margin-bottom: $spacing-md;
+        
+        .tag {
+            background: $accent-color;
+            color: $background-color;
+            padding: $spacing-xs $spacing-sm;
+            border-radius: 3px;
+            font-size: $font-size-xs;
+            font-weight: bold;
+            text-decoration: none;
+            
+            &:hover {
+                background: $link-hover-color;
+            }
+        }
+    }
+    
+    .project-links {
+        display: flex;
+        gap: $spacing-sm;
+        margin-top: $spacing-md;
+        
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: $spacing-xs;
+            padding: $spacing-sm $spacing-md;
+            border: 1px solid $border-color;
+            background: $button-background;
+            color: $button-text-color;
+            text-decoration: none;
+            transition: all $transition-fast;
+            font-size: $font-size-sm;
+            
+            &:hover {
+                background: $button-hover-background;
+                border-color: $border-focus-color;
+            }
+            
+            &.primary {
+                background: $accent-color;
+                color: $background-color;
+                border-color: $accent-color;
+                
+                &:hover {
+                    background: $link-hover-color;
+                    border-color: $link-hover-color;
+                }
+            }
+            
+            svg {
+                width: 14px;
+                height: 14px;
+            }
+        }
+    }
+    
+    .project-stats {
+        margin-top: $spacing-md;
+        padding-top: $spacing-sm;
+        border-top: 1px solid $border-color;
+        display: flex;
+        justify-content: space-between;
+        font-size: $font-size-sm;
+        color: $text-dim-color;
+        
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: $spacing-xs;
+            
+            &::before {
+                content: "▸ ";
+                color: $accent-color;
+            }
+        }
+        
+        .last-updated {
+            font-style: italic;
+        }
+    }
+}
+
+// Project filters and search
+.project-controls {
+    display: flex;
+    gap: $spacing-md;
+    margin-bottom: $spacing-lg;
+    padding: $spacing-md;
+    border: 1px solid $border-color;
+    background: $card-background;
+    flex-wrap: wrap;
+    
+    .search-box {
+        flex: 1;
+        min-width: 200px;
+        
+        input {
+            width: 100%;
+            padding: $spacing-sm;
+            border: 1px solid $border-color;
+            background: $input-background;
+            color: $text-color;
+            font-family: $font-stack;
+            
+            &:focus {
+                border-color: $border-focus-color;
+                outline: none;
+            }
+            
+            &::placeholder {
+                color: $text-dim-color;
+            }
+        }
+    }
+    
+    .filter-buttons {
+        display: flex;
+        gap: $spacing-xs;
+        
+        .filter-btn {
+            padding: $spacing-sm $spacing-md;
+            border: 1px solid $border-color;
+            background: $button-background;
+            color: $text-color;
+            font-family: $font-stack;
+            cursor: pointer;
+            transition: all $transition-fast;
+            font-size: $font-size-sm;
+            
+            &:hover {
+                background: $button-hover-background;
+                border-color: $border-focus-color;
+            }
+            
+            &.active {
+                background: $accent-color;
+                color: $background-color;
+                border-color: $accent-color;
+            }
+        }
+    }
+    
+    .sort-options {
+        select {
+            padding: $spacing-sm;
+            border: 1px solid $border-color;
+            background: $input-background;
+            color: $text-color;
+            font-family: $font-stack;
+            
+            &:focus {
+                border-color: $border-focus-color;
+                outline: none;
+            }
+        }
+    }
+}
+
+// Empty state
+.projects-empty {
+    text-align: center;
+    padding: $spacing-3xl;
+    color: $text-dim-color;
+    border: 2px dashed $border-color;
+    background: $card-background;
+    
+    .empty-icon {
+        font-size: $font-size-3xl;
+        margin-bottom: $spacing-md;
+    }
+    
+    .empty-message {
+        font-size: $font-size-lg;
+        margin-bottom: $spacing-sm;
+    }
+    
+    .empty-description {
+        font-size: $font-size-sm;
+    }
+}
+
+// Loading state
+.projects-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: $spacing-3xl;
+    color: $text-dim-color;
+    
+    .loading-spinner {
+        width: 32px;
+        height: 32px;
+        border: 3px solid $border-color;
+        border-top: 3px solid $accent-color;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: $spacing-md;
+    }
+    
+    .loading-message {
+        font-size: $font-size-lg;
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .project-controls {
+        flex-direction: column;
+        
+        .search-box {
+            min-width: unset;
+        }
+        
+        .filter-buttons {
+            flex-wrap: wrap;
+        }
+    }
+    
+    .project-header {
+        flex-direction: column;
+        gap: $spacing-sm;
+    }
+    
+    .project-meta {
+        flex-direction: column;
+        gap: $spacing-xs;
+    }
+    
+    .project-links {
+        flex-direction: column;
+    }
+}

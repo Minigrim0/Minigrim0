@@ -1,3 +1,128 @@
+// Function to get terminal color
+@use "sass:map";
+
+// ===== TERMINAL COLOR PALETTE SYSTEM =====
+// Modern terminal themes - easily configurable in one place
+// Change $active-terminal-theme to switch between terminal themes
+
+$terminal-themes: (
+    // Modern Dark Terminal (VS Code / Dracula inspired)
+    modern-dark: (
+        background: #1e1e1e,
+        background-alt: #252526,
+        foreground: #d4d4d4,
+        foreground-bright: #ffffff,
+        foreground-dim: #a0a0a0,
+        
+        // Terminal accent colors
+        accent-primary: #569cd6,    // Blue
+        accent-secondary: #4ec9b0,  // Cyan
+        accent-success: #6a9955,    // Green
+        accent-warning: #dcdcaa,    // Yellow
+        accent-error: #f44747,      // Red
+        accent-purple: #c586c0,     // Purple/Magenta
+        
+        // UI elements
+        border: #3c3c3c,
+        border-focus: #007acc,
+        selection: #264f78,
+        cursor: #ffffff,
+        
+        // Window chrome
+        titlebar: #2d2d30,
+        titlebar-text: #cccccc,
+        button-bg: #3c3c3c,
+        button-hover: #4f4f4f,
+    ),
+    
+    // Classic Green Terminal (Matrix style)
+    classic-green: (
+        background: #000000,
+        background-alt: #0a0a0a,
+        foreground: #00ff00,
+        foreground-bright: #00ff41,
+        foreground-dim: #008000,
+        
+        accent-primary: #00ff00,
+        accent-secondary: #00ffff,
+        accent-success: #00ff00,
+        accent-warning: #ffff00,
+        accent-error: #ff0000,
+        accent-purple: #ff00ff,
+        
+        border: #008000,
+        border-focus: #00ff41,
+        selection: #004000,
+        cursor: #00ff00,
+        
+        titlebar: #004000,
+        titlebar-text: #00ff00,
+        button-bg: #004000,
+        button-hover: #008000,
+    ),
+    
+    // Amber Terminal (Retro style)
+    amber-retro: (
+        background: #1a0f00,
+        background-alt: #2a1500,
+        foreground: #ffb000,
+        foreground-bright: #ffd700,
+        foreground-dim: #cc8800,
+        
+        accent-primary: #ffb000,
+        accent-secondary: #ff8c00,
+        accent-success: #32cd32,
+        accent-warning: #ffd700,
+        accent-error: #ff4500,
+        accent-purple: #da70d6,
+        
+        border: #cc8800,
+        border-focus: #ffd700,
+        selection: #4d3300,
+        cursor: #ffd700,
+        
+        titlebar: #2a1500,
+        titlebar-text: #ffb000,
+        button-bg: #2a1500,
+        button-hover: #4d3300,
+    ),
+    
+    // Solarized Dark Terminal
+    solarized-dark: (
+        background: #002b36,
+        background-alt: #073642,
+        foreground: #839496,
+        foreground-bright: #fdf6e3,
+        foreground-dim: #586e75,
+        
+        accent-primary: #268bd2,   // Blue
+        accent-secondary: #2aa198, // Cyan
+        accent-success: #859900,   // Green
+        accent-warning: #b58900,   // Yellow
+        accent-error: #dc322f,     // Red
+        accent-purple: #d33682,    // Magenta
+        
+        border: #586e75,
+        border-focus: #268bd2,
+        selection: #073642,
+        cursor: #fdf6e3,
+        
+        titlebar: #073642,
+        titlebar-text: #839496,
+        button-bg: #073642,
+        button-hover: #094853,
+    ),
+);
+
+// Active terminal theme - change this to switch terminal themes
+$active-terminal-theme: modern-dark;
+
+// Function to get terminal color
+@function terminal-color($color-name) {
+    $theme: map.get($terminal-themes, $active-terminal-theme);
+    @return map.get($theme, $color-name);
+}
+
 // ===== COLOR PALETTE SYSTEM =====
 // Primary colors define the main brand colors
 // Secondary colors are used for accents and highlights
@@ -156,7 +281,6 @@ $palettes: (
 $active-palette: default;
 
 // Function to get color from palette
-@use "sass:map";
 @function color($color-name) {
     $palette: map.get($palettes, $active-palette);
     @return map.get($palette, $color-name);
@@ -228,35 +352,36 @@ $transition-normal: 300ms ease;
 $transition-slow: 500ms ease;
 
 // ===== THEME COLORS =====
-// Base theme colors
-$background-color: theme-color(color(primary-300), color(dark-primary-400));
-$text-color: theme-color(color(neutral-600), color(neutral-300));
-$header-color: theme-color(color(neutral-800), color(neutral-100));
-$muted-text-color: theme-color(color(neutral-500), color(neutral-400));
-$link-color: theme-color(color(primary-500), color(primary-400));
-$link-hover-color: theme-color(color(primary-400), color(primary-300));
-$border-color: theme-color(rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.2));
-$accent-color: theme-color(color(secondary-500), color(secondary-400));
+// Terminal-based theme colors
+$background-color: terminal-color(background);
+$background-alt-color: terminal-color(background-alt);
+$text-color: terminal-color(foreground);
+$text-bright-color: terminal-color(foreground-bright);
+$text-dim-color: terminal-color(foreground-dim);
+$header-color: terminal-color(foreground-bright);
+$muted-text-color: terminal-color(foreground-dim);
+$link-color: terminal-color(accent-primary);
+$link-hover-color: terminal-color(accent-secondary);
+$border-color: terminal-color(border);
+$border-focus-color: terminal-color(border-focus);
+$accent-color: terminal-color(accent-primary);
+$cursor-color: terminal-color(cursor);
 
 // Component-specific colors
-$card-background: theme-color(
-    rgba(255, 255, 255, 0.6),
-    rgba(255, 255, 255, 0.1)
-);
-$card-hover-background: theme-color(
-    rgba(255, 255, 255, 0.8),
-    rgba(255, 255, 255, 0.2)
-);
-$button-background: theme-color(color(primary-400), color(dark-primary-300));
-$button-hover-background: theme-color(
-    color(primary-500),
-    color(dark-primary-200)
-);
-$button-text-color: theme-color(color(neutral-100), color(neutral-100));
-$input-background: theme-color(rgba(255, 255, 255, 0.8), rgba(0, 0, 0, 0.2));
-$input-border: theme-color(color(neutral-300), color(neutral-600));
-$input-focus-border: theme-color(color(primary-400), color(primary-400));
-$success-color: theme-color(#34d399, #10b981);
-$error-color: theme-color(#ef4444, #f87171);
-$warning-color: theme-color(#f59e0b, #fbbf24);
-$info-color: theme-color(#3b82f6, #60a5fa);
+$card-background: terminal-color(background-alt);
+$card-hover-background: terminal-color(button-hover);
+$button-background: terminal-color(button-bg);
+$button-hover-background: terminal-color(button-hover);
+$button-text-color: terminal-color(foreground);
+$input-background: terminal-color(background-alt);
+$input-border: terminal-color(border);
+$input-focus-border: terminal-color(border-focus);
+$success-color: terminal-color(accent-success);
+$error-color: terminal-color(accent-error);
+$warning-color: terminal-color(accent-warning);
+$info-color: terminal-color(accent-primary);
+
+// Terminal window chrome colors
+$titlebar-background: terminal-color(titlebar);
+$titlebar-text: terminal-color(titlebar-text);
+$selection-background: terminal-color(selection);
