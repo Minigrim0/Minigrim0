@@ -21,6 +21,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("dev/", include(("devlog.urls", "devlog"), namespace="devlog")),
     path("cv/", views.cv, name="cv"),
+    path("cv/pdf/", views.cv_pdf, name="cv_pdf"),
     path("blog/", include(("blog.urls", "blog"), namespace="blog")),
     path("", views.index, name="index"),
     path("robots.txt", TemplateView.as_view(template_name="robots.txt", content_type="text/plain"), name="robots")
