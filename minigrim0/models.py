@@ -124,3 +124,32 @@ class Interest(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+
+class CVProfile(models.Model):
+    """Profile information for CV generation"""
+    profile_image = models.ImageField(
+        upload_to='cv_images/', 
+        null=True, 
+        blank=True,
+        help_text="Profile image for CV (recommended: square format, 200x200px)"
+    )
+    name = models.CharField(max_length=100, default="Florent Grimau")
+    title = models.CharField(max_length=200, default="Master Student in Embedded Systems")
+    address = models.CharField(max_length=200, default="Stockholm - Sweden")
+    email = models.EmailField(default="grimauflorent@gmail.com")
+    github_username = models.CharField(max_length=100, default="Minigrim0")
+    birth_date = models.CharField(max_length=20, default="22 Sept 2000")
+    
+    class Meta:
+        verbose_name = "CV Profile"
+        verbose_name_plural = "CV Profile"
+    
+    def __str__(self) -> str:
+        return f"CV Profile for {self.name}"
+    
+    def save(self, *args, **kwargs):
+        # Ensure only one profile exists
+        if not self.pk and CVProfile.objects.exists():
+            raise ValueError("Only one CV profile can exist. Please edit the existing one.")
+        return super().save(*args, **kwargs)
