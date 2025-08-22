@@ -165,17 +165,26 @@
 .cv-item .item-subtitle {
   color: #ffffff;
   margin-bottom: 0.5rem;
+  display: inline-block;
+  width: 100%;
 }
 .cv-item .item-subtitle::before {
-  content: "  └─ ";
+  content: "└─ ";
   color: #3c3c3c;
+  display: inline;
+  margin-right: 0.25rem;
+}
+.cv-item .item-subtitle p {
+  display: inline;
+  margin: 0;
+  padding: 0;
 }
 .cv-item .item-subtitle a {
-  color: #569cd6;
+  color: #4ec9b0;
   text-decoration: underline;
 }
 .cv-item .item-subtitle a:hover {
-  color: #4ec9b0;
+  color: #ffffff;
 }
 .cv-item .item-description {
   color: #d4d4d4;
