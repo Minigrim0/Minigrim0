@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     "devlog",
     "import_export",
     "rest_framework",
-    "knox"
+    "knox",
+    "django_tex",
 ]
 
 MIDDLEWARE = [
@@ -71,6 +72,11 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
             ],
         },
+    },
+    {
+        'NAME': 'tex',
+        'BACKEND': 'django_tex.engine.TeXEngine', 
+        'APP_DIRS': True,
     },
 ]
 
