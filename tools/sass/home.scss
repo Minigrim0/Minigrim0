@@ -1,24 +1,100 @@
 // Import variables
 @use "variables" as *;
 
-// Home terminal layout
-.home-terminal {
+// Custom home body to override default styles
+.home-body {
+    font: $base-font-size $font-stack;
+    background: terminal-color(background);
+    color: terminal-color(foreground);
+    margin: 0;
+    padding: 0;
+    line-height: $line-height-normal;
+    overflow: hidden; // Prevent any scrolling
+    height: 100vh;
+}
+
+// Home layout - full viewport height with no scroll
+.home-layout {
     display: flex;
     flex-direction: column;
-    min-height: calc(100vh - 120px);
-    font-family: $font-stack;
-    gap: $spacing-xl;
+    height: 100vh;
+    background: terminal-color(background);
+    border: 2px solid terminal-color(border);
+    border-radius: 8px;
+    margin: 5px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+// Home titlebar
+.home-titlebar {
+    background: terminal-color(titlebar);
+    padding: 8px 12px;
+    border-bottom: 1px solid terminal-color(border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0; // Don't shrink
+    height: 40px;
+    box-sizing: border-box;
+    font-size: 0.9em;
+    color: terminal-color(titlebar-text);
+    
+    .terminal-buttons {
+        // Empty div for layout consistency
+    }
+    
+    .terminal-title {
+        font-weight: bold;
+        
+        &::before {
+            content: "user@minigrim0:~";
+            color: terminal-color(accent-primary);
+            margin-right: 8px;
+        }
+    }
+    
+    .terminal-info {
+        .mono {
+            font-family: $font-stack;
+            color: terminal-color(foreground-dim);
+            font-size: 0.8rem;
+        }
+    }
+}
+
+// Home content area - takes remaining space
+.home-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: $spacing-sm;
+    gap: $spacing-sm;
+    overflow: hidden;
 }
 
 .profile-section {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    gap: $spacing-xl;
-    margin: $spacing-lg 0;
+    gap: $spacing-md;
+    width: 100%;
+    max-width: 900px;
+    align-items: center;
     
+    // Mobile: stack picture above text
     @media (max-width: 768px) {
         grid-template-columns: 1fr;
-        gap: $spacing-lg;
+        gap: $spacing-sm;
+        text-align: center;
+        max-width: 350px;
+    }
+    
+    // Smaller screens: reduce gap
+    @media (max-width: 480px) {
+        gap: $spacing-xs;
+        max-width: 100%;
     }
 }
 
@@ -28,91 +104,200 @@
     align-items: center;
     
     .ascii-frame {
-        border: 2px solid $border-color;
-        padding: $spacing-md;
-        background: $card-background;
+        border: 2px solid terminal-color(border);
+        padding: $spacing-xs;
+        background: terminal-color(background-alt);
         
         img {
-            width: 200px;
-            height: 200px;
+            width: 120px;
+            height: 120px;
             object-fit: cover;
-            border: 1px solid $border-color;
+            border: 1px solid terminal-color(border);
             filter: contrast(1.2) brightness(1.1);
-        }
-    }
-}
-
-.profile-info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    
-    .name-header {
-        font-size: $font-size-2xl;
-        color: $header-color;
-        margin-bottom: $spacing-md;
-        font-weight: bold;
-        
-        &::before {
-            content: "┌─ ";
-            color: $accent-color;
-        }
-        
-        &::after {
-            content: " ─┐";
-            color: $accent-color;
-        }
-    }
-    
-    .description {
-        color: $text-color;
-        line-height: $line-height-loose;
-        padding: $spacing-md;
-        border-left: 3px solid $accent-color;
-        background: $card-background;
-        
-        strong {
-            color: $text-bright-color;
-        }
-        
-        a {
-            color: $link-color;
             
-            &:hover {
-                color: $link-hover-color;
+            // Smaller image on mobile
+            @media (max-width: 768px) {
+                width: 80px;
+                height: 80px;
+            }
+            
+            @media (max-width: 480px) {
+                width: 60px;
+                height: 60px;
             }
         }
     }
 }
 
-.navigation-menu {
-    .menu-items {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: $spacing-md;
+.profile-info {
+    border: 2px solid terminal-color(border);
+    background: terminal-color(background-alt);
+    padding: $spacing-sm;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    // Header border that marks the contour
+    &::before {
+        content: "┌─[ Profile ]─";
+        position: absolute;
+        top: -1px;
+        left: $spacing-sm;
+        background: terminal-color(background);
+        padding: 0 $spacing-xs;
+        color: terminal-color(accent-primary);
+        font-weight: bold;
+        font-family: $font-stack;
+        font-size: 0.8rem;
     }
     
-    .menu-item {
-        border: 1px solid $border-color;
-        background: $card-background;
-        transition: all $transition-fast;
+    .name-header {
+        font-size: $font-size-xl;
+        color: terminal-color(foreground-bright);
+        margin-bottom: $spacing-xs;
+        font-weight: bold;
         
-        &:hover {
-            background: $card-hover-background;
-            border-color: $border-focus-color;
-            transform: translateY(-2px);
+        &::before {
+            content: "» ";
+            color: terminal-color(accent-primary);
+        }
+        
+        // Smaller font on mobile
+        @media (max-width: 768px) {
+            font-size: $font-size-lg;
+        }
+        
+        @media (max-width: 480px) {
+            font-size: $font-size-md;
+        }
+    }
+    
+    .description {
+        color: terminal-color(foreground);
+        line-height: $line-height-normal;
+        padding-left: $spacing-sm;
+        border-left: 3px solid terminal-color(accent-primary);
+        font-size: $font-size-sm;
+        
+        strong {
+            color: terminal-color(foreground-bright);
         }
         
         a {
-            color: $link-color;
-            text-decoration: none;
-            display: block;
-            padding: $spacing-lg;
-            font-weight: bold;
-            text-align: center;
+            color: terminal-color(accent-secondary);
+            text-decoration: underline;
             
             &:hover {
-                color: $link-hover-color;
+                color: terminal-color(foreground-bright);
+                text-decoration: none;
+            }
+        }
+        
+        // Adjust spacing on mobile
+        @media (max-width: 768px) {
+            font-size: $font-size-xs;
+            line-height: $line-height-tight;
+            padding-left: $spacing-xs;
+        }
+    }
+}
+
+.navigation-menu {
+    width: 100%;
+    max-width: 900px;
+    
+    .menu-items {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: $spacing-sm;
+        
+        // Mobile: stack vertically (4 rows x 1 column)
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+            grid-template-rows: repeat(4, auto);
+            gap: $spacing-xs;
+            max-width: 180px;
+            margin: 0 auto;
+        }
+        
+        // Tablet: 2 columns
+        @media (max-width: 1024px) and (min-width: 769px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    
+    .menu-item {
+        border: 1px solid terminal-color(border);
+        background: terminal-color(background-alt);
+        transition: all $transition-fast;
+        
+        &:hover {
+            background: terminal-color(button-hover);
+            border-color: terminal-color(accent-primary);
+            transform: translateY(-1px);
+        }
+        
+        a {
+            color: terminal-color(accent-secondary);
+            text-decoration: none;
+            display: block;
+            padding: $spacing-xs;
+            font-weight: bold;
+            text-align: center;
+            font-size: $font-size-sm;
+            
+            &:hover {
+                color: terminal-color(foreground-bright);
+            }
+            
+            // Smaller padding on mobile
+            @media (max-width: 768px) {
+                padding: $spacing-xs;
+                font-size: $font-size-xs;
+            }
+        }
+    }
+}
+
+// Home footer - fixed at bottom
+.home-footer {
+    background: terminal-color(titlebar);
+    border-top: 1px solid terminal-color(border);
+    color: terminal-color(titlebar-text);
+    padding: $spacing-xs $spacing-sm;
+    flex-shrink: 0; // Don't shrink
+    height: 30px;
+    box-sizing: border-box;
+    
+    .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.7rem;
+        
+        @media (max-width: 480px) {
+            flex-direction: column;
+            gap: $spacing-xs;
+            height: auto;
+        }
+    }
+    
+    .footer-links {
+        display: flex;
+        gap: $spacing-sm;
+        
+        a {
+            color: terminal-color(titlebar-text);
+            text-decoration: none;
+            
+            &:hover {
+                color: terminal-color(accent-primary);
+            }
+            
+            svg {
+                width: 12px;
+                height: 12px;
             }
         }
     }
