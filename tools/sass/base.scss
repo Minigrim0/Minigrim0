@@ -16,142 +16,359 @@
 }
 
 :root {
-    color-scheme: light dark;
+    color-scheme: dark;
+}
+
+// Selection styling for terminal feel
+::selection {
+    background: $selection-background;
+    color: $text-bright-color;
 }
 
 body {
-    font: 100% $font-stack;
+    font: $base-font-size $font-stack;
     background: $background-color;
     color: $text-color;
-    background-image: url("/static/img/noise.png");
-    background-size: 200px;
-    font-size: 2em;
-    margin: 0px;
-    transition:
-        color 0.2s,
-        background 0.2s;
+    margin: 0;
+    padding: 0;
+    line-height: $line-height-normal;
+    overflow-x: hidden;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+// Terminal window chrome
+.terminal-window {
+    background: $background-color;
+    border: 2px solid $border-color;
+    border-radius: 8px;
+    margin: 10px;
+    min-height: calc(100vh - 20px);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.terminal-titlebar {
+    background: $titlebar-background;
+    padding: 8px 12px;
+    border-bottom: 1px solid $border-color;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.9em;
+    color: $titlebar-text;
+    
+    .terminal-buttons {
+        display: flex;
+        gap: 6px;
+        
+        .btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: none;
+            
+            &.close { background: $error-color; }
+            &.minimize { background: $warning-color; }
+            &.maximize { background: $success-color; }
+        }
+    }
+    
+    .terminal-title {
+        font-weight: bold;
+        
+        &::before {
+            content: "user@minigrim0:~";
+            color: $accent-color;
+            margin-right: 8px;
+        }
+    }
+}
+
+.terminal-content {
+    flex: 1;
+    padding: 20px;
+    background: $background-color;
+}
+
+// Typography with terminal styling
+h1, h2, h3, h4, h5, h6 {
     font-family: $font-stack;
     color: $header-color;
+    margin: 0 0 $spacing-md 0;
+    font-weight: bold;
+    
+    &::before {
+        content: "# ";
+        color: $accent-color;
+    }
 }
 
-footer {
-    height: $footer-height;
+h1 {
+    font-size: $font-size-2xl;
+    border-bottom: 1px solid $border-color;
+    padding-bottom: $spacing-sm;
+    margin-bottom: $spacing-lg;
 }
 
+h2 {
+    font-size: $font-size-xl;
+    &::before { content: "## "; }
+}
+
+h3 {
+    font-size: $font-size-lg;
+    &::before { content: "### "; }
+}
+
+// Links with underline styling
+a {
+    color: $link-color;
+    text-decoration: underline;
+    transition: color $transition-fast;
+    
+    &:hover {
+        color: $link-hover-color;
+        text-decoration: underline;
+    }
+    
+    &:visited {
+        color: terminal-color(accent-purple);
+    }
+}
+
+// Terminal-style buttons
+.btn, button {
+    background: $button-background;
+    color: $button-text-color;
+    border: 1px solid $border-color;
+    padding: $spacing-sm $spacing-md;
+    font-family: $font-stack;
+    font-size: inherit;
+    cursor: pointer;
+    transition: all $transition-fast;
+    
+    &:hover {
+        background: $button-hover-background;
+        border-color: $border-focus-color;
+    }
+    
+    &:focus {
+        outline: 2px solid $border-focus-color;
+        outline-offset: 2px;
+    }
+    
+    &.active {
+        background: $accent-color;
+        color: $background-color;
+        border-color: $accent-color;
+    }
+}
+
+// Input styling
+input, textarea, select {
+    background: $input-background;
+    color: $text-color;
+    border: 1px solid $input-border;
+    padding: $spacing-sm;
+    font-family: $font-stack;
+    font-size: inherit;
+    
+    &:focus {
+        outline: none;
+        border-color: $input-focus-border;
+        box-shadow: 0 0 0 2px terminal-color(border-focus);
+    }
+}
+
+// Terminal content areas
 .content {
     min-height: calc(100vh - $footer-height);
-}
-
-.no-overflow {
-    overflow-y: hidden;
-}
-
-.m-0 {
-    margin: 0;
-}
-
-.centered-row {
-    display: grid;
-    grid-template-columns: 10vw 15vw auto 10vw;
-    grid-template-rows: 30vh 40vh calc(30vh - $footer-height);
-}
-
-.pseudo {
-    text-decoration: none;
-}
-
-.text-right {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-}
-
-.text-center {
-    text-align: center;
-    width: 100%;
-}
-
-.row {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-around;
-}
-
-.justify-between {
-    justify-content: space-between;
-}
-
-.muted-center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: rgba(255, 255, 255, 0.5);
 }
 
 .container {
     width: 90%;
     max-width: 1200px;
-    margin: auto;
-    padding-top: 20px;
+    margin: 0 auto;
+    padding: $spacing-lg;
 }
 
+// Terminal-style borders and boxes
+.terminal-box {
+    border: 1px solid $border-color;
+    padding: $spacing-md;
+    margin: $spacing-md 0;
+    background: $card-background;
+    
+    &.double-border {
+        border: 2px solid $border-color;
+    }
+    
+    &:hover {
+        background: $card-hover-background;
+        border-color: $border-focus-color;
+    }
+}
+
+// ASCII-style separators
+.separator {
+    margin: $spacing-lg 0;
+    text-align: center;
+    color: $border-color;
+    
+    &::before {
+        content: "────────────────────────────────────────";
+        display: block;
+        margin: 0 auto;
+        overflow: hidden;
+        width: 100%;
+    }
+    
+    &.double::before {
+        content: "════════════════════════════════════════";
+    }
+}
+
+// Grid layouts with TUI styling
+.centered-row {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: auto 1fr auto;
+    min-height: calc(100vh - 40px);
+    gap: $spacing-lg;
+    padding: $spacing-lg;
+}
+
+// Text alignment utilities
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+// Layout utilities
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: $spacing-md;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+}
+
+.justify-between { justify-content: space-between; }
+.justify-center { justify-content: center; }
+.align-center { align-items: center; }
+
+// Terminal prompt styling
+.prompt {
+    &::before {
+        content: "$ ";
+        color: $accent-color;
+        font-weight: bold;
+    }
+}
+
+.prompt-user {
+    &::before {
+        content: "user@minigrim0:~$ ";
+        color: $accent-color;
+        font-weight: bold;
+    }
+}
+
+// Command output styling
+.output {
+    color: $text-color;
+    white-space: pre-wrap;
+    
+    &.success { color: $success-color; }
+    &.error { color: $error-color; }
+    &.warning { color: $warning-color; }
+    &.info { color: $info-color; }
+}
+
+// Back link with terminal styling
 .back-link {
     position: absolute;
     top: 10px;
     left: 10px;
-    color: white;
-    text-decoration: underline;
-
+    
     a {
         display: inline-flex;
         align-items: center;
-        padding: 8px 12px;
-        background: theme-color(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.1));
-        color: theme-color(color(neutral-800), color(neutral-100));
+        padding: $spacing-sm $spacing-md;
+        background: $button-background;
+        color: $button-text-color;
         text-decoration: none;
-        border-radius: 4px;
-        font-size: 0.9em; /* Slightly smaller font size */
-        border: 1px solid $border-color; /* Subtle border */
-
+        border: 1px solid $border-color;
+        font-family: $font-stack;
+        transition: all $transition-fast;
+        
         &:hover {
-            background-color: theme-color(
-                rgba(0, 0, 0, 0.2),
-                rgba(255, 255, 255, 0.2)
-            ); /* Lighter on hover */
+            background: $button-hover-background;
+            border-color: $border-focus-color;
         }
-
+        
+        &::before {
+            content: "← ";
+            margin-right: $spacing-xs;
+        }
+        
         svg {
-            margin-right: 6px;
-            width: 14px; /* Slightly smaller icon */
+            margin-right: $spacing-xs;
+            width: 14px;
             height: 14px;
         }
     }
 }
 
+// Image styling
 .image-left {
     display: flex;
     justify-content: center;
     align-items: center;
-
+    
     img {
-        max-width: 15vw;
-        margin: auto;
-        border-radius: 50%;
+        max-width: 200px;
+        border: 2px solid $border-color;
+        border-radius: 8px;
+        transition: border-color $transition-fast;
+        
+        &:hover {
+            border-color: $border-focus-color;
+        }
     }
 }
 
-.content-justify {
-    justify-content: space-evenly;
+// Utility classes
+.m-0 { margin: 0; }
+.p-0 { padding: 0; }
+.no-overflow { overflow: hidden; }
+.mono { font-family: $font-stack; }
+
+// Blinking cursor animation
+.cursor {
+    display: inline-block;
+    background: $cursor-color;
+    width: 2px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+// Footer styling
+footer {
+    height: $footer-height;
+    background: $titlebar-background;
+    border-top: 1px solid $border-color;
+    color: $titlebar-text;
     display: flex;
+    align-items: center;
+    padding: 0 $spacing-lg;
+    font-size: 0.9em;
 }

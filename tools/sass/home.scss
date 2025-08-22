@@ -1,13 +1,119 @@
-// Import variables if not already imported
+// Import variables
 @use "variables" as *;
 
-.pseudo {
-    font-weight: 1200;
-    color: $accent-color;
+// Home terminal layout
+.home-terminal {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 120px);
+    font-family: $font-stack;
+    gap: $spacing-xl;
 }
 
-.self-description {
-    font-size: 1.2em;
-    margin: 1.2em 0;
-    color: theme-color(color(neutral-700), color(neutral-200));
+.profile-section {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: $spacing-xl;
+    margin: $spacing-lg 0;
+    
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+        gap: $spacing-lg;
+    }
+}
+
+.profile-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    .ascii-frame {
+        border: 2px solid $border-color;
+        padding: $spacing-md;
+        background: $card-background;
+        
+        img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border: 1px solid $border-color;
+            filter: contrast(1.2) brightness(1.1);
+        }
+    }
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+    .name-header {
+        font-size: $font-size-2xl;
+        color: $header-color;
+        margin-bottom: $spacing-md;
+        font-weight: bold;
+        
+        &::before {
+            content: "┌─ ";
+            color: $accent-color;
+        }
+        
+        &::after {
+            content: " ─┐";
+            color: $accent-color;
+        }
+    }
+    
+    .description {
+        color: $text-color;
+        line-height: $line-height-loose;
+        padding: $spacing-md;
+        border-left: 3px solid $accent-color;
+        background: $card-background;
+        
+        strong {
+            color: $text-bright-color;
+        }
+        
+        a {
+            color: $link-color;
+            
+            &:hover {
+                color: $link-hover-color;
+            }
+        }
+    }
+}
+
+.navigation-menu {
+    .menu-items {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: $spacing-md;
+    }
+    
+    .menu-item {
+        border: 1px solid $border-color;
+        background: $card-background;
+        transition: all $transition-fast;
+        
+        &:hover {
+            background: $card-hover-background;
+            border-color: $border-focus-color;
+            transform: translateY(-2px);
+        }
+        
+        a {
+            color: $link-color;
+            text-decoration: none;
+            display: block;
+            padding: $spacing-lg;
+            font-weight: bold;
+            text-align: center;
+            
+            &:hover {
+                color: $link-hover-color;
+            }
+        }
+    }
 }
