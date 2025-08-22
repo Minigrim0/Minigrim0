@@ -1,0 +1,61 @@
+\documentclass[11pt,a4paper,sans]{moderncv}
+
+% moderncv themes
+\moderncvstyle[right]{classic}
+\moderncvcolor{grey}  % color options 'black', 'blue' (default), 'burgundy', 'green', 'grey', 'orange', 'purple' and 'red'
+% character encoding
+\usepackage[utf8]{inputenc}
+\RequirePackage{fontawesome}
+
+% adjust the page margins
+\usepackage[scale=0.79, top=0.4in, bottom=0.8in]{geometry}
+
+\usepackage{url}
+
+% personal data
+\name{Florent}{Grimau}
+\title{Master Student in Embedded Systems}
+\address{Stockholm - Sweden}
+\email{grimauflorent@gmail.com}
+\social[github]{Minigrim0}
+\extrainfo{22 Sept 2000}
+\photo[64pt][0.4pt]{profile.jpg}
+
+%----------------------------------------------------------------------------------
+%            content
+%----------------------------------------------------------------------------------
+\begin{document}
+%-----       resume       ---------------------------------------------------------
+\makecvtitle{}
+
+\section{Education}
+%- for education in edu
+\cventry{ {{- education.start_date -}}--{{- education.end_date -}} }{ {{- education.name|latex_escape -}} }{ {{- education.place|latex_escape -}} }{}{}{}
+%- endfor
+
+\section{Experience}
+%- for experience in exp
+\cventry{ {{- experience.start_date -}}--{{- experience.end_date -}} }{ {{- experience.name|latex_escape -}} }{ {{- experience.place|latex_escape -}} }{}{}{ {{- experience.description|latex_escape if experience.description -}}%- if experience.link %}\\ \url{ {{- experience.link -}} }%- endif %} }
+%- endfor
+
+\section{Competition and extra-scolar activities}
+%- for competition in com
+\cvitemwithcomment{ {{- competition.date -}} }{ {{- competition.name|latex_escape -}} }{ {{- competition.description|latex_escape if competition.description -}} }
+%- endfor
+
+\section{Languages}
+%- for language in lan
+\cvitem{ {{- language.name|latex_escape -}} }{ {{- language.get_level_display -}} }
+%- endfor
+
+\section{Skills}
+%- for skill in ski
+\cvitem{ {{- skill.name|latex_escape -}} }{%- for i in range(skill.level) %}\faCircle%- endfor -%}%- for i in range(5 - skill.level) %}\faCircleO%- endfor -%}%- if skill.details %}, {{- skill.details|latex_escape -%}%- endif %}
+%- endfor
+
+\section{Interest}
+%- for interest in int
+\cvitem{ {{- interest.category.name|latex_escape -}} }{ {{- interest.name|latex_escape -}} }
+%- endfor
+
+\end{document} 
