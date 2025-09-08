@@ -51,9 +51,39 @@ class LanguageAdmin(ImportExportModelAdmin):
     list_display = ("name", "level")
 
 
+@admin.register(models.SkillCategory)
+class SkillCategoryAdmin(ImportExportModelAdmin):
+    def move_up(self, request, queryset):
+        for obj in queryset:
+            obj.move(up=True)
+
+    def move_down(self, request, queryset):
+        for obj in queryset:
+            obj.move(up=False)
+
+    list_display = ("name", "_order")
+    actions = ["move_up", "move_down"]
+
+
+@admin.register(models.SkillSubCategory)
+class SkillSubCategoryAdmin(ImportExportModelAdmin):
+    def move_up(self, request, queryset):
+        for obj in queryset:
+            obj.move(up=True)
+
+    def move_down(self, request, queryset):
+        for obj in queryset:
+            obj.move(up=False)
+
+    list_display = ("name", "category", "_order")
+    list_filter = ("category",)
+    actions = ["move_up", "move_down"]
+
+
 @admin.register(models.Skill)
 class SkillAdmin(ImportExportModelAdmin):
-    list_display = ("name", "level")
+    list_display = ("name", "category")
+    list_filter = ("category__category",)
 
 
 @admin.register(models.InterestCategory)
@@ -83,6 +113,10 @@ class CVProfileAdmin(admin.ModelAdmin):
         }),
         ("Contact & Social", {
             "fields": ("address", "github_username")
+        }),
+        ("Professional Summary", {
+            "fields": ("professional_summary",),
+            "description": "Brief professional summary for your CV (Markdown supported)"
         }),
         ("Profile Image", {
             "fields": ("profile_image",),

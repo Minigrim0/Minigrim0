@@ -1,34 +1,41 @@
 \documentclass[11pt,a4paper,sans]{moderncv}
 
 % moderncv themes
-\moderncvstyle[right]{classic}
-\moderncvcolor{grey}  % color options 'black', 'blue' (default), 'burgundy', 'green', 'grey', 'orange', 'purple' and 'red'
+\moderncvstyle{classic}
+\moderncvcolor{blue}  % Changed to blue for more professional look
+
 % character encoding
 \usepackage[utf8]{inputenc}
 
 % adjust the page margins
-\usepackage[scale=0.79, top=0.4in, bottom=0.8in]{geometry}
+\usepackage[scale=0.8, top=0.5in, bottom=0.6in]{geometry}
 
+% Additional packages for enhanced styling
 \usepackage{url}
+\usepackage{xcolor}
+\usepackage{enumitem}
+
+% Custom colors
+\definecolor{darkblue}{RGB}{239,45,86}
+\definecolor{lightgray}{RGB}{54,53,55}
 
 % personal data
 {%- if profile %}
-\name{ {{ profile.name.split(' ')[0] }} }{ {{ profile.name.split(' ')[1:] | join(' ') }} }
-\title{ {{ profile.title | latex_escape }} }
-\address{ {{ profile.address | latex_escape }} }
-\email{ {{ profile.email }} }
-\social[github]{ {{ profile.github_username }} }
-\extrainfo{ {{ profile.birth_date }} }
+\name{ {{- profile.name.split(' ')[0] -}} }{ {{- profile.name.split(' ')[1] -}} }
+\title{ {{- profile.title -}} }
+\address{ {{- profile.address -}} }
+\email{ {{- profile.email -}} }
+\social[github]{ {{- profile.github_username -}} }
 {%- if profile.profile_image %}
 \photo[64pt][0.4pt]{ {{ profile.profile_image.path }} }
 {%- endif %}
 {%- else %}
 \name{Florent}{Grimau}
-\title{Master Student in Embedded Systems}
-\address{Stockholm - Sweden}
-\email{grimauflorent@gmail.com}
+\title{Embedded Systems Software Engineer}
+\address{Stockholm, Sweden}
+\email{fgrimau@proton.me}
 \social[github]{Minigrim0}
-\extrainfo{22 Sept 2000}
+\photo[64pt][0.4pt]{profile.jpg}
 {%- endif %}
 
 %----------------------------------------------------------------------------------
@@ -38,34 +45,92 @@
 %-----       resume       ---------------------------------------------------------
 \makecvtitle{}
 
+% Professional Summary Section
+{%- if profile and profile.professional_summary %}
+\section{Professional Summary}
+\cvitem{}{ {{ profile.professional_summary }} }
+{%- endif %}
+
+\section{Professional Experience}
+{%- for experience in exp %}
+\cventry{ {{ experience.start_date }}--{{ experience.end_date }} }{ {{ experience.name }} }{ {{ experience.place }} }{}{}{
+{%- if experience.description %}
+{{ experience.description }}
+{%- endif %}
+{%- if experience.link %}
+\\ \url{ {{ experience.link }} }
+{%- endif %}
+}
+{%- endfor %}
+
 \section{Education}
 {%- for education in edu %}
-\cventry{ {{ education.start_date }}--{{ education.end_date }} }{ {{ education.name | latex_escape }} }{ {{ education.place | latex_escape }} }{}{}{}
+\cventry{ {{ education.start_date }}--{{ education.end_date }} }{ {{ education.name }} }{ {{ education.place }} }{}{}{
+{%- if education.description %}
+{{ education.description }}
+{%- endif %}
+{%- if education.link %}
+\\ \url{ {{ education.link }} }
+{%- endif %}
+}
 {%- endfor %}
 
-\section{Experience}
-{%- for experience in exp %}
-\cventry{ {{ experience.start_date }}--{{ experience.end_date }} }{ {{ experience.name | latex_escape }} }{ {{ experience.place | latex_escape }} }{}{}{ {%- if experience.description %}{{ experience.description | latex_escape }}{%- endif %}{%- if experience.link %}\\ \url{ {{ experience.link }} }{%- endif %} }
+{%- if pro %}
+\section{Open Source \& Community Projects}
+{%- for project in pro %}
+\cventry{ {{ project.start_date }}--{{ project.end_date }} }{ {{ project.name }} }{ {{ project.place }} }{}{}{
+{%- if project.description %}
+{{ project.description }}
+{%- endif %}
+{%- if project.link %}
+\\ \url{ {{ project.link }} }
+{%- endif %}
+}
+{%- endfor %}
+{%- endif %}
+
+\section{Technical Skills}
+
+{%- for name, cat in skill_cats.items() %}
+  \subsection{ {{ name }} }
+  {%- for subcat_name, subcat in cat.items() %}
+    \cvitem{ {{ subcat_name }} }{ 
+      {%- for skill in subcat %}
+        {{ skill.name_latex }} {%- if skill.details %} ({{ skill.details_latex }}){% endif %}{%- if not loop.last %}, {% endif -%}
+      {%- endfor %}
+    }
+  {%- endfor %}
 {%- endfor %}
 
-\section{Competition and extra-scolar activities}
+\section{Achievements \& Competitions}
 {%- for competition in com %}
-\cvitemwithcomment{ {{ competition.date }} }{ {{ competition.name | latex_escape }} }{ {%- if competition.description %}{{ competition.description | latex_escape }}{%- endif %} }
+\cventry{ {{ competition.date }} }{ {{ competition.name }} }{}{}{}{
+{%- if competition.description %}
+{{ competition.description }}
+{%- endif %}
+{%- if competition.link %}
+\\ \url{ {{ competition.link }} }
+{%- endif %}
+}
 {%- endfor %}
 
-\section{Languages}
-{%- for language in lan %}
-\cvitem{ {{ language.name | latex_escape }} }{ {{ language.get_level_display }} }
+{%- if community %}
+\section{Community Involvement}
+{%- for activity in community %}
+\cventry{ {{ activity.date }} }{ {{ activity.name }} }{ {{ activity.place }} }{}{}{
+{%- if activity.description %}
+{{ activity.description }}
+{%- endif %}
+{%- if activity.link %}
+\\ \url{ {{ activity.link }} }
+{%- endif %}
+}
 {%- endfor %}
+{%- endif %}
 
-\section{Skills}
-{%- for skill in ski %}
-\cvitem{ {{ skill.name | latex_escape }} }{ {%- for i in range(skill.level) %}\faCircle{%- endfor -%}{%- for i in range(5 - skill.level) %}\faCircleO{%- endfor -%}{%- if skill.details %}, {{ skill.details | latex_escape }}{%- endif %} }
-{%- endfor %}
-
-\section{Interest}
+\section{Interests \& Hobbies}
 {%- for interest in int %}
-\cvitem{ {{ interest.category.name | latex_escape }} }{ {{ interest.name | latex_escape }} }
+\cvitem{ {{ interest.category.name }} }{ {{ interest.name }} }
 {%- endfor %}
 
 \end{document}

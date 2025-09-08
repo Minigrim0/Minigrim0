@@ -1,6 +1,6 @@
-from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models, transaction
 
+from minigrim0.utils import latex_markdown
 
 class Orderable(models.Model):
     _order = models.IntegerField(default=0, editable=False)
@@ -102,10 +102,39 @@ class Language(models.Model):
         return self.name
 
 
+class SkillCategory(Orderable):
+    name = models.CharField(max_length=100)
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class SkillSubCategory(Orderable):
+    name = models.CharField(max_length=100)
+    category = models.ForeignKey("minigrim0.SkillCategory", on_delete=models.CASCADE, null=True, blank=True)
+
+    @property
+    def name_latex(self) -> str:
+        return latex_markdown(self.name)
+
+    def __str__(self) -> str:
+        if self.category is not None:
+            return f"{self.name} - {self.category.name}"
+        return self.name
+
+
 class Skill(models.Model):
     name = models.CharField(max_length=100)
-    level = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
     details = models.TextField(null=True, blank=True, help_text="Markdown is supported")
+    category = models.ForeignKey('minigrim0.SkillSubCategory', on_delete=models.CASCADE, null=True, blank=True)
+
+    @property
+    def name_latex(self) -> str:
+        return latex_markdown(self.name)
+
+    @property
+    def details_latex(self) -> str:
+        return latex_markdown(self.details)
 
     def __str__(self) -> str:
         return self.name
@@ -140,7 +169,11 @@ class CVProfile(models.Model):
     email = models.EmailField(default="grimauflorent@gmail.com")
     github_username = models.CharField(max_length=100, default="Minigrim0")
     birth_date = models.CharField(max_length=20, default="22 Sept 2000")
-    
+    professional_summary = models.TextField(
+        default="Passionate about embedded systems and low-level programming. Experienced in C, C++, Python, and Rust. Skilled in microcontroller programming, real-time operating systems, and hardware interfacing. Strong problem-solving abilities and a collaborative team player.",
+        help_text="Markdown is supported"
+    )
+
     class Meta:
         verbose_name = "CV Profile"
         verbose_name_plural = "CV Profile"
