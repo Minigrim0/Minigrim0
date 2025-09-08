@@ -1,0 +1,174 @@
+\documentclass[11pt,a4paper,sans]{moderncv}
+
+% moderncv themes
+\moderncvstyle{classic}
+\moderncvcolor{blue}  % Changed to blue for more professional look
+
+% character encoding
+\usepackage[utf8]{inputenc}
+\RequirePackage{fontawesome}
+
+% adjust the page margins
+\usepackage[scale=0.8, top=0.5in, bottom=0.6in]{geometry}
+
+% Additional packages for enhanced styling
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage{enumitem}
+
+% Custom colors
+\definecolor{darkblue}{RGB}{239,45,86}
+\definecolor{lightgray}{RGB}{54,53,55}
+
+% personal data
+\name{Florent}{Grimau}
+\title{Embedded Systems Software Engineer}
+\address{Stockholm, Sweden}
+\email{fgrimau@proton.me}
+\social[github]{Minigrim0}
+\photo[64pt][0.4pt]{profile.jpg}
+
+%----------------------------------------------------------------------------------
+%            content
+%----------------------------------------------------------------------------------
+\begin{document}
+%-----       resume       ---------------------------------------------------------
+\makecvtitle{}
+
+% Professional Summary Section
+\section{Professional Summary}
+\cvitem{}{Software Engineer with a degree in Embedded Systems Engineering, combining strong academic foundations with hands-on experience in full-stack development, IoT solutions, and hardware-software integration. Proven track record in building web applications, developing embedded systems, and participating in cybersecurity competitions. Passionate about creating robust and scalable technology solutions.}
+
+\section{Professional Experience}
+
+\cventry{2021--2023}{Embedded Systems Test Engineer \& Frontend Developer}{Railnova}{Brussels, Belgium}{}{
+\begin{itemize}[leftmargin=0.6cm, itemsep=0pt]
+\item Developed and tested hardware testbenches for embedded systems validation
+\item Designed automated testing procedures and validation protocols
+\item Modernized internal web application using \textbf{React} and \textbf{REST API} integration
+\item \url{https://www.railnova.eu}
+\end{itemize}}
+
+\cventry{2020--2022}{Lead Full-Stack Developer}{Chifuri}{Brussels, Belgium}{}{
+\begin{itemize}[leftmargin=0.6cm, itemsep=0pt]
+\item Architected and deployed complete web application using \textbf{Django}, \textbf{React}, and \textbf{PostgreSQL}
+\item Implemented containerized deployment pipeline with \textbf{Docker} and \textbf{Docker Compose}
+\item Designed integration layers with \textbf{REST API} architecture for dynamic frontend environment with \textbf{React}.
+\item Led technical decision-making and established development best practices
+\item \url{https://chifuri.be}
+\end{itemize}}
+
+\cventry{2019--2021}{Backend Developer}{Railnova}{Brussels, Belgium}{}{
+\begin{itemize}[leftmargin=0.6cm, itemsep=0pt]
+\item Developed and maintained internal supply chain management system
+\item Implemented bug fixes and feature enhancements for stock management solution
+\item Worked with enterprise-level database systems and business logic optimization
+\end{itemize}}
+
+\cventry{2019--2021}{Full-Stack Developer}{CAD Cours à domicile}{Brussels \& Namur, Belgium}{}{
+\begin{itemize}[leftmargin=0.6cm, itemsep=0pt]
+\item Designed, developed, and deployed complete web platform for non-profit educational organization
+\item Managed entire software development lifecycle from requirements gathering to maintenance
+\item \url{https://github.com/Minigrim0/CAD}
+\end{itemize}}
+
+\section{Education}
+\cventry{2025}{Research Intern}{National Institute of Informatics (NII)}{Tokyo, Japan}{Audio Processing Research Group}{
+\begin{itemize}[leftmargin=0.6cm, itemsep=0pt]
+\item 4-month research internship focusing on optimising source and sensor placement for Active Sound Field Control
+\item Collaboration with international research team
+\item \url{https://www.ap.nii.ac.jp/}
+\end{itemize}}
+
+\cventry{2023--2025}{Master of Science in Electrical Engineering}{KTH Royal Institute of Technology}{Stockholm, Sweden}{Embedded Systems Track}{
+\begin{itemize}[leftmargin=0.6cm, itemsep=0pt]
+\item Specialization: Embedded Systems, Digital Signal Processing, Real-time Systems
+\item Relevant Coursework: Advanced Computer Architecture, VLSI Design, IoT Systems
+\end{itemize}}
+
+\cventry{2021--2023}{Master of Science in Computer Science}{Vrije Universiteit Brussel (VUB)}{Brussels, Belgium}{Software Languages \& Software Engineering}{
+\begin{itemize}[leftmargin=0.6cm, itemsep=0pt]
+\item Focus: Software Architecture, Programming Language Theory, Software Engineering Methodologies
+\item \textit{Program not completed due to transfer to KTH}
+\end{itemize}}
+
+\cventry{2018--2021}{Bachelor of Science in Computer Science}{Université Libre de Bruxelles (ULB)}{Brussels, Belgium}{}{
+\begin{itemize}[leftmargin=0.6cm, itemsep=0pt]
+\item Strong foundation in algorithms, data structures, and software development
+\end{itemize}}
+
+
+\section{Open Source \& Community Projects}
+
+\cventry{2019--2023}{Domotics Systems Developer}{UrLab Hackerspace}{ULB, Brussels}{}{
+\begin{itemize}[leftmargin=0.6cm, itemsep=0pt]
+\item Designed and implemented IoT-based home automation system for university hackerspace
+\item Integrated hardware sensors with software control systems using \textbf{Arduino} and \textbf{Raspberry Pi}
+\item \url{https://github.com/UrLab/alain}
+\end{itemize}}
+
+\cventry{2019--2023}{Web Developer}{UrLab Website}{ULB, Brussels}{}{
+\begin{itemize}[leftmargin=0.6cm, itemsep=0pt]
+\item Maintained and enhanced hackerspace website using \textbf{Django} framework
+\item Upgraded legacy systems, updated libraries (\textbf{Bootstrap}), and implemented new features
+\item \url{https://github.com/UrLab/incubator}
+\end{itemize}}
+
+\section{Technical Skills}
+
+\subsection{Programming Languages}
+\cvitem{Experienced}{\textbf{Python} (Django, Flask, Jupyter), \textbf{C++}, \textbf{Rust}}
+\cvitem{Proficient}{\textbf{JavaScript/TypeScript} (React, jQuery, Vue.js), \textbf{Arduino/C}}
+\cvitem{Familiar}{\textbf{SQL}, \textbf{HTML/CSS}, \textbf{Java}}
+
+\subsection{Technologies \& Frameworks}
+\cvitem{Web Technologies}{React, Django, Flask, Bootstrap, REST APIs, MQTT}
+\cvitem{Databases}{PostgreSQL, SQLite}
+\cvitem{DevOps \& Tools}{Docker, Docker-compose, Git, Linux System Administration}
+\cvitem{Hardware}{ESP32, Raspberry Pi, Embedded Linux, IoT Systems}
+\cvitem{Development Tools}{GitHub, Jupyter Notebook}
+
+\subsection{Systems \& Platforms}
+\cvitem{Operating Systems}{Linux (Ubuntu, Debian, Arch, NixOS), Windows}
+\cvitem{Embedded Systems}{ARM-based microcontrollers, Real-time systems, Hardware-software integration}
+\cvitem{Specializations}{System Administration, Open Source Software, Cybersecurity, Game Development}
+
+\section{Achievements \& Competitions}
+
+\cventry{2022--2023}{Cybersecurity Challenge Belgium}{}{}{}{
+\begin{itemize}[leftmargin=0.6cm, itemsep=0pt]
+\item \textbf{2nd Place - Finals 2024}
+\item \textbf{4th Place - Finals 2023}
+\item \textbf{3rd Place - Finals 2022}
+\item \textbf{Semi-finalist 2019 \& 2021}
+\item \url{https://www.cybersecuritychallenge.be/}
+\end{itemize}}
+
+\cventry{2022--2023}{Odoo Hackathon}{Ramillies, Belgium}{}{}{
+\begin{itemize}[leftmargin=0.6cm, itemsep=0pt]
+\item \textbf{2nd Place (2022 \& 2023)}
+\item Developed enterprise-grade solutions under time constraints
+\item \url{https://www.odoo.com/fr_FR/event/hackathon}
+\end{itemize}}
+
+\cventry{2021}{Louvain-li-Nux Game Jam}{Louvain-la-Neuve, Belgium}{}{}{
+\begin{itemize}[leftmargin=0.6cm, itemsep=0pt]
+\item \textbf{2nd Place}: Rapid prototyping and game development under 24-hour constraints
+\item \url{https://louvainlinux.org/activites/game-jam}
+\end{itemize}}
+
+\section{Community Involvement}
+\cventry{2018--2023}{Active Member \& Contributor}{UrLab Hackerspace}{ULB, Brussels}{}{
+\begin{itemize}[leftmargin=0.6cm, itemsep=0pt]
+\item Contributing member of university technology community
+\item Participated in \& animated workshops on embedded systems and web development
+\item Mentored newer members in programming and electronics projects
+\item \url{https://urlab.be}
+\end{itemize}}
+
+\section{Interests \& Hobbies}
+\cvitem{Technology}{Electronics design, embedded systems development, home automation, digital signal processing}
+\cvitem{Creative}{Game development, music production, piano, guitar, bass guitar}
+\cvitem{Community}{Open source software contribution, technology mentoring, hackathon participation}
+
+\end{document}
