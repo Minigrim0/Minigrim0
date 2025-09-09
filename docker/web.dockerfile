@@ -15,7 +15,7 @@ RUN --mount=type=bind,source=tools/projects/src,target=src \
     <<EOF
 set -e
 cargo build --locked --release
-cp ./target/release/$APP_NAME /bin/minigrim0
+cp /app/target/release/$APP_NAME /bin/minigrim0
 EOF
 
 # Compile CSS
