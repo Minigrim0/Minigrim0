@@ -1,4 +1,3 @@
-# Compile Github Fetcher
 ARG APP_NAME=minigrim0
 
 FROM rust:slim-bullseye AS build
@@ -15,11 +14,11 @@ RUN --mount=type=bind,source=tools/projects/src,target=src \
     <<EOF
 set -e
 cargo build --locked --release
-cp /app/target/release/$APP_NAME /bin/minigrim0
+cp /app/target/release/github-project-fetcher /bin/$APP_NAME
 EOF
 
 # Compile CSS
-FROM alpine:latest as css
+FROM alpine:latest AS css
 
 WORKDIR /app
 
@@ -34,16 +33,32 @@ RUN npx sass ./sass:./css
 # Build final image
 FROM python:3.11-slim AS final
 
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
 WORKDIR /usr/src/app
 
-RUN apt update && apt install libpq-dev gcc -y
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpq-dev \
+    gcc \
+    texlive-latex-base \
+    texlive-latex-recommended \
+    texlive-fonts-extra \
+    texlive-latex-extra \
+    texlive-luatex \
+    lmodern \
+    fontconfig \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY pyproject.toml uv.lock .
+RUN pip install --upgrade pip \
+ && pip install uv \
+ && uv pip install --system --editable .
 
 COPY . .
-RUN rm tools/ -r
-RUN pip install --upgrade pip
-RUN pip install uv
+
 COPY --from=build /bin/minigrim0 /bin/
 COPY --from=css /data/css ./minigrim0/assets/css
 
-# install project dependencies
 CMD ["uv", "run", "--extra", "prod", "gunicorn", "minigrim0.wsgi", "--bind", "0.0.0.0:8000", "--timeout", "300"]

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Required for docker-compose to use buildkit
 export DOCKER_BUILDKIT=1
@@ -29,19 +29,23 @@ case $1 in
     up)
         get_docker_file $2
 
-        docker compose -f $DOCKERFILE up -d --build
-        docker compose -f $DOCKERFILE exec web uv run manage.py makemigrations --noinput
-        docker compose -f $DOCKERFILE exec web uv run manage.py migrate --noinput
-        docker compose -f $DOCKERFILE exec web uv run manage.py collectstatic --noinput
+        docker compose -f $DOCKERFILE up -d --build \
+            || { echo "docker compose up failed"; exit 1; }
+
+        docker compose -f $DOCKERFILE exec web uv run manage.py makemigrations --noinput \
+            || { echo "makemigrations failed"; exit 1; }
+        docker compose -f $DOCKERFILE exec web uv run manage.py migrate --noinput \
+            || { echo "migrate failed"; exit 1; }
+        docker compose -f $DOCKERFILE exec web uv run manage.py collectstatic --noinput \
+            || { echo "collectstatic failed"; exit 1; }
 
         if [ $2 != "dev" ]; then  # nginx is not in dev
             docker compose -f $DOCKERFILE restart nginx
         fi
         ;;
-    upgrade)
+    restart)
         get_docker_file $2
-
-        docker compose -f $DOCKERFILE exec web poetry install
+        docker compose -f $DOCKERFILE restart
         ;;
     attach)
         get_docker_file $2  # $2 is dev or prod

@@ -1,3 +1,6 @@
-tools/target/
-.venv/
-static/
+.git/
+__pycache__/
+*.pyc
+*.log
+node_modules/
+*.egg-info/

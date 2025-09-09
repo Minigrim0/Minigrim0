@@ -3,7 +3,6 @@ services:
     build:
       context: ..
       dockerfile: docker/web.dev.dockerfile
-    command: uv run python manage.py runserver 0.0.0.0:8080
     volumes:
       - ..:/usr/src/app/
     ports:

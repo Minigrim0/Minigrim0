@@ -108,7 +108,6 @@ USE_TZ = True
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),
-
 }
 
 STATIC_URL = "/static/"
