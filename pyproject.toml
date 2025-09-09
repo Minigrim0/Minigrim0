@@ -7,8 +7,8 @@ name = "minigrim0"
 version = "0.1.0"
 description = "Minigrim0's website"
 requires-python = ">=3.11"
-authors = [{ name = "Minigrim0", email = "grimauflorent@gmail.com" }]
-license = "MIT"
+authors = [{ name = "Minigrim0", email = "fgrimau@proton.me" }]
+license = { text = "MIT" }
 readme = "README.md"
 dependencies = [
     "coloredlogs == 15.0.1",

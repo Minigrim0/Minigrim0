@@ -41,6 +41,7 @@ WORKDIR /usr/src/app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libpq-dev \
     gcc \
+    build-essential \
     texlive-latex-base \
     texlive-latex-recommended \
     texlive-fonts-extra \
