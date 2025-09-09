@@ -21,8 +21,12 @@
                     <img src="{% static "img/minigrim0.jpeg" %}" alt="minigrim0">
                 </div>
                 <div class="personal-info">
-                    <h1 class="name">Florent Grimau</h1>
-                    <h2 class="title">Student in Embedded Systems at KTH</h2>
+                    <h1 class="name">{{ cv.profile.name|default:"Florent Grimau" }}</h1>
+                    {% if cv.profile.professional_summary %}
+                        <div class="professional-summary">{{ cv.profile.professional_summary|markdown|safe }}</div>
+                    {% else %}
+                        <h2 class="title">{{ cv.profile.title|default:"Student in Embedded Systems at KTH" }}</h2>
+                    {% endif %}
                     <div class="contact-links">
                         <a href="https://github.com/Minigrim0">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
@@ -38,6 +42,26 @@
                         </a>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        {# Experience #}
+        <div class="cv-section">
+            <div class="section-header">Professional Experience</div>
+            <div class="section-content">
+                {% for exp in cv.exp %}
+                    <div class="cv-item">
+                        <div class="item-header">
+                            <div class="item-title">{{ exp.name }}</div>
+                            <div class="item-date">{% if exp.start_date == exp.end_date %}{{ exp.start_date }}{% else %}{{ exp.start_date }} - {{ exp.end_date }}{% endif %}</div>
+                        </div>
+                        <div class="item-subtitle">
+                            {{ exp.place }}
+                            {% if exp.link %} | <a href="{{ exp.link }}">{{ exp.link }}</a>{% endif %}
+                        </div>
+                        <div class="item-description">{{ exp.description|markdown|safe }}</div>
+                    </div>
+                {% endfor %}
             </div>
         </div>
 
@@ -57,40 +81,26 @@
             </div>
         </div>
 
-        {# Experience #}
-        <div class="cv-section">
-            <div class="section-header">Professional Experience</div>
-            <div class="section-content">
-                {% for exp in cv.exp %}
-                    <div class="cv-item">
-                        <div class="item-header">
-                            <div class="item-title">{{ exp.name }}</div>
-                            <div class="item-date">{{ exp.start_date }} - {{ exp.end_date }}</div>
-                        </div>
-                        <div class="item-subtitle">
-                            {{ exp.place }}
-                            {% if exp.link %} | <a href="{{ exp.link }}">{{ exp.link }}</a>{% endif %}
-                        </div>
-                        <div class="item-description">{{ exp.description|markdown|safe }}</div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
 
         {# Skills #}
         <div class="cv-section">
             <div class="section-header">Technical Skills</div>
             <div class="section-content">
                 <div class="skills-grid">
-                    {% for skill in cv.ski %}
+                    {% for category in cv.skill_categories %}
                         <div class="skill-category">
-                            <div class="category-title">{{ skill.name }}</div>
+                            <div class="category-title">{{ category.name }}</div>
                             <div class="skill-list">
-                                {% for i in skill.level|times %}
-                                    <span class="skill-tag">★</span>
+                                {% for subcategory in category.subcategories %}
+                                    <div class="subcategory-skills">
+                                        {% for skill in subcategory.skills %}
+                                            <div class="skill-tag"{% if skill.details %} data-has-details="true" data-skill-details="{{ skill.details|escape }}"{% endif %}>
+                                                <div class="skill-name">{{ skill.name|markdown|safe }}</div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
                                 {% endfor %}
                             </div>
-                            <div class="skill-details">{{ skill.details|markdown|safe }}</div>
                         </div>
                     {% endfor %}
                 </div>
@@ -123,4 +133,113 @@
         </div>
     </div>
 </div>
+
+<!-- Tooltip container for skills -->
+<div id="skill-tooltip" class="skill-tooltip"></div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const tooltip = document.getElementById('skill-tooltip');
+    const skillTags = document.querySelectorAll('.skill-tag[data-has-details="true"]');
+    
+    // Markdown-like rendering for skill details
+    function renderMarkdown(text) {
+        return text
+            .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+            .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+            .replace(/`([^`]+)`/g, '<code>$1</code>')
+            .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+            .replace(/\n\n/g, '</p><p>')
+            .replace(/\n/g, '<br>');
+    }
+    
+    let currentTooltipTag = null;
+    let hideTimeout = null;
+    
+    function showTooltip(tag) {
+        clearTimeout(hideTimeout);
+        currentTooltipTag = tag;
+        
+        const details = tag.getAttribute('data-skill-details');
+        if (!details) return;
+        
+        tooltip.innerHTML = '<p>' + renderMarkdown(details) + '</p>';
+        tooltip.classList.add('show');
+        
+        // Position tooltip above the skill tag
+        const rect = tag.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+        
+        // Set initial position to measure tooltip
+        tooltip.style.left = '0px';
+        tooltip.style.top = '0px';
+        
+        const tooltipRect = tooltip.getBoundingClientRect();
+        
+        let left = rect.left + scrollLeft + (rect.width / 2) - (tooltipRect.width / 2);
+        let top = rect.top + scrollTop - tooltipRect.height - 10;
+        
+        // Keep tooltip within viewport
+        if (left < 10) left = 10;
+        if (left + tooltipRect.width > window.innerWidth - 10) {
+            left = window.innerWidth - tooltipRect.width - 10;
+        }
+        if (top < scrollTop + 10) {
+            top = rect.top + scrollTop + rect.height + 10;
+            tooltip.style.transform = 'rotate(180deg)';
+        } else {
+            tooltip.style.transform = 'none';
+        }
+        
+        tooltip.style.left = left + 'px';
+        tooltip.style.top = top + 'px';
+    }
+    
+    function hideTooltip() {
+        hideTimeout = setTimeout(() => {
+            tooltip.classList.remove('show');
+            currentTooltipTag = null;
+        }, 150);
+    }
+    
+    skillTags.forEach(tag => {
+        // Show tooltip on hover
+        tag.addEventListener('mouseenter', function() {
+            showTooltip(this);
+        });
+        
+        // Schedule hide when leaving tag
+        tag.addEventListener('mouseleave', function(e) {
+            // Check if mouse is moving toward tooltip
+            const rect = this.getBoundingClientRect();
+            const tooltipRect = tooltip.getBoundingClientRect();
+            
+            // If mouse is moving toward where tooltip should be, delay hiding
+            if (e.clientY < rect.top && 
+                e.clientX > tooltipRect.left - 20 && 
+                e.clientX < tooltipRect.right + 20) {
+                hideTimeout = setTimeout(() => {
+                    if (!tooltip.matches(':hover')) {
+                        tooltip.classList.remove('show');
+                        currentTooltipTag = null;
+                    }
+                }, 300);
+            } else {
+                hideTooltip();
+            }
+        });
+    });
+    
+    // Keep tooltip visible when hovering over it
+    tooltip.addEventListener('mouseenter', function() {
+        clearTimeout(hideTimeout);
+    });
+    
+    // Hide tooltip when leaving tooltip
+    tooltip.addEventListener('mouseleave', function() {
+        hideTooltip();
+    });
+});
+</script>
 {% endblock content %}

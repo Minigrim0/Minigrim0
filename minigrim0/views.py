@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django_tex.shortcuts import render_to_pdf
+from itertools import groupby
+from operator import attrgetter
 
 from minigrim0 import models
-
-from minigrim0.utils import latex_markdown
 
 
 def index(request):
@@ -13,12 +13,28 @@ def index(request):
 
 def cv(request):
     cv_profile = models.CVProfile.objects.first()
+    
+    # Organize skills by category and subcategory for HTML display
+    skill_categories = []
+    for skill_cat in models.SkillCategory.objects.all().order_by("_order"):
+        category_data = {
+            'name': skill_cat.name,
+            'subcategories': []
+        }
+        for skill_subcat in skill_cat.skillsubcategory_set.all().order_by("_order"):
+            subcat_data = {
+                'name': skill_subcat.name,
+                'skills': list(skill_subcat.skill_set.all())
+            }
+            category_data['subcategories'].append(subcat_data)
+        skill_categories.append(category_data)
+    
     cv_data = {
-        "edu": models.Education.objects.all(),
-        "exp": models.Experience.objects.all(),
+        "edu": models.Education.objects.all().order_by("_order"),
+        "exp": models.Experience.objects.all().order_by("_order"),
         "com": models.Competition.objects.all().order_by("-_order"),
         "lan": models.Language.objects.all(),
-        "ski": models.Skill.objects.all().order_by("-level"),
+        "skill_categories": skill_categories,
         "int": models.Interest.objects.all(),
         "profile": cv_profile,
     }
@@ -28,78 +44,39 @@ def cv(request):
 
 def cv_pdf(request):
     """Generate CV PDF from LaTeX template"""
-    try:
-        profile = models.CVProfile.objects.first()
-        if profile:
-            # Process all profile text fields
-            if hasattr(profile, 'professional_summary'):
-                profile.professional_summary = latex_markdown(profile.professional_summary)
-            profile.name = latex_markdown(profile.name)
-            profile.title = latex_markdown(profile.title)
-            profile.address = latex_markdown(profile.address)
-            profile.github_username = latex_markdown(profile.github_username)
-    except models.CVProfile.DoesNotExist:
-        profile = None
+    profile = models.CVProfile.objects.first()
     
-    # Process all experience fields
-    experiences = list(models.Experience.objects.all())
-    for exp in experiences:
-        exp.name = latex_markdown(exp.name)
-        exp.place = latex_markdown(exp.place)
-        exp.start_date = latex_markdown(exp.start_date)
-        exp.end_date = latex_markdown(exp.end_date)
-        if exp.description:
-            exp.description = latex_markdown(exp.description)
-        if exp.link:
-            exp.link = latex_markdown(exp.link)
+    # Simple querysets - LaTeX processing handled by model properties
+    educations = models.Education.objects.all().order_by("_order")
+    experiences = models.Experience.objects.all().order_by("_order")
+    competitions = models.Competition.objects.all().order_by("-_order")
+    languages = models.Language.objects.all()
     
-    # Process all education fields
-    educations = list(models.Education.objects.all())
-    for edu in educations:
-        edu.name = latex_markdown(edu.name)
-        edu.place = latex_markdown(edu.place)
-        edu.start_date = latex_markdown(edu.start_date)
-        edu.end_date = latex_markdown(edu.end_date)
-        if hasattr(edu, 'description') and edu.description:
-            edu.description = latex_markdown(edu.description)
+    # Process skills - group by category and subcategory
+    skill_cats = {}
+    for skill_cat in models.SkillCategory.objects.all().order_by("_order"):
+        skill_cats[skill_cat.name_latex] = {}
+        for skill_subcat in skill_cat.skillsubcategory_set.all().order_by("_order"):
+            skill_cats[skill_cat.name_latex][skill_subcat.name_latex] = list(skill_subcat.skill_set.all())
     
-    # Process all competition fields
-    competitions = list(models.Competition.objects.all().order_by("-_order"))
-    for comp in competitions:
-        comp.name = latex_markdown(comp.name)
-        comp.date = latex_markdown(comp.date)
-        if comp.description:
-            comp.description = latex_markdown(comp.description)
-    
-    # Process languages
-    languages = list(models.Language.objects.all())
-    for lang in languages:
-        lang.name = latex_markdown(lang.name)
-    
-    # Process skills
-    skills_cat = dict([(latex_markdown(skill_cat.name), {}) for skill_cat in models.SkillCategory.objects.all().order_by("_order")])
-    for skill_name, category in zip(skills_cat.keys(), models.SkillCategory.objects.all().order_by("_order")):
-        skills_cat[skill_name] = {}
-        for skill_subcat in category.skillsubcategory_set.order_by("_order"):
-            skills_cat[skill_name][latex_markdown(skill_subcat.name)] = list(skill_subcat.skill_set.all())
-
-    from pprint import pprint
-    pprint(skills_cat)
-
-    # Process interests
-    interests = list(models.Interest.objects.all())
-    for interest in interests:
-        interest.name = latex_markdown(interest.name)
-        if hasattr(interest, 'category') and interest.category:
-            interest.category.name = latex_markdown(interest.category.name)
+    # Process interests - group by category using model properties
+    interests_query = models.Interest.objects.select_related('category').order_by('category__name')
+    interest_categories = []
+    for category_name, interests_group in groupby(interests_query, key=attrgetter('category.name')):
+        interests_list = list(interests_group)  # Convert to list first
+        if interests_list:  # Only if there are interests in this category
+            interest_categories.append({
+                'name': interests_list[0].category.name_latex,  # Get category from first interest
+                'interests': [interest.name_latex for interest in interests_list]
+            })
     
     cv_data = {
         "edu": educations,
         "exp": experiences,
         "com": competitions,
         "lan": languages,
-        "skill_cats": skills_cat,
-        "int": interests,
+        "skill_cats": skill_cats,
+        "interest_categories": interest_categories,
         "profile": profile,
     }
     

@@ -239,8 +239,8 @@
 
 // Skills section
 .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    display: flex;
+    flex-direction: column;
     gap: $spacing-lg;
 }
 
@@ -264,8 +264,15 @@
     
     .skill-list {
         display: flex;
-        flex-wrap: wrap;
-        gap: $spacing-xs;
+        flex-direction: column;
+        gap: 0.75rem;
+        
+        .subcategory-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: $spacing-xs;
+            margin-bottom: $spacing-sm;
+        }
         
         .skill-tag {
             background: $accent-color;
@@ -274,13 +281,57 @@
             border-radius: 3px;
             font-size: $font-size-sm;
             font-weight: bold;
+            position: relative;
+            cursor: pointer;
+            transition: all $transition-fast;
+            display: inline-block;
+            border: 1px solid transparent;
+            
+            &:hover {
+                background: $text-bright-color;
+                color: $background-color;
+                border-color: $accent-color;
+                transform: translateY(-1px);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            }
+            
+            // Show info indicator for skills with details inline
+            &[data-has-details="true"] .skill-name::after {
+                content: " ⓘ";
+                font-size: 0.8em;
+                opacity: 0.7;
+            }
+            
+            .skill-name {
+                color: inherit;
+                font-weight: inherit;
+                
+                strong {
+                    color: inherit;
+                    font-weight: 900;
+                }
+                
+                a {
+                    color: inherit;
+                    text-decoration: underline;
+                    
+                    &:hover {
+                        opacity: 0.8;
+                    }
+                }
+                
+                // Hide paragraph tags from markdown
+                p {
+                    display: inline;
+                    margin: 0;
+                    padding: 0;
+                }
+            }
+            
+            .skill-details {
+                display: none; // Hidden by default, shown in tooltip
+            }
         }
-    }
-    
-    .skill-details {
-        color: $text-dim-color;
-        font-size: $font-size-sm;
-        margin-top: $spacing-sm;
     }
 }
 
@@ -355,6 +406,88 @@
             background: terminal-color(button-bg);
             opacity: 0.8;
         }
+    }
+}
+
+// Interactive Skill Tooltip
+.skill-tooltip {
+    position: absolute;
+    background: $card-background;
+    color: $text-color;
+    padding: $spacing-sm;
+    border: 1px solid $border-color;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: normal;
+    line-height: 1.4;
+    max-width: 280px;
+    min-width: 150px;
+    z-index: 9999;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    display: none;
+    pointer-events: none;
+    
+    &.show {
+        display: block;
+        pointer-events: auto;
+    }
+    
+    // Arrow pointing down to skill badge
+    &::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border: 6px solid transparent;
+        border-top-color: $border-color;
+    }
+    
+    &::before {
+        content: "";
+        position: absolute;
+        top: calc(100% + 1px);
+        left: 50%;
+        transform: translateX(-50%);
+        border: 5px solid transparent;
+        border-top-color: $card-background;
+    }
+    
+    // Style links inside tooltip
+    a {
+        color: $link-color;
+        text-decoration: underline;
+        
+        &:hover {
+            color: $link-hover-color;
+            background: rgba($accent-color, 0.1);
+        }
+    }
+    
+    // Style markdown elements
+    p {
+        margin: 0 0 $spacing-xs 0;
+        
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+    
+    strong {
+        color: $text-bright-color;
+    }
+    
+    em {
+        color: $text-dim-color;
+        font-style: italic;
+    }
+    
+    code {
+        background: $button-background;
+        padding: 0.125rem 0.25rem;
+        border-radius: 2px;
+        font-family: $font-stack;
+        color: $warning-color;
     }
 }
 

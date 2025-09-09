@@ -203,8 +203,8 @@
 }
 
 .skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  display: flex;
+  flex-direction: column;
   gap: 1.5rem;
 }
 
@@ -226,8 +226,14 @@
 }
 .skill-category .skill-list {
   display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.skill-category .skill-list .subcategory-skills {
+  display: flex;
   flex-wrap: wrap;
   gap: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 .skill-category .skill-list .skill-tag {
   background: #569cd6;
@@ -236,11 +242,46 @@
   border-radius: 3px;
   font-size: 0.875rem;
   font-weight: bold;
+  position: relative;
+  cursor: pointer;
+  transition: all 150ms ease;
+  display: inline-block;
+  border: 1px solid transparent;
 }
-.skill-category .skill-details {
-  color: #a0a0a0;
-  font-size: 0.875rem;
-  margin-top: 0.5rem;
+.skill-category .skill-list .skill-tag:hover {
+  background: #ffffff;
+  color: #1e1e1e;
+  border-color: #569cd6;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+.skill-category .skill-list .skill-tag[data-has-details=true] .skill-name::after {
+  content: " ⓘ";
+  font-size: 0.8em;
+  opacity: 0.7;
+}
+.skill-category .skill-list .skill-tag .skill-name {
+  color: inherit;
+  font-weight: inherit;
+}
+.skill-category .skill-list .skill-tag .skill-name strong {
+  color: inherit;
+  font-weight: 900;
+}
+.skill-category .skill-list .skill-tag .skill-name a {
+  color: inherit;
+  text-decoration: underline;
+}
+.skill-category .skill-list .skill-tag .skill-name a:hover {
+  opacity: 0.8;
+}
+.skill-category .skill-list .skill-tag .skill-name p {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+.skill-category .skill-list .skill-tag .skill-details {
+  display: none;
 }
 
 .achievement-item {
@@ -303,6 +344,74 @@
   border: 1px solid #6a9955;
   background: #3c3c3c;
   opacity: 0.8;
+}
+
+.skill-tooltip {
+  position: absolute;
+  background: #252526;
+  color: #d4d4d4;
+  padding: 0.5rem;
+  border: 1px solid #3c3c3c;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: normal;
+  line-height: 1.4;
+  max-width: 280px;
+  min-width: 150px;
+  z-index: 9999;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  display: none;
+  pointer-events: none;
+}
+.skill-tooltip.show {
+  display: block;
+  pointer-events: auto;
+}
+.skill-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #3c3c3c;
+}
+.skill-tooltip::before {
+  content: "";
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #252526;
+}
+.skill-tooltip a {
+  color: #569cd6;
+  text-decoration: underline;
+}
+.skill-tooltip a:hover {
+  color: #4ec9b0;
+  background: rgba(86, 156, 214, 0.1);
+}
+.skill-tooltip p {
+  margin: 0 0 0.25rem 0;
+}
+.skill-tooltip p:last-child {
+  margin-bottom: 0;
+}
+.skill-tooltip strong {
+  color: #ffffff;
+}
+.skill-tooltip em {
+  color: #a0a0a0;
+  font-style: italic;
+}
+.skill-tooltip code {
+  background: #3c3c3c;
+  padding: 0.125rem 0.25rem;
+  border-radius: 2px;
+  font-family: AnonymiceProNerdFont, sans-serif;
+  color: #dcdcaa;
 }
 
 .download-section {

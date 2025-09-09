@@ -44,6 +44,22 @@ class Education(Orderable):
             ),
         ]
 
+    @property
+    def name_latex(self) -> str:
+        return latex_markdown(self.name)
+    
+    @property
+    def place_latex(self) -> str:
+        return latex_markdown(self.place)
+    
+    @property
+    def start_date_latex(self) -> str:
+        return latex_markdown(self.start_date)
+    
+    @property
+    def end_date_latex(self) -> str:
+        return latex_markdown(self.end_date)
+
     def __str__(self) -> str:
         return self.name
 
@@ -65,6 +81,30 @@ class Experience(Orderable):
             ),
         ]
 
+    @property
+    def name_latex(self) -> str:
+        return latex_markdown(self.name)
+    
+    @property
+    def description_latex(self) -> str:
+        return latex_markdown(self.description) if self.description else ""
+    
+    @property
+    def start_date_latex(self) -> str:
+        return latex_markdown(self.start_date)
+    
+    @property
+    def end_date_latex(self) -> str:
+        return latex_markdown(self.end_date)
+    
+    @property
+    def place_latex(self) -> str:
+        return latex_markdown(self.place)
+    
+    @property
+    def link_latex(self) -> str:
+        return latex_markdown(self.link) if self.link else ""
+
     def __str__(self) -> str:
         return self.name
 
@@ -83,6 +123,18 @@ class Competition(Orderable):
             ),
         ]
 
+    @property
+    def name_latex(self) -> str:
+        return latex_markdown(self.name)
+    
+    @property
+    def description_latex(self) -> str:
+        return latex_markdown(self.description) if self.description else ""
+    
+    @property
+    def date_latex(self) -> str:
+        return latex_markdown(self.date)
+
     def __str__(self) -> str:
         return self.name
 
@@ -98,12 +150,20 @@ class Language(models.Model):
     name = models.CharField(max_length=100)
     level = models.CharField(max_length=100, choices=level_choice)
 
+    @property
+    def name_latex(self) -> str:
+        return latex_markdown(self.name)
+
     def __str__(self) -> str:
         return self.name
 
 
 class SkillCategory(Orderable):
     name = models.CharField(max_length=100)
+
+    @property
+    def name_latex(self) -> str:
+        return latex_markdown(self.name)
 
     def __str__(self) -> str:
         return self.name
@@ -143,6 +203,10 @@ class Skill(models.Model):
 class InterestCategory(models.Model):
     name = models.CharField(max_length=100)
 
+    @property
+    def name_latex(self) -> str:
+        return latex_markdown(self.name)
+
     def __str__(self) -> str:
         return self.name
 
@@ -150,6 +214,10 @@ class InterestCategory(models.Model):
 class Interest(models.Model):
     category = models.ForeignKey(InterestCategory, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
+
+    @property
+    def name_latex(self) -> str:
+        return latex_markdown(self.name)
 
     def __str__(self) -> str:
         return self.name
@@ -177,6 +245,26 @@ class CVProfile(models.Model):
     class Meta:
         verbose_name = "CV Profile"
         verbose_name_plural = "CV Profile"
+    
+    @property
+    def name_latex(self) -> str:
+        return latex_markdown(self.name)
+    
+    @property
+    def title_latex(self) -> str:
+        return latex_markdown(self.title)
+    
+    @property
+    def address_latex(self) -> str:
+        return latex_markdown(self.address)
+    
+    @property
+    def github_username_latex(self) -> str:
+        return latex_markdown(self.github_username)
+    
+    @property
+    def professional_summary_latex(self) -> str:
+        return latex_markdown(self.professional_summary)
     
     def __str__(self) -> str:
         return f"CV Profile for {self.name}"
