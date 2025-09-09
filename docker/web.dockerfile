@@ -14,7 +14,7 @@ RUN --mount=type=bind,source=tools/projects/src,target=src \
     <<EOF
 set -e
 cargo build --locked --release
-cp /app/target/release/github-project-fetcher /bin/$APP_NAME
+cp ./target/release/github-project-fetcher /bin/${APP_NAME}
 EOF
 
 # Compile CSS
