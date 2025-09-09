@@ -3,8 +3,7 @@ use std::collections::HashMap;
 use serde::Serialize;
 use log::{info, error, warn};
 use redis::Commands;
-use octocrab::{params::repos::Commitish, Octocrab};
-use hyper::body::to_bytes;
+use octocrab::Octocrab;
 
 /// Represents a GitHub repository with its details.
 #[derive(Serialize)]
@@ -45,13 +44,13 @@ fn save_repos(repos: HashMap<String, Repo>) -> redis::RedisResult<()> {
             Err(err) => err.to_string(),
         };
 
-        con.set(key, serialized)?;
+        () = con.set(key, serialized)?;
     }
 
     Ok(())
 }
 
-/// Fetches the content of a file from a GitHub repository.
+/// Fetches the content of a README file from a GitHub repository.
 ///
 /// # Arguments
 ///
@@ -61,22 +60,21 @@ fn save_repos(repos: HashMap<String, Repo>) -> redis::RedisResult<()> {
 ///
 /// # Returns
 ///
-/// The content of the file as a String.
+/// The content of the README file as a String.
 async fn get_data(octocrab: Octocrab, repo_name: String, branch: String) -> String {
-    let content: hyper::Response<hyper::Body> = octocrab
-        .repos("minigrim0", repo_name)
-        .raw_file(Commitish(branch), "README.md")
+    match octocrab
+        .repos("minigrim0", &repo_name)
+        .get_readme()
+        .r#ref(&branch)
+        .send()
         .await
-        .expect("Failed to get response !");
-
-    let body = content.into_body();
-    let truc = match to_bytes(body).await {
-        Ok(val) => val,
-        Err(_) => panic!("Could fetch bytes"),
-    };
-
-    // Convert the response body bytes to a string
-    String::from_utf8(truc.to_vec()).unwrap()
+    {
+        Ok(content) => {
+            // Use the built-in decoded_content method
+            content.decoded_content().unwrap_or_else(|| "No README content found".to_string())
+        }
+        Err(_) => "README.md not found".to_string(),
+    }
 }
 
 /// Verifies if the response is valid JSON.
