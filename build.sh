@@ -57,29 +57,50 @@ case $1 in
             exit 1
         fi
 
-        # Build images first
+        echo "Building images..."
         docker compose -f $DOCKERFILE build \
             || { echo "docker compose build failed"; exit 1; }
 
-        # Deploy stack to swarm
-        docker stack deploy -c $DOCKERFILE $COMPOSE_PROJECT_NAME \
+        echo "Deploying stack to swarm..."
+        docker stack deploy --with-registry-auth -c $DOCKERFILE $COMPOSE_PROJECT_NAME \
             || { echo "docker stack deploy failed"; exit 1; }
 
-        echo "Stack deployed. Waiting for services to start..."
-        sleep 10
+        echo "Stack deployed successfully!"
+        echo ""
+        echo "Waiting 15 seconds for services to start..."
+        sleep 15
 
-        # Run migrations
+        # Run migrations on web service
         SERVICE_NAME="${COMPOSE_PROJECT_NAME}_web"
-        CONTAINER_ID=$(docker ps -q -f name=$SERVICE_NAME)
+        echo "Running database migrations..."
 
-        if [ -z "$CONTAINER_ID" ]; then
-            echo "Warning: Could not find web container. Please run migrations manually:"
+        # Get the task ID for the web service
+        TASK_ID=$(docker service ps --filter "desired-state=running" $SERVICE_NAME -q | head -1)
+
+        if [ -z "$TASK_ID" ]; then
+            echo "Warning: Could not find running web service."
+            echo "Please run migrations manually after services are up:"
             echo "  docker exec \$(docker ps -q -f name=${SERVICE_NAME}) uv run manage.py migrate"
         else
-            docker exec $CONTAINER_ID uv run manage.py makemigrations --noinput
-            docker exec $CONTAINER_ID uv run manage.py migrate --noinput
-            docker exec $CONTAINER_ID uv run manage.py collectstatic --noinput
+            # Get container ID from task
+            CONTAINER_ID=$(docker inspect --format '{{.Status.ContainerStatus.ContainerID}}' $TASK_ID)
+
+            if [ -z "$CONTAINER_ID" ]; then
+                echo "Warning: Could not find web container."
+                echo "Please run migrations manually:"
+                echo "  docker exec \$(docker ps -q -f name=${SERVICE_NAME}) uv run manage.py migrate"
+            else
+                echo "Running migrations in container $CONTAINER_ID..."
+                docker exec $CONTAINER_ID uv run manage.py makemigrations --noinput || true
+                docker exec $CONTAINER_ID uv run manage.py migrate --noinput || echo "Migration failed"
+                docker exec $CONTAINER_ID uv run manage.py collectstatic --noinput || echo "Collectstatic failed"
+            fi
         fi
+
+        echo ""
+        echo "Deployment complete!"
+        echo "Check service status with: docker service ls"
+        echo "Check logs with: docker service logs ${SERVICE_NAME}"
         ;;
     restart)
         get_docker_file $2

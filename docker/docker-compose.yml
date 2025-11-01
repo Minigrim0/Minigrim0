@@ -1,10 +1,9 @@
 services:
   web:
+    image: minigrim0-web:latest
     build:
       dockerfile: docker/web.dockerfile
       context: ..
-    expose:
-      - 8000
     environment:
       - DEBUG=False
       - LOGLEVEL=INFO
@@ -28,11 +27,14 @@ services:
       ofelia.job-exec.githubcron.schedule: "@every 1d"
       ofelia.job-exec.githubcron.command: "/bin/minigrim0 >> minigrim0.log && python manage.py fetchrepositories >> repo.log"
       ofelia.job-exec.githubcron.timezone: "Europe/Stockholm"
-    restart: unless-stopped
+    deploy:
+      restart_policy:
+        condition: unless-stopped
     networks:
       - private
 
   nginx:
+    image: minigrim0-nginx:latest
     build:
       context: ./nginx
       dockerfile: Dockerfile
@@ -52,10 +54,12 @@ services:
       - "traefik.docker.network=traefik-proxy"
     depends_on:
       - web
+    deploy:
+      restart_policy:
+        condition: unless-stopped
     networks:
       - traefik-proxy
       - private
-    restart: unless-stopped
 
   postgres:
     image: postgres:15
@@ -69,7 +73,9 @@ services:
       - POSTGRES_PASSWORD_FILE=/run/secrets/DB_PASSWORD
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    restart: unless-stopped
+    deploy:
+      restart_policy:
+        condition: unless-stopped
     networks:
       - private
 
@@ -77,9 +83,9 @@ services:
     image: redis:alpine
     volumes:
       - redis_data:/data
-    expose:
-      - 6379
-    restart: unless-stopped
+    deploy:
+      restart_policy:
+        condition: unless-stopped
     networks:
       - private
 
@@ -88,7 +94,9 @@ services:
     command: daemon --docker
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    restart: unless-stopped
+    deploy:
+      restart_policy:
+        condition: unless-stopped
     depends_on:
       - web
     networks:
@@ -102,7 +110,9 @@ services:
       - POSTGRES_USER=plausible
       - POSTGRES_PASSWORD=plausible
       - POSTGRES_DB=plausible_db
-    restart: unless-stopped
+    deploy:
+      restart_policy:
+        condition: unless-stopped
     networks:
       - private
 
@@ -116,7 +126,9 @@ services:
       nofile:
         soft: 262144
         hard: 262144
-    restart: unless-stopped
+    deploy:
+      restart_policy:
+        condition: unless-stopped
     networks:
       - private
 
@@ -126,8 +138,6 @@ services:
     depends_on:
       - plausible_db
       - plausible_events_db
-    expose:
-      - 8000
     secrets:
       - PLAUSIBLE_SECRET_KEY_BASE
       - PLAUSIBLE_TOTP_VAULT_KEY
@@ -150,7 +160,9 @@ services:
       - "traefik.http.routers.plausible.service=plausible-service"
       - "traefik.http.services.plausible-service.loadbalancer.server.port=8000"
       - "traefik.docker.network=traefik-proxy"
-    restart: unless-stopped
+    deploy:
+      restart_policy:
+        condition: unless-stopped
     networks:
       - traefik-proxy
       - private
