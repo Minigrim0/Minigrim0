@@ -7,10 +7,20 @@ services:
       - 8000
     env_file:
       - ./.env.prod
+    secrets:
+      - SECRET_KEY
+      - DB_USER
+      - DB_PASSWORD
+      - DB_HOST
+      - DB_NAME
+      - ALLOWED_HOSTS
+      - PLAUSIBLE_URL
+      - PLAUSIBLE_DOMAIN
     volumes:
       - static_volume:/usr/src/app/static
     depends_on:
       - redis
+      - postgres
     labels:
       ofelia.enabled: "true"
       ofelia.job-exec.githubcron.schedule: "@every 1d"
@@ -49,6 +59,10 @@ services:
     image: postgres:15
     env_file:
       - ./.env.prod.db
+    secrets:
+      - DB_PASSWORD
+    environment:
+      - POSTGRES_PASSWORD_FILE=/run/secrets/DB_PASSWORD
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     restart: unless-stopped
@@ -87,3 +101,21 @@ networks:
   private:
     driver: overlay
     attachable: true
+
+secrets:
+  SECRET_KEY:
+    external: true
+  DB_USER:
+    external: true
+  DB_PASSWORD:
+    external: true
+  DB_HOST:
+    external: true
+  DB_NAME:
+    external: true
+  ALLOWED_HOSTS:
+    external: true
+  PLAUSIBLE_URL:
+    external: true
+  PLAUSIBLE_DOMAIN:
+    external: true

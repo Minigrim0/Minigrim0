@@ -13,12 +13,13 @@ mkShell rec {
     pkg-config
     uv
     openssl
+    docker
   ];
 
   LD_LIBRARY_PATH = lib.makeLibraryPath buildInputs;
 
   CARGO_TARGET_DIR = cargoTarget;
-  CARGO_INCREMENTAl= "1";
+  CARGO_INCREMENTAl = "1";
   RUST_BACKTRACE = "1";
 
   CARGO_HOME = cargoHome;
@@ -27,16 +28,16 @@ mkShell rec {
   CARGO_BUILD_JOBS = toString (lib.min 16 (lib.max 1 pkgs.stdenv.hostPlatform.parsed.cpu.cores or 8));
 
   shellHook = ''
-    mkdir -p "${cargoHome}"
-    mkdir -p "${cargoTarget}"
+        mkdir -p "${cargoHome}"
+        mkdir -p "${cargoTarget}"
 
-    cat > "${cargoHome}/config.toml" << EOF
-[build]
-jobs = $CARGO_BUILD_JOBS
-incremental = true
+        cat > "${cargoHome}/config.toml" << EOF
+    [build]
+    jobs = $CARGO_BUILD_JOBS
+    incremental = true
 
-[env]
-PKG_CONFIG_PATH = "${lib.makeSearchPath "lib/pkgconfig" buildInputs}"
-EOF
+    [env]
+    PKG_CONFIG_PATH = "${lib.makeSearchPath "lib/pkgconfig" buildInputs}"
+    EOF
   '';
 }

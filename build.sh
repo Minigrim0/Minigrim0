@@ -2,6 +2,7 @@
 
 # Required for docker-compose to use buildkit
 export DOCKER_BUILDKIT=1
+export COMPOSE_BAKE=true
 export COMPOSE_DOCKER_CLI_BUILD=1
 
 help_text () {

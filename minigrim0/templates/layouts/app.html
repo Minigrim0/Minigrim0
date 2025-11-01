@@ -8,12 +8,18 @@
         <title>Minigrim0</title>
 
         <link rel="stylesheet" href="{% static 'css/base.css' %}">
+        {% block extra_css %}{% endblock %}
 
         {% block extra_head %}
         {% endblock %}
+
+        {% if PLAUSIBLE_URL and PLAUSIBLE_DOMAIN %}
+        <script defer data-domain="{{ PLAUSIBLE_DOMAIN }}" src="{{ PLAUSIBLE_URL }}/js/{% if DEBUG %}script.local.js{% else %}script.js{% endif %}"></script>
+        {% endif %}
     </head>
 
-    <body>
+    <body{% block body_class %}{% endblock %}>
+        {% block page_content %}
         <div class="terminal-window">
             <div class="terminal-titlebar">
                 <div class="terminal-buttons">
@@ -32,6 +38,7 @@
         </div>
 
         {% include "layouts/footer.html" %}
+        {% endblock %}
 
         {% block extra_js %}
         {% endblock %}
