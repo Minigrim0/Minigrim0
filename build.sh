@@ -6,7 +6,12 @@ export COMPOSE_BAKE=true
 export COMPOSE_DOCKER_CLI_BUILD=1
 
 help_text () {
-    echo "Usage: $0 {up|attach|logs|down} {dev|prod}"
+    echo "Usage: $0 {up|deploy|attach|logs|down} {dev|prod}"
+    echo "  up     - Start with docker compose (local development)"
+    echo "  deploy - Deploy to docker swarm (production only)"
+    echo "  attach - Attach to web container"
+    echo "  logs   - Follow web container logs"
+    echo "  down   - Stop containers"
     exit 1
 }
 
@@ -42,6 +47,38 @@ case $1 in
 
         if [ $2 != "dev" ]; then  # nginx is not in dev
             docker compose -f $DOCKERFILE restart nginx
+        fi
+        ;;
+    deploy)
+        get_docker_file $2
+
+        if [ $2 != "prod" ]; then
+            echo "Error: deploy only works with prod environment"
+            exit 1
+        fi
+
+        # Build images first
+        docker compose -f $DOCKERFILE build \
+            || { echo "docker compose build failed"; exit 1; }
+
+        # Deploy stack to swarm
+        docker stack deploy -c $DOCKERFILE $COMPOSE_PROJECT_NAME \
+            || { echo "docker stack deploy failed"; exit 1; }
+
+        echo "Stack deployed. Waiting for services to start..."
+        sleep 10
+
+        # Run migrations
+        SERVICE_NAME="${COMPOSE_PROJECT_NAME}_web"
+        CONTAINER_ID=$(docker ps -q -f name=$SERVICE_NAME)
+
+        if [ -z "$CONTAINER_ID" ]; then
+            echo "Warning: Could not find web container. Please run migrations manually:"
+            echo "  docker exec \$(docker ps -q -f name=${SERVICE_NAME}) uv run manage.py migrate"
+        else
+            docker exec $CONTAINER_ID uv run manage.py makemigrations --noinput
+            docker exec $CONTAINER_ID uv run manage.py migrate --noinput
+            docker exec $CONTAINER_ID uv run manage.py collectstatic --noinput
         fi
         ;;
     restart)
