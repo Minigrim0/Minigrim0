@@ -6,3 +6,4 @@ db.sqlite3
 static/
 cv_images/
 .sass-cache/
+secrets/
