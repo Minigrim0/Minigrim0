@@ -183,22 +183,22 @@ networks:
 
 secrets:
   SECRET_KEY:
-    external: true
+    file: secrets/secret_key.txt
   DB_USER:
-    external: true
+    file: secrets/db_user.txt
   DB_PASSWORD:
-    external: true
+    file: secrets/db_password.txt
   DB_HOST:
-    external: true
+    file: secrets/db_host.txt
   DB_NAME:
-    external: true
+    file: secrets/db_name.txt
   ALLOWED_HOSTS:
-    external: true
+    file: secrets/allowed_hosts.txt
   PLAUSIBLE_URL:
-    external: true
+    file: secrets/plausible_url.txt
   PLAUSIBLE_DOMAIN:
-    external: true
+    file: secrets/plausible_domain.txt
   PLAUSIBLE_SECRET_KEY_BASE:
-    external: true
+    file: secrets/plausible_secret_key_base.txt
   PLAUSIBLE_TOTP_VAULT_KEY:
-    external: true
+    file: secrets/plausible_totp_vault_key.txt
