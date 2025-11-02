@@ -139,12 +139,10 @@ services:
       - plausible_db
       - plausible_events_db
     secrets:
-      - PLAUSIBLE_SECRET_KEY_BASE
-      - PLAUSIBLE_TOTP_VAULT_KEY
+      - SECRET_KEY_BASE
+      - TOTP_VAULT_KEY
     environment:
       - BASE_URL=https://analytics.minigrim0.xyz
-      - SECRET_KEY_BASE_FILE=/run/secrets/PLAUSIBLE_SECRET_KEY_BASE
-      - TOTP_VAULT_KEY_FILE=/run/secrets/PLAUSIBLE_TOTP_VAULT_KEY
       - DATABASE_URL=postgres://plausible:plausible@plausible_db:5432/plausible_db
       - CLICKHOUSE_DATABASE_URL=http://plausible_events_db:8123/plausible_events_db
     labels:
@@ -198,7 +196,7 @@ secrets:
     file: secrets/plausible_url.txt
   PLAUSIBLE_DOMAIN:
     file: secrets/plausible_domain.txt
-  PLAUSIBLE_SECRET_KEY_BASE:
+  SECRET_KEY_BASE:
     file: secrets/plausible_secret_key_base.txt
-  PLAUSIBLE_TOTP_VAULT_KEY:
+  TOTP_VAULT_KEY:
     file: secrets/plausible_totp_vault_key.txt

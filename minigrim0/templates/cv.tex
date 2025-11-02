@@ -27,7 +27,7 @@
   \email{ {{- profile.email -}} }
   \social[github]{ {{- profile.github_username_latex -}} }
   {%- if profile.profile_image %}
-    \photo[64pt][0.4pt]{ {{ profile.profile_image.path }} }
+    % \photo[64pt][0.4pt]{ {{ profile.profile_image.path }} }
   {%- endif %}
 {%- else %}
   \name{Florent}{Grimau}
@@ -35,7 +35,7 @@
   \address{Stockholm, Sweden}
   \email{fgrimau@proton.me}
   \social[github]{Minigrim0}
-  \photo[64pt][0.4pt]{profile.jpg}
+  % \photo[64pt][0.4pt]{profile.jpg}
 {%- endif %}
 
 %----------------------------------------------------------------------------------
@@ -94,7 +94,7 @@
 {%- for name, cat in skill_cats.items() %}
   \subsection{ {{ name }} }
   {%- for subcat_name, subcat in cat.items() %}
-    \cvitem{ {{ subcat_name }} }{ 
+    \cvitem{ {{ subcat_name }} }{
       {%- for skill in subcat %}
         {{ skill.name_latex }} {%- if skill.details %} ({{ skill.details_latex }}){% endif %}{%- if not loop.last %}, {% endif -%}
       {%- endfor %}
