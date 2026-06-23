@@ -1,0 +1,58 @@
+---
+import { getCollection } from "astro:content";
+import "../styles/global.scss";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Minigrim0",
+  description = "Embedded systems software engineer, open-source tinkerer, and occasional game developer."
+} = Astro.props;
+
+const posts = await getCollection("blog", ({ data }) => data.draft !== true);
+const hasBlog = posts.length > 0;
+const pageTitle = title === "Minigrim0" ? title : `${title} - Minigrim0`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/jpeg" href="/img/minigrim0.jpeg" />
+    {hasBlog && <link rel="alternate" type="application/rss+xml" title="Minigrim0 RSS" href="/rss.xml" />}
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="/" aria-label="Minigrim0 home">
+          <img src="/img/minigrim0.jpeg" alt="" width="72" height="72" />
+          <span>Minigrim0</span>
+        </a>
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="/cv/">cv</a>
+          <a href="/projects/">projects</a>
+          <a href="https://minigrim0.itch.io/">games</a>
+          {hasBlog && <a href="/blog/">writing</a>}
+          {hasBlog && <a href="/rss.xml">rss</a>}
+        </nav>
+      </header>
+      <main class="page">
+        <slot />
+      </main>
+      <footer class="site-footer">
+        <span>Minigrim0 - {new Date().getFullYear()}</span>
+        <nav aria-label="Social links">
+          <a href="https://github.com/Minigrim0">GitHub</a>
+          <a href="https://mastodon.nu/@minigrim0" rel="me">Mastodon</a>
+        </nav>
+      </footer>
+    </div>
+  </body>
+</html>
