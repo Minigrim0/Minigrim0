@@ -1,9 +1,6 @@
-target/
-.env*
-__pycache__/
-db.sqlite3
-.venv/
-static/
-cv_images/
-.sass-cache/
-secrets/
+node_modules/
+dist/
+.astro/
+.astro-config/
+.DS_Store
+npm-debug.log*
