@@ -2,7 +2,7 @@
 title: Cook Book
 description: A desktop app for loading, browsing, and creating recipes.
 order: 7
-featured: false
+featured: true
 status: Work in Progress
 tags:
   - Rust
