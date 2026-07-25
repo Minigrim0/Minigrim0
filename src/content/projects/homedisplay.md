@@ -2,7 +2,7 @@
 title: Home Display
 description: A weather and bus-timing display running on a Raspberry Pi 3 B+ with a touchscreen.
 order: 2
-featured: false
+featured: true
 status: Finished
 tags:
   - Rust
